@@ -15,7 +15,7 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 
-import logo from "../../assets/Images/logo-new.jpeg";
+import logo from "../../assets/Images/logo-new-2.png";
 import { UserModel } from "@/domain/models";
 
 interface Signup_2Props {
@@ -26,7 +26,6 @@ interface Signup_2Props {
 
 export const Signup_2 = ({ user, handleChange, handlePart }: Signup_2Props) => {
   //const [show, setShow] = useState(false);
-
 
   /*
   const handleShowBtn = () => {

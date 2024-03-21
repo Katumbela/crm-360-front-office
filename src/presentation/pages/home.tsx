@@ -13,17 +13,15 @@ import { Feature } from "../components/Feature";
 import { Footer } from "../components/Footer";
 import { HomeMidView } from "../components/HomeMidView";
 import { NavbarBefore } from "../components/NavbarBefore";
+import home_image from "../../assets/Images/home_img_1.jpg";
 
-
-export default function Home () {
+export default function Home() {
   return (
     <div>
       <NavbarBefore />
       <Flex m="auto" mt="70px" width="80%">
         <Stack width="70%" spacing={5}>
-          <h1 className="text-3xl font-new-rocker" >
-            Prepare for takeoff.
-          </h1>
+          <h1 className="text-3xl font-new-rocker">Prepare for takeoff.</h1>
           <Text
             align="left"
             fontSize="xl"
@@ -48,7 +46,11 @@ export default function Home () {
           </Button>
         </Stack>
         <Box width="60%">
-          <Image opacity={1} alt="Home Image" src="../../assets/Images/home_img_1.jpg" />
+          <Image
+            opacity={1}
+            alt="Home Image"
+            src={home_image}
+          />
         </Box>
       </Flex>
 

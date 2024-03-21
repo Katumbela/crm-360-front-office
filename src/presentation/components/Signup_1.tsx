@@ -21,7 +21,7 @@ import {
 import { useState } from "react";
 import { BsApple } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
-import logo from "../../assets/Images/logo-new.jpeg";
+import logo from "../../assets/Images/logo-new-2.png";
 import { UserModel } from "@/domain/models";
 
 interface Signup_1Props {

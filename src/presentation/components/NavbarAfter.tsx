@@ -34,7 +34,7 @@ import { GiWorld } from "react-icons/gi";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { GrDocumentText } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/Images/logo-new.jpeg";
+import logo from "../../assets/Images/logo-new-2.png";
 
 export const NavbarAfter = () => {
   const navigate = useNavigate();

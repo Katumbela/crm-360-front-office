@@ -20,7 +20,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import { authContext } from "../context/AuthContext";
-import logo from "../../assets/Images/logo-new.jpeg";
+import logo from "../../assets/Images/logo-new-2.png";
 import { UserModel } from "@/domain/models";
 
 interface Signup_4Props {

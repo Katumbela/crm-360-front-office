@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Flex,
   Heading,
   HStack,
@@ -20,17 +19,14 @@ export const Footer = () => {
     <Box p={10}>
       {/* Icons and Logo  */}
       <Flex
-        w="70%"
+        w="90%"
         m="auto"
+        style={{ marginBottom: "2rem" }}
         //  justifyContent="space-between"
         gap={4}
         direction={{ base: "column", md: "row" }}
       >
-        <Image
-          w={{ base: "250px", md: "200px" }}
-          alt="Logo"
-          src={"/Images/logo-new.jpeg"}
-        />
+        <div></div>
         <Spacer />
         <HStack spacing="4">
           {logos.map((item) => (
@@ -41,19 +37,19 @@ export const Footer = () => {
 
       {/* Middle section  */}
       <Flex
-        w="70%"
+        w="90%"
         m="auto"
         my="10"
         gap={8}
         direction={{ base: "column", md: "row" }}
       >
         <Flex
-          w={{ md: "37%" }}
+          w={{ md: "30%" }}
           gap={8}
           direction={{ base: "column", md: "row" }}
         >
           <Image
-            boxSize="130px"
+            boxSize="100px"
             alt="footer image"
             src="https://www.sendinblue.com/wp-content/uploads/2019/05/CEO_Footer_image.jpg"
           />
@@ -82,15 +78,26 @@ export const Footer = () => {
 
         <Spacer />
 
-        <Flex w="60%" gap={10} direction={{ base: "column", md: "row" }}>
+        <Flex
+          w="90%"
+          background={"red.500"}
+          gap={10}
+          direction={{ base: "column", md: "row" }}
+        >
           {footerList.map((item, i) => (
             <List key={i} textAlign="left" spacing={2} fontSize="1.1rem">
-              <Heading color="green.900" fontSize="lg" mb={8}>
+              <Heading
+                color="green.900"
+                fontWeight={"bold"}
+                fontSize="lg"
+                mb={8}
+              >
                 {item.title}
               </Heading>
               {item.content.map((el, i) => (
                 <ListItem
                   cursor="pointer"
+                  fontSize={"sm"}
                   color="gray.600"
                   key={i}
                   _hover={{
@@ -105,8 +112,6 @@ export const Footer = () => {
         </Flex>
       </Flex>
 
-      <Divider w="70%" m="auto" />
-
       <br />
       {/* BOTTOM SECTION  */}
       <Flex w="70%" m="auto" mt="5" direction={{ base: "column", md: "row" }}>
@@ -117,7 +122,7 @@ export const Footer = () => {
           alignItems="center"
           gap={1}
         >
-          <span>&copy;</span> 
+          <span>&copy;</span>
           {ano} CRM 360. All rights reserved
         </Text>
         <Spacer />
