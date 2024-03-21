@@ -1,8 +1,21 @@
 import React, { useState } from "react";
-import { Box, Button, Divider, Flex, FormControl, FormLabel, Grid, GridItem, Heading, Input, Spacer, Stack, Text, Textarea, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  FormControl,
+  FormLabel,
+  Grid,
+  GridItem,
+  Heading,
+  Input,
+  Spacer,
+  Stack,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { NavbarAfter } from "../components/NavbarAfter";
 import { ShowEmail } from "../components/ShowEmail";
-import { useNavigate } from "react-router-dom";
 
 interface Email {
   campaign_name: string;
@@ -32,10 +45,11 @@ const sendEmail = (newEmail: Email) => {
 
 export const EmailCampaign = () => {
   const [email, setEmail] = useState<Email>(initialEmailState);
-  const { isOpen: isVisible, onClose, onOpen } = useDisclosure({ defaultIsOpen: false });
-  const navigate = useNavigate();
+  const { isOpen: isVisible, onOpen } = useDisclosure({ defaultIsOpen: false });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setEmail({ ...email, [name]: value });
     console.log(email);
@@ -52,11 +66,12 @@ export const EmailCampaign = () => {
       });
   };
 
+  /*
   const handleClose = () => {
     onClose();
     navigate("/dashboard");
   };
-
+*/
   return (
     <Box bg="blackAlpha.100">
       <NavbarAfter />
@@ -76,11 +91,20 @@ export const EmailCampaign = () => {
             Create an email campaign
           </Heading>
           <Divider />
-          <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap="5">
+          <Grid
+            templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }}
+            gap="5"
+          >
             <GridItem colSpan={{ base: 1, md: 2 }}>
               <FormControl isRequired>
                 <FormLabel>Campaign Name</FormLabel>
-                <Input type="text" name="campaign_name" value={email.campaign_name} onChange={handleChange} placeholder="Enter campaign name here" />
+                <Input
+                  type="text"
+                  name="campaign_name"
+                  value={email.campaign_name}
+                  onChange={handleChange}
+                  placeholder="Enter campaign name here"
+                />
               </FormControl>
             </GridItem>
             {/* ...Outros campos de entrada... */}
@@ -94,7 +118,19 @@ export const EmailCampaign = () => {
           Send Email
         </Button>
       ) : (
-        <Button disabled={email.campaign_name === "" || email.from === "" || email.to === "" || email.body === "" || email.subject === ""} onClick={handleSend} px="20" colorScheme="blue" mb="10">
+        <Button
+          disabled={
+            email.campaign_name === "" ||
+            email.from === "" ||
+            email.to === "" ||
+            email.body === "" ||
+            email.subject === ""
+          }
+          onClick={handleSend}
+          px="20"
+          colorScheme="blue"
+          mb="10"
+        >
           Send Email
         </Button>
       )}
