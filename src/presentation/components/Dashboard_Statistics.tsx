@@ -2,18 +2,15 @@ import {
   Box,
   Button,
   Center,
-  CircularProgress,
-  CircularProgressLabel,
   Divider,
   Flex,
   Heading,
   Icon,
-  Image,
   Spacer,
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { FaUsers, FaEye, FaBan, FaTelegramPlane } from "react-icons/fa";
+import { FaTelegramPlane } from "react-icons/fa";
 
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";

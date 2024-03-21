@@ -6,3 +6,4 @@ export * from "./string-utils";
 export * from "./abreviate-utils";
 export * from './logos-utils'
 export * from './footer-list-utils'
+export * from './homesection-contdata-utils'

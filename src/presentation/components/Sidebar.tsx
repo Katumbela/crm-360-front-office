@@ -3,7 +3,6 @@ import { AiFillDashboard, AiFillSetting } from 'react-icons/ai'
 import { MdEmail } from 'react-icons/md'
 import { GoGraph } from 'react-icons/go'
 import { RiLayout5Fill } from 'react-icons/ri'
-import { GrAnalytics } from 'react-icons/gr'
 import { ElementType } from 'react'
 
 interface listItemsProps {

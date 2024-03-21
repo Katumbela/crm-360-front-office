@@ -1,4 +1,4 @@
-import { Box, Button, Center, CircularProgress, CircularProgressLabel, Divider, Flex, Heading, Icon, Image, Spacer, Stack, Text } from "@chakra-ui/react"
+import { Box, Button, Center, CircularProgress, CircularProgressLabel, Divider, Flex, Heading, Icon, Spacer, Stack, Text } from "@chakra-ui/react"
 import {FaUsers, FaEye, FaBan} from "react-icons/fa";
 import {MdEmail} from "react-icons/md";
 import {AiFillCheckCircle} from "react-icons/ai";

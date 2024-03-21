@@ -26,7 +26,7 @@ import { UserModel } from "@/domain/models";
 
 interface Signup_1Props {
   user: UserModel;
-  handleChange: () => void;
+  handleChange: (e: any) => void;
   handlePart: () => void;
 }
 

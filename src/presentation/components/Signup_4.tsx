@@ -25,7 +25,7 @@ import { UserModel } from "@/domain/models";
 
 interface Signup_4Props {
   user: UserModel;
-  handleChange: () => void;
+  handleChange: (e: any) => void;
 }
 
 export const Signup_4 = ({ user, handleChange }: Signup_4Props) => {

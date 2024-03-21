@@ -1,8 +1,16 @@
 import { Box, Center, Heading, Stack, Text } from "@chakra-ui/react"
 
+interface ShowEmailProps {
+    email: {
+        campaign_name: string,
+        from: string,
+        to: string,
+        subject: string,
+        body: string
+    }
+}
 
-
-export const ShowEmail = ({email})=>{
+export const ShowEmail = ({email}: ShowEmailProps)=>{
     const {campaign_name, from, to, subject, body} = email;
     return (
         <Box w={{base:"80%", md:"48%"}}

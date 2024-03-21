@@ -4,9 +4,9 @@ import { Signup_1 } from "../components/Signup_1";
 import { Signup_2 } from "../components/Signup_2";
 import { Signup_4 } from "../components/Signup_4";
 import Signup_3 from "../components/Signup_3";
-import { UserDetailsModel } from "@/domain/models";
+import { UserModel } from "@/domain/models";
 
-const userDetails: UserDetailsModel = {
+const userDetails: UserModel = {
   email: "",
   password: "",
   first_name: "",
@@ -18,9 +18,12 @@ const userDetails: UserDetailsModel = {
   city: "",
   country: "",
   team: "",
-  contacts: "",
+  contacts: [],
   online_selling: "no", // Inicializado com um valor padrão
   plan: "",
+  id: "",
+  name: "",
+  shortname: ""
 };
 
 
@@ -64,4 +67,4 @@ export function Signup () {
       )}
     </Box>
   );
-};
+}
