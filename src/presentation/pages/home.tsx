@@ -21,7 +21,9 @@ export default function Home() {
       <NavbarBefore />
       <Flex m="auto" mt="70px" width="80%">
         <Stack width="70%" spacing={5}>
-          <h1 className="text-3xl font-new-rocker">Prepare for takeoff.</h1>
+          <h1 className="text-3xl font-new-rocker">
+            Prepare-se para a decolagem.
+          </h1>
           <Text
             align="left"
             fontSize="xl"
@@ -30,9 +32,9 @@ export default function Home() {
             borderLeft="2px"
             borderColor="#FFD201"
           >
-            CRM 360 is the smartest and most intuitive platform for growing
-            business. Thrive digitally as we guide your business with the right
-            marketing & sales tools.
+            O CRM 360 é a plataforma mais inteligente e intuitiva para negócios
+            em crescimento. Prospere digitalmente enquanto orientamos seu
+            negócio com as ferramentas certas de marketing e vendas.
           </Text>
 
           <Button
@@ -42,15 +44,11 @@ export default function Home() {
             p={7}
             fontSize="md"
           >
-            Take a free test drive!
+            Teste gratuitamente!
           </Button>
         </Stack>
         <Box width="60%">
-          <Image
-            opacity={1}
-            alt="Home Image"
-            src={home_image}
-          />
+          <Image opacity={1} alt="Home Image" src={home_image} />
         </Box>
       </Flex>
 
