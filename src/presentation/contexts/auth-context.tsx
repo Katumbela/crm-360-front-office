@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	useEffect(() => {
 		const load = async () => {
 			const account = await getCurrentAccountAdapter()
-			if (!account?.user && path.indexOf('/login') < 0) {
-				location.replace('/login')
-			} else if (account?.user && path.indexOf('/login') >= 0) {
+			if (!account?.user && !isPublicRoute(path)) {
+				location.replace('/')
+			} else if (account?.user && path === '/login') {
 				location.replace('/')
 			} else {
 				if (!auth?.user?.id) dispatch(addAuthStore(account))
@@ -35,7 +35,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 		}
 	}, [auth?.user?.id, dispatch, path])
 
-	if (!auth?.user?.id && path.indexOf('/login') < 0) return <></>
+	const isPublicRoute = (path: string) => {
+		// Adicione aqui as rotas públicas que não requerem autenticação
+		const publicRoutes = ['/login', '/signup', '/']
+		return publicRoutes.includes(path)
+	}
+
+	if (!auth?.user?.id && !isPublicRoute(path)) return null
 
 	return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>
 }
