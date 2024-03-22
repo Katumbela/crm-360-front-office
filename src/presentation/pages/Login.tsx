@@ -18,75 +18,69 @@ import { ChangeEvent, useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 //import { useNavigate } from "react-router-dom";
-import { Authentication } from "@/domain/usecases";
-import { useDispatch } from "react-redux";
-import { AccountModel } from "@/domain/models";
-import { setCurrentAccountAdapter } from '../../main/adapters'
-import { addAuthStore } from "../../store";
+// import { useDispatch } from "react-redux";
+// import { addAuthStore } from "../../store";
 import { Spinner } from "../components/spinner";
+// import { AlertUtils } from "../../utils";
+// import { UserModel } from "../../domain/models";
+// import { testApiRequest } from "../../services";
+// import axios from "axios";
+// import authService from "../../services/auth.service";
+import axios from "axios";
 import { AlertUtils } from "../../utils";
+// import { GiConsoleController } from "react-icons/gi";
 
 
 
 type FormDataProps = {
-	email: string
-	password: string
+  email: string
+  password: string
 }
 
-type LoginProps = {
-  authentication: Authentication;
-};
 
-export function Login({ authentication }: LoginProps) {
-  const dispatch = useDispatch();
+export function Login() {
+  // const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   //const [inputUser, setInputUser] = useState({ email: "", password: "" });
   const [formData, setFormData] = useState<FormDataProps>({} as FormDataProps)
-	
+
   //const navigate = useNavigate();
 
   const handleShowBtn = () => {
     setShow(!show);
   };
 
-	const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value })
-	}
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
+
+  const requestBody = {
+    email: formData.email,
+    password: formData.password
+  };
 
 
   const handleLogin = async (e: any) => {
-    e.preventDefault();
-    console.log({ formData });
+    e.preventDefault()
+    setLoading(true); // Indicate loading state
 
-    if (!formData.email?.trim() && !formData.password?.trim()) {
-      return AlertUtils.error("Informe as credenciais");
-    }
-    if (!formData.email?.trim()) {
-      return AlertUtils.error("Informe o email ou nº de matrícula");
-    }
-    if (!formData.password?.trim()) {
-      return AlertUtils.error("Informe a senha");
-    }
-    setLoading(true);
     try {
-      const account = await authentication.handle(formData);
-
-      const endsAt = new Date();
-      endsAt.setSeconds(endsAt.getSeconds() + Number(account.expires_in));
-
-      const currentAccount: AccountModel = { ...account, ends_at: endsAt };
-
-      await setCurrentAccountAdapter(currentAccount);
-      dispatch(addAuthStore(account));
-      AlertUtils.success("Login efectuado com sucesso");
-    } catch (error: unknown) {
-      AlertUtils.error(error as string);
+      const response = await axios.post('https://crm-360-api.vercel.app/login', requestBody);
+    
+      // Handle successful login (e.g., navigate to a different page, store user data)
+      AlertUtils.success('Login successful:'+ response.data);
+      // ...
+    
+    } catch (error) {
+      AlertUtils.error('Login error:' + error);
+      // Handle login errors (e.g., display error message to the user)
     } finally {
-      setLoading(false);
+      setLoading(false); // Reset loading state
     }
-  };
+
+  }
 
   return (
     <Box bg="#00FF99" padding="10">
