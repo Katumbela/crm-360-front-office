@@ -14,7 +14,7 @@ export interface UserModel {
   contacts: [];
   city: string;
   country: string;
-  plan: string,
+  plan: string;
   online_selling: "no" | "yes";
 }
 
