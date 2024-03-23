@@ -1,4 +1,4 @@
-import './presentation/theme/global.css'
+// import './presentation/theme/global.css'
 import './index.css'
 import { AppRoutes } from './main/routes'
 import { store } from './store'

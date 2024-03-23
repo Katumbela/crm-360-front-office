@@ -19,9 +19,8 @@ import { NavLink } from 'react-router-dom'
 
 interface Signup_3Props {
 	user: {
-		address: string
-		zipcode: string
-		city: string
+		address: string,
+		city: string,
 		country: string
 	}
 	handleChange: (e: any) => void
@@ -29,7 +28,7 @@ interface Signup_3Props {
 }
 
 export default function Signup_3({ user, handleChange, handlePart }: Signup_3Props) {
-	const { address, zipcode, city, country } = user
+	const { address, city, country } = user
 
 	return (
 		<Flex h="100vh" overflowY="auto">
@@ -100,7 +99,7 @@ export default function Signup_3({ user, handleChange, handlePart }: Signup_3Pro
 					<Button
 						w="100px"
 						colorScheme="blue"
-						disabled={address == '' || zipcode == '' || city == '' || country == ''}
+						disabled={address == '' || city == '' || country == ''}
 						onClick={handlePart}
 					>
 						Next

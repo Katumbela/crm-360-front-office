@@ -33,7 +33,7 @@ import { MdLogout } from "react-icons/md";
 import { GiWorld } from "react-icons/gi";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { GrDocumentText } from "react-icons/gr";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Images/logo-new-2.png";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../main/hooks";
@@ -41,14 +41,14 @@ import { useDispatch } from "react-redux";
 import { removeAuthStore } from "../../store";
 
 export const NavbarAfter = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const account = useSelector(useAuth())
   const dispatch = useDispatch()
 
   const handleLogout = () => {
     localStorage.removeItem('user')
     dispatch(removeAuthStore())
-    navigate("/login");
+    window.location.href = "/login";
   };
 
   const hoverStyle = {

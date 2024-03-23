@@ -50,7 +50,7 @@ export function AppRoutes() {
 		// Limpar o intervalo quando o componente é desmontado
 		return () => clearInterval(intervalId);
 	}, []);
-
+	
 	return (
 		<BrowserRouter>
 			<Routes>

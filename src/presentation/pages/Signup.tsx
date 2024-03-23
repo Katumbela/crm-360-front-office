@@ -9,12 +9,9 @@ import { UserModel } from "@/domain/models";
 const userDetails: UserModel = {
   email: "",
   password: "",
-  first_name: "",
-  last_name: "",
   company_name: "",
   website: "",
   address: "",
-  zipcode: "",
   city: "",
   country: "",
   team: "",
@@ -23,7 +20,6 @@ const userDetails: UserModel = {
   plan: "",
   id: "",
   name: "",
-  shortname: ""
 };
 
 
