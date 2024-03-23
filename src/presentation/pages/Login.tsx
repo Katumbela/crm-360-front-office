@@ -18,17 +18,13 @@ import { ChangeEvent, useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 //import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { addAuthStore } from "../../store";
 import { Spinner } from "../components/spinner";
-// import { AlertUtils } from "../../utils";
-// import { UserModel } from "../../domain/models";
-// import { testApiRequest } from "../../services";
-// import axios from "axios";
-// import authService from "../../services/auth.service";
-import axios from "axios";
 import { AlertUtils } from "../../utils";
-// import { GiConsoleController } from "react-icons/gi";
+import { handleLoginService } from "../../services";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../main/hooks";
+import { useDispatch } from "react-redux";
+import { addAuthStore } from "../../store";
 
 
 
@@ -39,12 +35,12 @@ type FormDataProps = {
 
 
 export function Login() {
-  // const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   //const [inputUser, setInputUser] = useState({ email: "", password: "" });
   const [formData, setFormData] = useState<FormDataProps>({} as FormDataProps)
-
+  const user = useSelector(useAuth());
+  const dispatch = useDispatch()
   //const navigate = useNavigate();
 
   const handleShowBtn = () => {
@@ -56,31 +52,43 @@ export function Login() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const requestBody = {
-    email: formData.email,
-    password: formData.password
-  };
-
 
   const handleLogin = async (e: any) => {
-    e.preventDefault()
-    setLoading(true); // Indicate loading state
+    e.preventDefault();
+    console.log({ formData });
 
-    try {
-      const response = await axios.post('https://crm-360-api.vercel.app/login', requestBody);
-    
-      // Handle successful login (e.g., navigate to a different page, store user data)
-      AlertUtils.success('Login successful:'+ response.data);
-      // ...
-    
-    } catch (error) {
-      AlertUtils.error('Login error:' + error);
-      // Handle login errors (e.g., display error message to the user)
-    } finally {
-      setLoading(false); // Reset loading state
+    if (!formData.email?.trim() && !formData.password?.trim()) {
+      return AlertUtils.error("Informe as credenciais");
     }
+    if (!formData.email?.trim()) {
+      return AlertUtils.error("Informe o email ");
+    }
+    if (!formData.password?.trim()) {
+      return AlertUtils.error("Informe a senha");
+    }
+    setLoading(true);
+    try {
+      const accountData = await handleLoginService(formData);
 
-  }
+      console.log(accountData)
+      dispatch(addAuthStore(accountData))
+      localStorage.setItem('user', accountData.id?.toString())
+      if (
+        accountData.name !== ''
+      ) {
+        AlertUtils.success("Login efetuado com sucesso");
+
+      }
+      else {
+        AlertUtils.error("Credenciais de acesso inválidas");
+
+      }
+    } catch (error) {
+      AlertUtils.error(error as string);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Box bg="#00FF99" padding="10">
@@ -139,6 +147,7 @@ export function Login() {
           border="1px"
           borderColor="green"
         >
+          {user.user?.name}
           <FcGoogle />
           Sign in with Google
         </Button>

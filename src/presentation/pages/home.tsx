@@ -16,6 +16,7 @@ import { NavbarBefore } from "../components/NavbarBefore";
 import home_image from "../../assets/Images/home_img_1.jpg";
 
 export default function Home() {
+
   return (
     <div>
       <NavbarBefore />

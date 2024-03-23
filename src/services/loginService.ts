@@ -1,26 +1,69 @@
 import axios from "axios";
+import { UserModel } from "../domain/models";
+import { env } from "../main/config";
 
-// Função para fazer a requisição à API
-export async function testApiRequest(formData: {
+export interface AuthProps {
   email: string;
   password: string;
-}) {
+}
+
+export async function handleLoginService(
+  { email, password }: AuthProps
+): Promise<UserModel> {
   try {
-    const apiUrl = "https://crm-360-api.vercel.app/login";
+    const formData = {
+      email: email,
+      password: password,
+    };
 
-    const response = await axios.post(apiUrl, formData);
+    const response = await axios.post(env.apiUrl + "/login", formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    console.log(response.status)
     if (response.status === 200) {
       console.log("Requisição bem-sucedida!");
       console.log("Dados recebidos:", response.data);
-      return response.data; // Retornar os dados recebidos da API
+
+      const userData: UserModel = response.data;
+      
+      return userData;
     } else {
       console.error("Erro na requisição:", response.statusText);
-      return null;
+      const userData: UserModel = {
+        id: "",
+        name: "",
+        email: "",
+        company_name: "",
+        website: "",
+        password: "",
+        address: "",
+        team: "",
+        contacts: [],
+        city: "",
+        country: "",
+        plan: "",
+        online_selling: "no",
+      }; // Atribuir um array vazio de UserModel
+      return userData;
     }
   } catch (error) {
-    console.error("Erro ao fazer requisição:", error);
-    return null;
+    const userData: UserModel = {
+      id: "",
+      name: "",
+      email: "",
+      company_name: "",
+      website: "",
+      password: "",
+      address: "",
+      team: "",
+      contacts: [],
+      city: "",
+      country: "",
+      plan: "",
+      online_selling: "no",
+    }; // Atribuir um array vazio de UserModel
+    return userData;
   }
 }

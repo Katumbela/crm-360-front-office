@@ -26,10 +26,10 @@ class AuthService {
     });
   }
 
-  getCurrentUser() {
+  getCurrentUserId(): string {
     // Implemente a lógica para decodificar o token e obter informações do usuário, se necessário
-    const token = localStorage.getItem("token");
-    return token ? true : false;
+    const user = localStorage.getItem("user");
+    return user as string ;
   }
 }
 

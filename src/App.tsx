@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast'
 import { AppProvider } from './presentation/contexts'
 
 function App() {
+
 	return (
 		<div  className="bg-gradient-radial">
 			<Provider store={store}>

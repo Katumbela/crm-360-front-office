@@ -1,4 +1,4 @@
 
 export const env = {
-	apiUrl: 'https://crm-360-api.vercel.app'
+	apiUrl: 'http://localhost:3035'
 } as const
