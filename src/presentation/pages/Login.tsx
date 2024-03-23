@@ -24,7 +24,8 @@ import { handleLoginService } from "../../services";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../main/hooks";
 import { useDispatch } from "react-redux";
-import { addAuthStore } from "../../store";
+import { addAuthStore, removeAuthStore } from "../../store";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -53,6 +54,12 @@ export function Login() {
   }
 
 
+  const logout = async () => {
+    localStorage.removeItem('user')
+    localStorage.removeItem('userId')
+    dispatch(removeAuthStore())
+  }
+
   const handleLogin = async (e: any) => {
     e.preventDefault();
     console.log({ formData });
@@ -70,9 +77,9 @@ export function Login() {
     try {
       const accountData = await handleLoginService(formData);
 
-      console.log(accountData)
-      dispatch(addAuthStore(accountData))
       localStorage.setItem('user', accountData.id?.toString())
+      // console.log(accountData)
+      dispatch(addAuthStore(accountData))
       if (
         accountData.name !== ''
       ) {
@@ -92,7 +99,7 @@ export function Login() {
 
   return (
     <Box bg="#00FF99" padding="10">
-      <Stack
+      <Stack 
         spacing={5}
         w={["90%", "50%", "30%"]}
         shadow={"lg"}
@@ -153,14 +160,14 @@ export function Login() {
         </Button>
 
         <Center p={2} color="black" gap={3}>
-          <Link
-            href="/signup"
-            _hover={{ color: "red", textDecoration: "underline" }}
+          <NavLink
+            to="/"
+            
           >
             Criar conta
-          </Link>
+          </NavLink>
           <BsDot />
-          <Link _hover={{ color: "red.400", textDecoration: "underline" }}>
+          <Link onClick={logout} _hover={{ color: "red.400", textDecoration: "underline" }}>
             Esqueceu senha
           </Link>
         </Center>

@@ -11,11 +11,10 @@ import {
   MenuDivider,
   Center,
   Spacer,
-  Link,
 } from "@chakra-ui/react";
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from '../../assets/Images/logo-new-2.png'
 
 
@@ -25,10 +24,6 @@ export const NavbarBefore = () => {
 
   const handleClick = () => {
     navigate("/");
-  };
-
-  const handleSignup = () => {
-    navigate("/signup");
   };
 
   return (
@@ -176,19 +171,22 @@ export const NavbarBefore = () => {
                     </Menu> */}
 
           <Box>
-            <Link href="/login" _hover={{ textDecoration: "none" }}>
-              Log in
-            </Link>
+            <NavLink to="/login">
+              Entrar
+            </NavLink>
           </Box>
 
-          <Button
-            colorScheme="red"
-            borderRadius={50}
-            p={6}
-            onClick={handleSignup}
-          >
-            Sign up free
-          </Button>
+          <NavLink to="/signup">
+
+            <Button
+              colorScheme="red"
+              borderRadius={50}
+              p={6}
+            >
+              Sign up free
+            </Button>
+          </NavLink>
+
         </Center>
       </Flex>
     </Flex>

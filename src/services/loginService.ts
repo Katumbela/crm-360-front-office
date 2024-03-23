@@ -24,7 +24,7 @@ export async function handleLoginService(
 
     if (response.status === 200) {
       console.log("Requisição bem-sucedida!");
-      console.log("Dados recebidos:", response.data);
+    //   console.log("Dados recebidos:", response.data);
 
       const userData: UserModel = response.data;
       
