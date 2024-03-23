@@ -35,12 +35,19 @@ import { IoShieldCheckmark } from "react-icons/io5";
 import { GrDocumentText } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/Images/logo-new-2.png";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../main/hooks";
+import { useDispatch } from "react-redux";
+import { removeAuthStore } from "../../store";
 
 export const NavbarAfter = () => {
   const navigate = useNavigate();
+  const account = useSelector(useAuth())
+  const dispatch = useDispatch()
 
   const handleLogout = () => {
-    //logout();
+    localStorage.removeItem('user')
+    dispatch(removeAuthStore())
     navigate("/login");
   };
 
@@ -150,19 +157,21 @@ export const NavbarAfter = () => {
                 color: "black",
               }}
             >
-              {"empresaData?.nomeEmpresa"}
+              {account.user?.company_name}
             </MenuButton>
 
             <MenuList color="black">
-              <MenuGroup title="{empresaData?.email}">
+              <MenuGroup title={account.user?.name}>
                 <MenuItem icon={<FaUser />}>
-                  Perfil {'empresaData?.nomeEmpresa.split(" ")[0]'}
+                  {account && account.user && account.user.company_name && (
+                    <span>Perfil {(account.user.company_name.split(" ")[0])}</span>
+                  )}
                 </MenuItem>
               </MenuGroup>
 
               <MenuDivider />
 
-              <MenuGroup title={"empresaData?.company_name"}>
+              <MenuGroup  >
                 <MenuItem icon={<FaCreditCard />}>My Plan</MenuItem>
                 <MenuItem icon={<FaPlug />}>Plugins</MenuItem>
                 <MenuItem icon={<FaTelegramPlane />}>Senders & IP</MenuItem>

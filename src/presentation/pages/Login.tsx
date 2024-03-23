@@ -25,8 +25,8 @@ import { useSelector } from "react-redux";
 import { useAuth } from "../../main/hooks";
 import { useDispatch } from "react-redux";
 import { addAuthStore, removeAuthStore } from "../../store";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useNavigate } from "react-router-dom";
+import logo from '../../assets/Images/logo-new-2.png'
 
 
 type FormDataProps = {
@@ -42,7 +42,7 @@ export function Login() {
   const [formData, setFormData] = useState<FormDataProps>({} as FormDataProps)
   const user = useSelector(useAuth());
   const dispatch = useDispatch()
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleShowBtn = () => {
     setShow(!show);
@@ -84,6 +84,7 @@ export function Login() {
         accountData.name !== ''
       ) {
         AlertUtils.success("Login efetuado com sucesso");
+        navigate('/')
 
       }
       else {
@@ -107,9 +108,9 @@ export function Login() {
         bg="white"
         p={10}
       >
-        <Link href="/">
-          <Image src={"assets/images"} alt="" className="logo" mx="auto" />
-        </Link>
+        <NavLink to="/">
+          <Image src={logo} alt="" className="logo" mx="auto" />
+        </NavLink>
         <form className="bg-white py-9 px-16 w-[30vw]" onSubmit={handleLogin}>
           <FormControl>
             <FormLabel>Email</FormLabel>
@@ -161,7 +162,7 @@ export function Login() {
 
         <Center p={2} color="black" gap={3}>
           <NavLink
-            to="/"
+            to="/signup"
             
           >
             Criar conta
