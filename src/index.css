@@ -6,6 +6,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.text-primary {
+  color: #ff6633;
+}
+
+.bg-primary {
+  background: #ff6633;
+}
+
 .new-rocker {
   font-family: "New Rocker";
   font-weight: 400;
