@@ -15,10 +15,29 @@
   background: #ff6633;
 }
 
+.border-primary {
+  border-color: #ff6633;
+}
+
 .new-rocker {
   font-family: "New Rocker";
   font-weight: 400;
   font-style: normal;
+}
+
+.bg-hover-primary {
+  background: #ff6633;
+}
+
+.bg-hover-primary:hover {
+  background: #F9952F;
+}
+.text-hover-primary {
+  color: #ff6633;
+}
+
+.text-hover-primary:hover {
+  color: #F9952F;
 }
 
 .truculenta {
