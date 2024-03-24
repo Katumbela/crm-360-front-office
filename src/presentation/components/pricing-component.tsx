@@ -73,9 +73,9 @@ const PricingBox: React.FC<PricingBoxProps> = ({
                     borderRadius={0}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
-                    className={`${popular ? 'bg-hover-primary' :'text-primary hover-primary'} transition-all border-primary  border-2 mx-auto mt-4 px-16 py-2 `}
+                    className={`font-semibold ${popular ? 'bg-hover-primary text-white ' :'text-primary hover-primary'} transition-all border-primary  border-2 mx-auto mt-4 ${name == 'start' ? 'px-8' : 'px-16'} py-2 `}
                 >
-                    Assinar
+                     {name == 'start' ? "Registro gratuito" : "Assinar"}
                     <BsArrowRightShort
               className={`my-auto text-2xl transition-transform duration-300 ${isHovered ? 'transform translate-x-2' : ''
                 }`}
