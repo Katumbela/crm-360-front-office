@@ -23,10 +23,12 @@ import home_image from "../../assets/Images/hero-1.svg";
 import hero6 from "../../assets/Images/hero-6.svg";
 import { prices } from "../../dummy/pricing-list-datas";
 import PricingBox from "../components/pricing-component";
-import { BsArrowRight } from "react-icons/bs";
+import { BsArrowRight, BsArrowRightShort } from "react-icons/bs";
+import { useState } from "react";
 
 export default function Home() {
 
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <div>
       <NavbarBefore />
@@ -50,9 +52,15 @@ export default function Home() {
 
           <Button
             maxWidth="fit-content"
-            className=" bg-primary py-3 mt-6 px-5"
+            className="font-bold flex text-white bg-primary py-3 mt-6 px-5 relative"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            Teste gratuitamente!
+            Teste gratuitamente
+            <BsArrowRightShort
+              className={`my-auto text-2xl transition-transform duration-300 ${isHovered ? 'transform translate-x-2' : ''
+                }`}
+            />
           </Button>
         </Stack>
         <Box width="60%">
@@ -144,14 +152,27 @@ export default function Home() {
         </Stack>
       </Flex>
 
-      <Flex w="70%" margin="auto">
-        <Image
-          boxSize="450px"
-          alt="image"
-          src="https://www.sendinblue.com/wp-content/themes/sendinblue2019/assets/images/common/shield.jpg"
-        />
+      <div className="flex w-[80%] mx-auto gap-4">
+        <img src={hero6} alt="" className="w-6/12" />
+        <div className="w-6/12 my-auto">
+          <h2 className="text-4xl text-orange-600 font-bold ">Análise & Monitoramento</h2>
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos perspiciatis esse corrupti obcaecati iste possimus, autem expedita dignissimos distinctio sequi officia, volupt
+          </p>
 
-        <Stack padding={10} textAlign="left">
+          <button className="bg-secondary-opacity flex gap-3 hover:bg-orange-600 hover:text-white transition-all mt-5 py-3 border-2 border-primary font-bold px-6 text-xl text-orange-700" >
+            Comece gratuitamente
+            <BsArrowRight className="my-auto" />
+          </button>
+        </div>
+      </div>
+      <br />
+      <br />
+      <br />
+      <Flex w="70%" margin="auto">
+
+
+        <Stack padding={10} className="my-auto" textAlign="left">
           <Heading fontSize="5xl" color="green.900">
             A privacidade e a segurança dos seus dados são uma das principais preocupações para nós.          </Heading>
           <HStack spacing={10}>
@@ -181,24 +202,14 @@ export default function Home() {
             <Text>Saiba mais sobre a conformidade de segurança</Text>
           </HStack>
         </Stack>
+
+        <Image
+          boxSize="300px"
+          alt="image"
+          src="https://www.sendinblue.com/wp-content/themes/sendinblue2019/assets/images/common/shield.jpg"
+        />
       </Flex>
 
-      <div className="flex w-[80%] mx-auto gap-4">
-        <img src={hero6} alt="" className="w-6/12" />
-        <div className="w-6/12 my-auto">
-          <h2 className="text-4xl text-orange-600 font-bold ">Análise & Monitoramento</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos perspiciatis esse corrupti obcaecati iste possimus, autem expedita dignissimos distinctio sequi officia, volupt
-          </p>
-
-          <button className="bg-secondary-opacity flex gap-3 hover:bg-orange-600 hover:text-white transition-all mt-5 py-3 border-2 border-primary font-bold px-6 text-xl text-orange-700" >
-            Comece gratuitamente
-            <BsArrowRight className="my-auto" />
-          </button>
-        </div>
-      </div>
-      <br />
-      <br />
 
       <br />
       {/* Bottom section is remaining */}

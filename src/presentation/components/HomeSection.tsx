@@ -4,9 +4,12 @@ import { Box, Center, Divider, Flex, Grid, GridItem, Heading, Image, Stack, Text
 import { BsArrowRightShort } from "react-icons/bs"
 import { NavLink } from "react-router-dom"
 import hero from '../../assets/Images/bg-orange-dots-1.png'
+import { useState } from "react"
 
 
 export const HomeSection = () => {
+
+    const [isHovered, setIsHovered] = useState(false);
     return (
         <div className="relative">
             <Image src={hero} className=" opacity-[.3] absolute  rotate-90" />
@@ -46,10 +49,14 @@ export const HomeSection = () => {
                 <Center>
                     <NavLink
                         to={'/signup'}
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
                         className={'bg-primary mt-10 flex py-3 font-bold text-white px-6'}
                     >Comece gratuitamente
-                        <BsArrowRightShort className="my-auto text-2xl ms-2" />
-
+                        <BsArrowRightShort
+              className={`my-auto text-2xl transition-transform duration-300 ${isHovered ? 'transform translate-x-2' : ''
+                }`}
+            />
                     </NavLink>
                 </Center>
 

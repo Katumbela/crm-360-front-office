@@ -8,7 +8,7 @@ import {
     Stack,
     Text,
 } from "@chakra-ui/react";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { BsArrowRightShort, BsCheckCircleFill } from "react-icons/bs";
 import { NumberUtils } from "../../utils";
 
 const PricingBox: React.FC<PricingBoxProps> = ({
@@ -22,6 +22,7 @@ const PricingBox: React.FC<PricingBoxProps> = ({
         "monthly"
     );
 
+    const [isHovered, setIsHovered] = useState(false);
     const isAnnual = billingOption === "annual";
     const price = isAnnual ? monthlyPrice * 12 * 0.18 : monthlyPrice * 1;
 
@@ -69,11 +70,16 @@ const PricingBox: React.FC<PricingBoxProps> = ({
             <center className="absolute bottom-3 left-0 right-0 mt-3">
                 <Button
                     size="md"
-                    rightIcon={<ArrowForwardIcon />}
                     borderRadius={0}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
                     className={`${popular ? 'bg-hover-primary' :'text-primary hover-primary'} transition-all border-primary  border-2 mx-auto mt-4 px-16 py-2 `}
                 >
                     Assinar
+                    <BsArrowRightShort
+              className={`my-auto text-2xl transition-transform duration-300 ${isHovered ? 'transform translate-x-2' : ''
+                }`}
+            />
                 </Button>
                 <Text fontSize="sm" className="text-xs px-5 mt-2 text-gray-500" mt={2}>
                     {info}
