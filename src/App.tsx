@@ -9,7 +9,7 @@ import { AppProvider } from './presentation/contexts'
 function App() {
 
 	return (
-		<div  className="bg-gradient-radial">
+		<div  className="bg-gradient-radial ">
 			<Provider store={store}>
 				<Toaster position="top-center" toastOptions={{ duration: 6000 }} />
 				<AppProvider>
