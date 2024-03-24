@@ -12,7 +12,7 @@ async function testApiRequest() {
     const response = await axios.post(apiUrl, formData, {
       headers: {
         "Content-Type": "application/json",
-        "User-Agent": "CRM 360 - API", // Substitua com o seu User-Agent adequado
+        "User-Agent": "Echo Link 360 - API", // Substitua com o seu User-Agent adequado
       },
     });
 

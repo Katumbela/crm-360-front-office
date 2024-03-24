@@ -45,7 +45,7 @@ export default function Home() {
             borderLeft="2px"
             borderColor="#FFD201"
           >
-            O CRM 360 é a plataforma mais inteligente e intuitiva para negócios
+            O Echo Link 360 é a plataforma mais inteligente e intuitiva para negócios
             em crescimento. Prospere digitalmente enquanto orientamos seu
             negócio com as ferramentas certas de marketing e vendas.
           </Text>

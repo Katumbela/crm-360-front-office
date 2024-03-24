@@ -124,8 +124,8 @@ export const Signup_1 = ({ user, handleChange, handlePart }: Signup_1Props) => {
           </Button>
 
           <Text color="gray.600">
-            By Signing up, you are creating a CRM 360 account, and you agree to
-            CRM 360 's{" "}
+            By Signing up, you are creating a Echo Link 360 account, and you agree to
+            Echo Link 360 's{" "}
             <Link color="red.400" textDecor="underline">
               Terms of use
             </Link>{" "}

@@ -125,7 +125,7 @@ export const Footer = () => {
           gap={1}
         >
           <span>&copy;</span>
-          {ano} CRM 360. All rights reserved
+          {ano} Echo Link 360. All rights reserved
         </Text>
         <Spacer />
         <Text fontSize="sm" className="text-sm" color="gray.600">
