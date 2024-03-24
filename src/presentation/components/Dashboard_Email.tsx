@@ -5,7 +5,6 @@ import {
   Heading,
   Input,
   InputGroup,
-  InputRightElement,
   Spacer,
   Tab,
   Table,
