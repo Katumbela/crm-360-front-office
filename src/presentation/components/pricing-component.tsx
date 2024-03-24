@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { PricingBoxProps } from "../../dummy/pricing-list-datas";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
     Box,
     Button,
@@ -28,7 +27,7 @@ const PricingBox: React.FC<PricingBoxProps> = ({
 
     const bgColor = popular ? 'bg-secondary-opacity' : 'bg-gray-100/70';
     const borderColor = popular ? "teal.300" : "gray.300";
-        
+
     return (
         <Box
 
@@ -46,7 +45,7 @@ const PricingBox: React.FC<PricingBoxProps> = ({
             <Text textTransform="uppercase" className="mt-6 mb-3 font-new-rocker">{name}</Text>
             <Flex alignItems="baseline" className=" font-bahiana">
                 <Text fontSize="2xl" fontWeight="bold" mr={1}>
-                     {NumberUtils.formatCurrency(price)}
+                    {NumberUtils.formatCurrency(price)}
                 </Text>
                 {isAnnual && (
                     <Text fontSize="sm" color="gray.600">
@@ -73,37 +72,40 @@ const PricingBox: React.FC<PricingBoxProps> = ({
                     borderRadius={0}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
-                    className={`font-semibold ${popular ? 'bg-hover-primary text-white ' :'text-primary hover-primary'} transition-all border-primary  border-2 mx-auto mt-4 ${name == 'start' ? 'px-8' : 'px-16'} py-2 `}
+                    className={`font-semibold ${popular ? 'bg-hover-primary text-white ' : 'text-primary hover-primary'} transition-all border-primary  border-2 mx-auto mt-4 ${name == 'start' ? 'px-8' : 'px-16'} py-2 `}
                 >
-                     {name == 'start' ? "Registro gratuito" : "Assinar"}
+                    {name == 'start' ? "Registro gratuito" : "Assinar"}
                     <BsArrowRightShort
-              className={`my-auto text-2xl transition-transform duration-300 ${isHovered ? 'transform translate-x-2' : ''
-                }`}
-            />
+                        className={`my-auto text-2xl transition-transform duration-300 ${isHovered ? 'transform translate-x-2' : ''
+                            }`}
+                    />
                 </Button>
                 <Text fontSize="sm" className="text-xs px-5 mt-2 text-gray-500" mt={2}>
                     {info}
                 </Text>
-                {/* <Flex justify="center" className="gap-3" mt={4}>
-                    <Button
-                        size="xs"
-                        variant="link"
-                        onClick={() => setBillingOption("monthly")}
-                        colorScheme={!isAnnual ? "teal" : "gray"}
-                        className={`  border border-orange-300 px-2 rounded-lg cursor-pointer ${billingOption == 'monthly' ? 'bg-orange-300/60' : ''}`}
-                    >
-                        Mensal 
-                    </Button>
-                    <Button
-                        size="xs"
-                        variant="link"
-                        onClick={() => setBillingOption("annual")}
-                        colorScheme={isAnnual ? "teal" : "gray"}
-                        className={` border border-orange-300 px-2 rounded-lg cursor-pointer ${billingOption == 'annual' ? 'bg-orange-300/60' : ''}`}
-                    >
-                        Anual
-                    </Button>
-                </Flex> */}
+                <div className="hidden">
+                    <Flex justify="center" className="gap-3 hidden" mt={4}>
+                        <Button
+                            size="xs"
+                            variant="link"
+                            onClick={() => setBillingOption("monthly")}
+                            colorScheme={!isAnnual ? "teal" : "gray"}
+                            className={`  border border-orange-300 px-2 rounded-lg cursor-pointer ${billingOption == 'monthly' ? 'bg-orange-300/60' : ''}`}
+                        >
+                            Mensal
+                        </Button>
+                        <Button
+                            size="xs"
+                            variant="link"
+                            onClick={() => setBillingOption("annual")}
+                            colorScheme={isAnnual ? "teal" : "gray"}
+                            className={` border border-orange-300 px-2 rounded-lg cursor-pointer ${billingOption == 'annual' ? 'bg-orange-300/60' : ''}`}
+                        >
+                            Anual
+                        </Button>
+                    </Flex>
+                </div>
+
 
             </center>
 
