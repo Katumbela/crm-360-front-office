@@ -118,7 +118,7 @@ export default function Home() {
           paddingX={[5, 0]}
         >
           <VStack alignItems="center" w="full">
-            <Heading className="font-new-rocker text-3xl text-orange-600 md:text-5xl xxl:text-6xl ">Preços e Planos</Heading>
+            <Heading className="font-new-rocker text-3xl text-orange-600 md:text-5xl xxl:text-6xl ">Planos e Preços</Heading>
             <Text className="font-bahiana mb-5" textAlign="center">
               Escolha o plano perfeito para alavancar o seu negócio, empresa ou startup com a <b className="text-orange-600 font-new-rocker">Echo Link 360</b>
             </Text>
