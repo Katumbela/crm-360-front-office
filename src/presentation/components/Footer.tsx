@@ -53,7 +53,7 @@ export const Footer = () => {
         >
           <Image
             alt="footer image"
-            className="w-[6rem] h-[4rem]"
+            className="w-[6rem] h-[3rem]"
             src={logo}
           />
           <Box textAlign="left">
