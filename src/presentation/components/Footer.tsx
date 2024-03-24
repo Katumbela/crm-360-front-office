@@ -52,9 +52,9 @@ export const Footer = () => {
           direction={{ base: "column", md: "row" }}
         >
           <Image
-            boxSize="100px"
             alt="footer image"
-            src="https://www.sendinblue.com/wp-content/uploads/2019/05/CEO_Footer_image.jpg"
+            className="w-[6rem] h-[4rem]"
+            src={logo}
           />
           <Box textAlign="left">
             <Text color="gray.600" className="text-sm">
@@ -114,7 +114,7 @@ export const Footer = () => {
       </Flex>
 
       <br />
-      <Image src={logo} className="mx-auto w-[5rem]"/>
+      {/* <Image src={logo} className="mx-auto w-[5rem]"/> */}
       {/* BOTTOM SECTION  */}
       <Flex w="70%" className="text-primary" m="auto" mt="5" direction={{ base: "column", md: "row" }}>
         <Text
