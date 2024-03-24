@@ -13,9 +13,9 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { SpinnerIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { ChangeEvent, useState } from "react";
-import { BsDot } from "react-icons/bs";
+import { BsArrowLeftShort, BsDot } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 //import { useNavigate } from "react-router-dom";
 import { Spinner } from "../components/spinner";
@@ -27,6 +27,7 @@ import { useDispatch } from "react-redux";
 import { addAuthStore, removeAuthStore } from "../../store";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from '../../assets/Images/logo-new-2.png'
+import { FaSpinner } from "react-icons/fa";
 
 
 type FormDataProps = {
@@ -99,37 +100,45 @@ export function Login() {
   };
 
   return (
-    <Box bg="#00FF99" padding="10">
-      <Stack 
+    <Box className="bg-orange-500  h-screen grid " padding="10">
+
+      <Stack
         spacing={5}
-        w={["90%", "50%", "30%"]}
-        shadow={"lg"}
+        className="relative bg-white shadow-xl rounded-md py-8 px-12 w-[28rem]"
         m="auto"
-        bg="white"
-        p={10}
+
+      > <NavLink
+        className={' absolute top-2 left-2 flex gap-2 px-2 w-[5rem] hover:text-orange-600 hover:rounded-lg py-1 hover:bg-orange-100/40 transition-all'}
+        to={'/'}
       >
-        <NavLink to="/">
-          <Image src={logo} alt="" className="logo" mx="auto" />
+          <BsArrowLeftShort className="my-auto" />
+          Voltar
         </NavLink>
-        <form className="bg-white py-9 px-16 w-[30vw]" onSubmit={handleLogin}>
+        <NavLink to="/" className={'mt-3'}>
+          <Image src={logo} alt="" className="logo w-[8rem]" mx="auto" />
+        </NavLink>
+        <center><b className="text-primary hover:text-orange-500">Bem vindo de volta !</b></center>
+        <form className="bg-white pt-5 pb-3 w-full" onSubmit={handleLogin}>
           <FormControl>
-            <FormLabel>Email</FormLabel>
+            <FormLabel className="label-sm">Email</FormLabel>
             <Input
               name="email"
               onChange={handleChangeInput}
               type="email"
-              placeholder="Enter Email"
+              className="input-default"
+              placeholder="Digite seu e-mail"
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Password</FormLabel>
+          <FormControl className="mt-2">
+            <FormLabel className="label-sm">Password</FormLabel>
             <InputGroup>
               <Input
                 name="password"
+                className="input-default"
                 onChange={handleChangeInput}
                 type={show ? "text" : "password"}
-                placeholder="Enter Password"
+                placeholder="Digite a password"
               />
               <InputRightElement>
                 <Button onClick={handleShowBtn}>
@@ -139,38 +148,40 @@ export function Login() {
             </InputGroup>
           </FormControl>
 
-          <Button onClick={handleLogin} colorScheme="green">
-            {loading && ((<Spinner />) as any)}
-            isLoading={loading}
-            Log in
-          </Button>
+          <button disabled={loading} onClick={handleLogin} className="bg-orange-500 font-semibold tracking-widest transition-all hover:bg-orange-400 rounded-md text-white py-2 w-full justify-center flex mt-5">
+            {loading && ((<Spinner className="text-white my-auto mr-3" />) as any)}
+            {loading}
+
+            {
+              loading ? 'Entrando...' : 'Entrar'
+            }
+          </button>
         </form>
-        <Divider />
-        <Text>OR</Text>
+        <div className="relative my-2 py-3 text-center">
+          <span className="bg-white w-[5rem] mx-auto my-auto absolute top-0 left-0 right-0 font-bold text-orange-600">Ou</span>
+          <hr />
+        </div>
 
         <Button
-          fontSize={{ base: "0.9rem", md: "1.1rem" }}
-          gap="4"
-          bg="white"
-          border="1px"
-          borderColor="green"
+
+          className="border py-2 text-orange-600  rounded-md flex gap-3 font-semibold tracking-wider border-primary"
+
         >
-          {user.user?.name}
           <FcGoogle />
-          Sign in with Google
+          Entrar Google
         </Button>
 
         <Center p={2} color="black" gap={3}>
           <NavLink
             to="/signup"
-            
+className={'link'}
           >
             Criar conta
           </NavLink>
           <BsDot />
-          <Link onClick={logout} _hover={{ color: "red.400", textDecoration: "underline" }}>
+          <NavLink to={''} onClick={logout} className={'link'}>
             Esqueceu senha
-          </Link>
+          </NavLink>
         </Center>
         {/*
         <Button fontSize={{ base: "0.9rem", md: "1.1rem" }} gap="4" bg="white" border="1px" borderColor="green">

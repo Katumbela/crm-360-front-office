@@ -6,19 +6,22 @@
 @tailwind utilities;
 
 .text-primary {
-  color: #ff6633;
+  @apply text-[#ff6633] hover:text-[#f9952f]
+}
+
+.bg-p {
+  @apply bg-orange-600
 }
 
 .bg-primary {
-  background: #ff6633;
+ @apply bg-[#ff6633]
 }
 
 .border-primary {
-  border-color: #ff6633;
+  @apply border-[#ff6633]
 }
-.border-hover-primary:hover {
-  transition: ease;
-  border-color: #ff6633;
+.border-hover-primary {
+  @apply hover:border-[#ff6633] transition-all
 }
 
 .new-rocker {
@@ -28,23 +31,27 @@
 }
 
 .bg-hover-primary {
-  background: #ff6633;
-}
-.bg-secondary {
-  background: #f9952f;
+  @apply hover:bg-[#f9952f] bg-[#ff6633]
 }
 
-.bg-hover-primary:hover {
-  background: #f9952f;
+.bg-secondary {
+  @apply bg-[#f9952f]
 }
-.text-hover-primary {
-  color: #ff6633;
+
+.input-default {
+  @apply bg-slate-100/70 focus-within:border-orange-500 w-full outline-none  px-3 py-2 rounded-md border
 }
+
+.link {
+  @apply hover:text-orange-600 transition-all
+}
+
+.label-sm {
+  @apply text-sm text-slate-400
+}
+
 .hover-primary:hover {
   background: #f9942f25;
-}
-.text-hover-primary:hover {
-  color: #f9952f;
 }
 
 .bg-secondary-opacity {

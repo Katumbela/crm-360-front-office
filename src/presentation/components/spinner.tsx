@@ -1,5 +1,5 @@
 import { IconBaseProps } from 'react-icons'
-import { IconSpinner } from './icons'
+import { FaSpinner } from 'react-icons/fa'
 
 type SpinnerProps = IconBaseProps & {
 	data?: string
@@ -7,7 +7,7 @@ type SpinnerProps = IconBaseProps & {
 export function Spinner({ className, data, ...props }: SpinnerProps) {
 	return (
 		<div className="flex items-center gap-1">
-			<IconSpinner className={`animate-spin ${className ?? ''}`} {...props} />{' '}
+			<FaSpinner className={`animate-spin ${className ?? ''}`} {...props} />{' '}
 			{data || ''}
 		</div>
 	)
