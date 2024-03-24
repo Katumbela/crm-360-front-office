@@ -1,4 +1,4 @@
-import { GetStorage } from '@/data/protocols/cache'
+// import { GetStorage } from '@/data/protocols/cache'
 import {
 	HttpClient,
 	HttpRequestParams,
@@ -9,7 +9,7 @@ import { setCurrentAccountAdapter } from '../adapters'
 
 export class AuthorizeHttpClientDecorator implements HttpClient {
 	constructor(
-		private readonly storage: GetStorage,
+		// private readonly storage: GetStorage,
 		private readonly httpClient: HttpClient
 	) {}
 
