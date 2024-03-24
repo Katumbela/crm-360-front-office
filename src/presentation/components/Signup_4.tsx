@@ -21,7 +21,7 @@ import logo from "../../assets/Images/logo-new-2.png";
 import { UserModel } from "@/domain/models";
 import { AlertUtils } from "../../utils";
 import bg_s from "../../assets/Images/bg-signup-2.webp";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { Spinner } from "./spinner";
 import { handleSignupService } from "../../services/signUpServices";
@@ -40,7 +40,7 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
   const [showError, setShowError] = useState(false);
   const { team, contacts } = user;
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false);
 
@@ -56,7 +56,7 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
         accountData.name !== ''
       ) {
         AlertUtils.success("Conta configurada com sucesso");
-        navigate('/')
+        window.location.href = '/'
 
       }
       else {
