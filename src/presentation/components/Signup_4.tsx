@@ -44,7 +44,7 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
 
   const [loading, setLoading] = useState(false);
 
-  const  handleSubmit = async () => {
+  const handleSubmit = async () => {
     setLoading(true)
     try {
       const accountData = await handleSignupService(user);
@@ -72,8 +72,8 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
     } finally {
       setLoading(false);
     }
-      // navigate('/success')
-   
+    // navigate('/success')
+
     // navigate("/");
     // handleSignup(user);
   };
@@ -92,14 +92,14 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
           <NavLink to="/" className={'mt-3'}>
             <Image src={logo} alt="" className="logo w-[8rem]" />
           </NavLink>
-          <button
+          <NavLink
             className={' absolute top-2 left-2 flex gap-2 px-2 w-[5rem] hover:text-orange-600 hover:rounded-lg py-1 hover:bg-orange-100/40 transition-all'}
-            onClick={handlePartPrev}
+            to="/"
           >
             <BsArrowLeftShort className="my-auto" />
             Voltar
-          </button>
-          <span className=""> <ArrowBackIcon onClick={() => handlePartPrev} /> Anterior</span>
+          </NavLink>
+          <span onClick={handlePartPrev} className=""> <ArrowBackIcon /> Anterior</span>
 
           <Button w="fit-content" className='text-3xl text-orange-600 font-new-rocker' gap={2} color="red.400" bg="white">
             Detalhes da empresa
@@ -171,10 +171,10 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
               </FormControl>
             </GridItem>
           </Grid>
-          {showError &&( <>
-          <div className=" bg-red-200/50 tracking-widest text-sm px-2 py-1 rounded-md shadow-md mb-1 text-red-700">
-          {user.name.split(" ")[0]} , Já existe uma conta com seu email , faça <NavLink className={'underline'} to={'/login'}>Login</NavLink>, ou recupere sua senha
-          </div>
+          {showError && (<>
+            <div className=" bg-red-200/50 tracking-widest text-sm px-2 py-1 rounded-md shadow-md mb-1 text-red-700">
+              {user.name.split(" ")[0]} , Já existe uma conta com seu email , faça <NavLink className={'underline'} to={'/login'}>Login</NavLink>, ou recupere sua senha
+            </div>
           </>)}
           <button
             className="bg-orange-600 mt-3 flex justify-center gap-4 disabled:bg-slate-300 disabled:text-slate-700 hover:bg-orange-500 transition-all py-2 rounded-md text-white font-bold tracking-widest"
