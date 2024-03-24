@@ -70,29 +70,29 @@ export default function Home() {
 
       <Flex
         w="80%"
-        padding="70px"
-        className="section_2 bg-secondary-opacity m-auto mt-20 border-2 border-primary"
-        gap={20}
-        position="absolute"
-        left="10%"
-        zIndex="1"
+        padding="40px"
+        className="section_2 bg-secondary-opacity mx-auto mt-20 border-2 border-primary rounded-lg"
+        gap={18}
+        position="relative"
+        alignItems="center"
+        justifyContent="center"
       >
         <Feature
           src="https://www.sendinblue.com/wp-content/uploads/2021/08/icn-ftr-1b.svg"
-          title="Pick your tools"
-          desc="We'll help you reach the right people and produce the right content"
+          title="Escolha suas ferramentas"
+          desc="Nós ajudaremos você a alcançar as pessoas certas e produzir o conteúdo certo."
         />
 
         <Feature
           src="https://www.sendinblue.com/wp-content/uploads/2021/08/icn-ftr-2b.svg"
-          title="Work smart not hard"
-          desc="Focus on the important tasks ans put the rest on autopilot with automation"
+          title="Trabalhe de forma inteligente, não dura"
+          desc="Concentre-se nas tarefas importantes e coloque o restante no piloto automático com automação."
         />
 
         <Feature
           src="https://www.sendinblue.com/wp-content/uploads/2021/08/icn-ftr-3b.svg"
-          title="We've got your back"
-          desc="We'll be here round-the-clock to support you with any questions"
+          title="Estamos aqui para você"
+          desc="Estaremos aqui 24 horas por dia para ajudá-lo com qualquer dúvida."
         />
       </Flex>
 

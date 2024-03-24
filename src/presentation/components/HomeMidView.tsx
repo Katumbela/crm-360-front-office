@@ -10,7 +10,7 @@ import img from '../../assets/Images/hero6.svg'
 
 export const HomeMidView = () => {
   return (
-    <Container bg="blue.500" className="" maxW="100vw" mt="300px" p={100}>
+    <Container bg="blue.500" className="" mb={'50px'} maxW="100vw" mt="30px" p={100}>
       <div
         className="flex gap-16"
       >
