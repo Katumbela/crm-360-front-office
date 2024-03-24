@@ -141,8 +141,8 @@ export function Login() {
             </InputGroup>
           </FormControl>
 
-          <button disabled={loading} onClick={handleLogin} className="bg-orange-500 font-semibold tracking-widest transition-all hover:bg-orange-400 rounded-md text-white py-2 w-full justify-center flex mt-5">
-            {loading && ((<Spinner className="text-white my-auto mr-3" />) as any)}
+          <button disabled={loading} onClick={handleLogin} className="disabled:bg-slate-300 disabled:text-slate-600 bg-orange-500 font-semibold tracking-widest transition-all hover:bg-orange-400 rounded-md text-white py-2 w-full justify-center flex mt-5">
+            {loading && ((<Spinner className="text-slate-700 mt-1 mr-3" />) as any)}
            
 
             {
