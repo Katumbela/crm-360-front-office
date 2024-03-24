@@ -34,6 +34,13 @@
   @apply hover:bg-[#f9952f] bg-[#ff6633]
 }
 
+.nav-after-link {
+  @apply hover:border-b-2 border-primary ms-6
+}
+.nav-link {
+  @apply hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md 
+}
+
 .bg-secondary {
   @apply bg-[#f9952f]
 }

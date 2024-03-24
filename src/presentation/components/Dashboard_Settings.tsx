@@ -25,9 +25,7 @@ export const Dashboard_Settings = () => {
   return (
     <Box w="75%" mx="auto">
       <Flex p="4">
-        <Heading textAlign="left" fontSize="3xl" color="green.900">
-          Settings
-        </Heading>
+        
         <Spacer />
         <Button onClick={handleClick} colorScheme="red">
           New Template
@@ -50,27 +48,28 @@ export const Dashboard_Settings = () => {
         my="20"
       >
         <Heading
-          fontSize="2xl"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          gap="2"
-          fontWeight="500"
-        >
-          <Icon as={FaTelegramPlane} />
-          Create your first template
-        </Heading>
+  fontSize="2xl"
+  display="flex"
+  alignItems="center"
+  justifyContent="center"
+  gap="2"
+  fontWeight="500"
+>
+  <Icon as={FaTelegramPlane} />
+  Crie seu primeiro modelo
+</Heading>
 
-        <Text color="gray.700">
-          Create and edit your email templates (order confirmations,
-          registration confirmations, automation emails etc.).
-        </Text>
+<Text color="gray.700">
+  Crie e edite seus modelos de e-mail (confirmações de pedidos,
+  confirmações de registro, e-mails de automação etc.).
+</Text>
 
-        <Center>
-          <Button borderRadius="50px" maxW="fit-content" colorScheme="red">
-            Create my first template
-          </Button>
-        </Center>
+<Center>
+  <Button borderRadius="50px" maxW="fit-content" colorScheme="red">
+    Criar meu primeiro modelo
+  </Button>
+</Center>
+
       </Stack>
 
       <Button

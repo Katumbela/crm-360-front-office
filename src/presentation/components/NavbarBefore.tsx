@@ -73,8 +73,8 @@ export const NavbarBefore = () => {
               Soluções <ChevronDownIcon />
             </MenuButton>
             <MenuList className="bg-white p-2 shadow-lg">
-              <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Por que o Echo Link 360 ?</MenuItem>
-              <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Enterprise</MenuItem>
+              <MenuItem className="nav-link">Por que o Echo Link 360 ?</MenuItem>
+              <MenuItem className="nav-link">Enterprise</MenuItem>
             </MenuList>
           </Menu>
 
@@ -85,26 +85,26 @@ export const NavbarBefore = () => {
 
             <MenuList display="flex" className="bg-white p-3 shadow-lg rounded-md">
               <MenuGroup className="text-orange-600 font-semibold" title="Comunicar">
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Email Marketing</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">API de Email</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Marketing de SMS</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Chat</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Caixa de Entrada</MenuItem>
+                <MenuItem className="nav-link">Email Marketing</MenuItem>
+                <MenuItem className="nav-link">API de Email</MenuItem>
+                <MenuItem className="nav-link">Marketing de SMS</MenuItem>
+                <MenuItem className="nav-link">Chat</MenuItem>
+                <MenuItem className="nav-link">Caixa de Entrada</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
 
               <MenuGroup className="text-orange-600 font-semibold" title="Personalizar">
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">CRM de Vendas</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Automação de Marketing</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Emails Transacionais</MenuItem>
+                <MenuItem className="nav-link">CRM de Vendas</MenuItem>
+                <MenuItem className="nav-link">Automação de Marketing</MenuItem>
+                <MenuItem className="nav-link">Emails Transacionais</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
               <MenuGroup className="text-orange-600 font-semibold" title="Converter">
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Formulários de Inscrição</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Páginas de Destino</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Monitoramento da internet</MenuItem>
+                <MenuItem className="nav-link">Formulários de Inscrição</MenuItem>
+                <MenuItem className="nav-link">Páginas de Destino</MenuItem>
+                <MenuItem className="nav-link">Monitoramento da internet</MenuItem>
               </MenuGroup>
             </MenuList>
           </Menu>
@@ -117,23 +117,23 @@ export const NavbarBefore = () => {
             </MenuButton>
             <MenuList display="flex" className="bg-white p-3 shadow-lg rounded-md">
               <MenuGroup className="text-orange-600 font-semibold" title="Aprendizado">
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Centro de Ajuda</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Documentação da API</MenuItem>
+                <MenuItem className="nav-link">Centro de Ajuda</MenuItem>
+                <MenuItem className="nav-link">Documentação da API</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
 
               <MenuGroup className="text-orange-600 font-semibold" title="Plataforma">
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Casos de Uso</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Laboratório de Serviços</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Sobre a Plataforma</MenuItem>
+                <MenuItem className="nav-link">Casos de Uso</MenuItem>
+                <MenuItem className="nav-link">Laboratório de Serviços</MenuItem>
+                <MenuItem className="nav-link">Sobre a Plataforma</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
               <MenuGroup className="text-orange-600 font-semibold" title="Parcerias">
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Seja parceiro</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Torne-se um Especialista</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Parceiros</MenuItem>
+                <MenuItem className="nav-link">Seja parceiro</MenuItem>
+                <MenuItem className="nav-link">Torne-se um Especialista</MenuItem>
+                <MenuItem className="nav-link">Parceiros</MenuItem>
               </MenuGroup>
             </MenuList>
           </Menu>

@@ -43,35 +43,30 @@ export const Dashboard_Email = () => {
   return (
     <Box w="80%" mx="auto">
       <Flex p="4">
-        <Heading textAlign="left" fontSize="3xl" color="red.900">
-          Email campaigns
-        </Heading>
         <Spacer />
-        <Button onClick={handleClick} colorScheme="red">
-          Create an email campaign
+        <Button className="bg-orange-200 text-orange-800 hover:bg-orange-300 transition-all border border-primary py-1 px-3 rounded-md " onClick={handleClick} colorScheme="red">
+          Criar campanha de e-mail
         </Button>
       </Flex>
 
-      <Tabs>
-        <TabList>
-          <Tab>All ({emails.length})</Tab>
-          <Tab>Sent (0)</Tab>
-          <Tab>Drafts (0)</Tab>
-          <Tab>Scheduled (0)</Tab>
-          <Tab>Suspended (0)</Tab>
-          <Tab>Running (0)</Tab>
-          <Tab>Archived(0)</Tab>
+      <Tabs className="mt-4">
+        <TabList className="gap-6">
+          <Tab className="nav-link">Todos ({emails.length})</Tab>
+          <Tab className="nav-link">Enviados (0)</Tab>
+          <Tab className="nav-link">Rascunhos (0)</Tab>
+          <Tab className="nav-link">Agendados (0)</Tab>
+          <Tab className="nav-link">Em execução (0)</Tab>
         </TabList>
 
-        <InputGroup mt="20px" w="250px">
-          <Input placeholder="Campaign ID, Name" />
-          <InputRightElement color="gray.600" children={<SearchIcon />} />
+        <InputGroup mt="20px" className="input-default w-full" >
+          <Input className="bg-transparent outline-none w-full" placeholder="ID da campanha, Nome" />
+          <SearchIcon  className="my-auto"/>
         </InputGroup>
 
         <TabPanels>
           <TabPanel>
             {emails === null ? (
-              <Heading fontSize="2xl">No Data Found</Heading>
+              <Heading fontSize="2xl">Nenhum dado encontrado</Heading>
             ) : (
               <Table>
                 <Tbody>
@@ -79,8 +74,8 @@ export const Dashboard_Email = () => {
                     <tr key={i}>
                       <Td w="100px" maxW="fit-content">{`ID: ${item.id}`}</Td>
                       <Td maxW="fit-content">{item.campaign_name}</Td>
-                      <Td>{`From: ${item.from}`}</Td>
-                      <Td>{`To: ${item.to}`}</Td>
+                      <Td>{`De: ${item.from}`}</Td>
+                      <Td>{`Para: ${item.to}`}</Td>
                     </tr>
                   ))}
                 </Tbody>
@@ -88,31 +83,10 @@ export const Dashboard_Email = () => {
             )}
           </TabPanel>
 
-          <TabPanel>
-            <Heading fontSize="2xl">No Data Found</Heading>
-          </TabPanel>
-
-          <TabPanel>
-            <Heading fontSize="2xl">No Data Found</Heading>
-          </TabPanel>
-
-          <TabPanel>
-            <Heading fontSize="2xl">No Data Found</Heading>
-          </TabPanel>
-
-          <TabPanel>
-            <Heading fontSize="2xl">No Data Found</Heading>
-          </TabPanel>
-
-          <TabPanel>
-            <Heading fontSize="2xl">No Data Found</Heading>
-          </TabPanel>
-
-          <TabPanel>
-            <Heading fontSize="2xl">No Data Found</Heading>
-          </TabPanel>
+          {/* Remaining TabPanel elements */}
         </TabPanels>
       </Tabs>
+
     </Box>
   );
 };
