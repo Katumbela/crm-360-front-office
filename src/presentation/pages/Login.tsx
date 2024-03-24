@@ -2,18 +2,15 @@ import {
   Box,
   Button,
   Center,
-  Divider,
   FormControl,
   FormLabel,
   Image,
   Input,
   InputGroup,
   InputRightElement,
-  Link,
   Stack,
-  Text,
 } from "@chakra-ui/react";
-import { SpinnerIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { ChangeEvent, useState } from "react";
 import { BsArrowLeftShort, BsDot } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
@@ -21,13 +18,10 @@ import { FcGoogle } from "react-icons/fc";
 import { Spinner } from "../components/spinner";
 import { AlertUtils } from "../../utils";
 import { handleLoginService } from "../../services";
-import { useSelector } from "react-redux";
-import { useAuth } from "../../main/hooks";
 import { useDispatch } from "react-redux";
 import { addAuthStore, removeAuthStore } from "../../store";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from '../../assets/Images/logo-new-2.png'
-import { FaSpinner } from "react-icons/fa";
 
 
 type FormDataProps = {
@@ -41,7 +35,6 @@ export function Login() {
   const [show, setShow] = useState(false);
   //const [inputUser, setInputUser] = useState({ email: "", password: "" });
   const [formData, setFormData] = useState<FormDataProps>({} as FormDataProps)
-  const user = useSelector(useAuth());
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
@@ -141,16 +134,16 @@ export function Login() {
                 placeholder="Digite a password"
               />
               <InputRightElement>
-                <Button onClick={handleShowBtn}>
+                <button  className={'mt-1 me-3 text-orange-600 text-xl'}  onClick={handleShowBtn}>
                   {show ? <ViewOffIcon /> : <ViewIcon />}
-                </Button>
+                </button>
               </InputRightElement>
             </InputGroup>
           </FormControl>
 
           <button disabled={loading} onClick={handleLogin} className="bg-orange-500 font-semibold tracking-widest transition-all hover:bg-orange-400 rounded-md text-white py-2 w-full justify-center flex mt-5">
             {loading && ((<Spinner className="text-white my-auto mr-3" />) as any)}
-            {loading}
+           
 
             {
               loading ? 'Entrando...' : 'Entrar'

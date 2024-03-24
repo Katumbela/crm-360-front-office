@@ -43,7 +43,7 @@
 }
 
 .link {
-  @apply hover:text-orange-600 transition-all
+  @apply hover:text-orange-600 transition-all cursor-pointer
 }
 
 .label-sm {

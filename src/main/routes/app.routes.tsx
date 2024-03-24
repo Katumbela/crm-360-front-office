@@ -12,6 +12,7 @@ import { MakeLogin } from '../factories/pages';
 import { MenuUtils } from '../../utils';
 import { useAuth } from '../hooks';
 import { useSelector } from 'react-redux';
+import { SignupSuccess } from '../../presentation/components/signup-success';
 
 export function AppRoutes() {
 	const dispatch = useDispatch();
@@ -50,26 +51,26 @@ export function AppRoutes() {
 		// Limpar o intervalo quando o componente é desmontado
 		return () => clearInterval(intervalId);
 	}, []);
-	
+
 	return (
 		<BrowserRouter>
 			<Routes>
+				<Route path={MenuUtils.LOGIN} element={<MakeLogin />} />
+				<Route path={'/signup'} element={<Signup />} />
+				<Route path={'/success'} element={<SignupSuccess />} /> {/* Movido para fora do bloco condicional */}
 				{isAuthenticated.user?.name != null ? (
 					<>
 						<Route path={'/'} element={<Dashboard />} />
 						{/* Adicione outras rotas protegidas aqui */}
-						<Route path={MenuUtils.LOGIN} element={<MakeLogin />} />
-						<Route path={'/signup'} element={<Signup />} />
 					</>
 				) : (
 					<>
 						<Route path={MenuUtils.HOME} element={<Home />} />
-						<Route path={MenuUtils.LOGIN} element={<MakeLogin />} />
-						<Route path={'/signup'} element={<Signup />} />
 					</>
 				)}
 				<Route path="/*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
+
 	);
 }

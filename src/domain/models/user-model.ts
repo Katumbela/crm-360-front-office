@@ -3,6 +3,7 @@ export interface UserModel {
   name:  string;
   email:  string;
   company_name:  string;
+  phone: number;
   website:  string;
   password:  string;
   address:  string;
