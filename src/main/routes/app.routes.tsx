@@ -55,7 +55,7 @@ export function AppRoutes() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path={MenuUtils.LOGIN} element={<MakeLogin />} />
+				<Route path={'/login'} element={<MakeLogin />} />
 				<Route path={'/signup'} element={<Signup />} />
 				<Route path={'/success'} element={<SignupSuccess />} /> {/* Movido para fora do bloco condicional */}
 				{isAuthenticated.user?.name != null ? (
