@@ -134,9 +134,9 @@ export function Login() {
                 placeholder="Digite a password"
               />
               <InputRightElement>
-                <button  className={'mt-1 me-3 text-orange-600 text-xl'}  onClick={handleShowBtn}>
+                <span  className={'mt-1 cursor-pointer me-3 text-orange-600 text-xl'}  onClick={handleShowBtn}>
                   {show ? <ViewOffIcon /> : <ViewIcon />}
-                </button>
+                </span>
               </InputRightElement>
             </InputGroup>
           </FormControl>
