@@ -10,13 +10,13 @@ interface FeatureProps {
 export const Feature = ({title, desc, src, ...rest}: FeatureProps)=>{
     return (
         <Stack direction='row' gap={2}>
-            <Image w={5} h={5} alt='icon' src={src}/>
+            <Image w={18} h={18} alt='icon' src={src}/>
             <Box boxShadow='none'
               {...rest} 
              textAlign='left'
              >
-                <Heading fontSize='2xl'>{title}</Heading>
-                <Text mt={4} color="whiteAlpha.700" fontSize="1.1rem">{desc}</Text>
+                <Heading className="text-xl font-bold text-orange-700" fontSize='2xl'>{title}</Heading>
+                <Text mt={4} color="whiteAlpha.700" className="text-md text-gray-600">{desc}</Text>
             </Box>
         </Stack>
         

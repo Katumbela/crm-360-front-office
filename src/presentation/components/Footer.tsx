@@ -10,14 +10,17 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { footerList, logos } from "../../utils";
+import { footerList, logos } from "../../utils"
+import logo from '../../assets/Images/logo-new-2.png';
 
 export const Footer = () => {
   const ano = new Date().getFullYear();
 
   return (
-    <Box p={10}>
+    <Box p={10} className="bg-gray-100/30  border-t-2  pb-2">
       {/* Icons and Logo  */}
+      <br />
+      <br />
       <Flex
         w="90%"
         m="auto"
@@ -30,7 +33,7 @@ export const Footer = () => {
         <Spacer />
         <HStack spacing="4">
           {logos.map((item) => (
-            <Image cursor="pointer" w={10} key={item.name} src={item.src} />
+            <Image cursor="pointer" w={40} key={item.name} src={item.src} />
           ))}
         </HStack>
       </Flex>
@@ -54,10 +57,8 @@ export const Footer = () => {
             src="https://www.sendinblue.com/wp-content/uploads/2019/05/CEO_Footer_image.jpg"
           />
           <Box textAlign="left">
-            <Text color="gray.600" fontSize="sm">
-              Email, SMS, Facebook, Chat, CRM, and more, all-in-one platform to
-              help you grow your business through building stronger customer
-              relationships.
+            <Text color="gray.600" className="text-sm">
+            E-mail, SMS, Facebook, bate-papo, CRM e muito mais, plataforma completa para ajudá-lo a expandir seus negócios por meio da construção de relacionamentos mais fortes com os clientes.
             </Text>
 
             <HStack
@@ -71,7 +72,7 @@ export const Footer = () => {
               }}
             >
               <ChevronRightIcon />
-              <Text>Why CRM 360 ?</Text>
+              <Text>Porquê a Echo Link 360 ?</Text>
             </HStack>
           </Box>
         </Flex>
@@ -97,7 +98,7 @@ export const Footer = () => {
               {item.content.map((el, i) => (
                 <ListItem
                   cursor="pointer"
-                  fontSize={"sm"}
+                  className="text-sm"
                   color="gray.600"
                   key={i}
                   _hover={{
@@ -113,12 +114,13 @@ export const Footer = () => {
       </Flex>
 
       <br />
+      <Image src={logo} className="mx-auto w-[5rem]"/>
       {/* BOTTOM SECTION  */}
-      <Flex w="70%" m="auto" mt="5" direction={{ base: "column", md: "row" }}>
+      <Flex w="70%" className="text-primary" m="auto" mt="5" direction={{ base: "column", md: "row" }}>
         <Text
-          fontSize="0.9rem"
           color="gray.600"
           display="flex"
+          className="text-sm" 
           alignItems="center"
           gap={1}
         >
@@ -126,8 +128,8 @@ export const Footer = () => {
           {ano} CRM 360. All rights reserved
         </Text>
         <Spacer />
-        <Text fontSize="sm" color="gray.600">
-          User agreement, Legal Notice
+        <Text fontSize="sm" className="text-sm" color="gray.600">
+          Cookies &middot; Termos de uso
         </Text>
       </Flex>
       <br />

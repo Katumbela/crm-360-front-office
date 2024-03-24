@@ -1,11 +1,9 @@
-
 /* styles.css */
 @import url("https://fonts.googleapis.com/css2?family=Bahiana&family=New+Rocker&family=Truculenta:opsz,wght@12..72,100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 .text-primary {
   color: #ff6633;
@@ -18,6 +16,10 @@
 .border-primary {
   border-color: #ff6633;
 }
+.border-hover-primary:hover {
+  transition: ease;
+  border-color: #ff6633;
+}
 
 .new-rocker {
   font-family: "New Rocker";
@@ -28,16 +30,25 @@
 .bg-hover-primary {
   background: #ff6633;
 }
+.bg-secondary {
+  background: #f9952f;
+}
 
 .bg-hover-primary:hover {
-  background: #F9952F;
+  background: #f9952f;
 }
 .text-hover-primary {
   color: #ff6633;
 }
-
+.hover-primary:hover {
+  background: #f9942f25;
+}
 .text-hover-primary:hover {
-  color: #F9952F;
+  color: #f9952f;
+}
+
+.bg-secondary-opacity {
+  background: #f9942f25;
 }
 
 .truculenta {
@@ -48,7 +59,7 @@
   font-variation-settings: "wdth" 100;
 }
 
-.bahiana-regular {
+.bahiana {
   font-family: "Bahiana", sans-serif;
   font-weight: 400;
   font-style: normal;

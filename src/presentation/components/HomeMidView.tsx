@@ -1,85 +1,50 @@
 import {
-  Box,
   Container,
-  Flex,
   Heading,
   Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { HomeSection } from "./HomeSection";
-import { HomeReviews } from "./HomeReviews";
+import img from '../../assets/Images/hero6.svg'
 
 export const HomeMidView = () => {
   return (
-    <Container bg="blue.500" maxW="100vw" mt="300px" p={100}>
-      <Flex
-        w="80%"
-        m="auto"
-        mt="100px"
-        gap={40}
-        borderBottom="1px"
-        borderColor="gray.300"
-        pb="50px"
+    <Container bg="blue.500" className="" maxW="100vw" mt="300px" p={100}>
+      <div
+        className="flex gap-16"
       >
-        <VStack align="flex-start" textAlign="start" spacing={8}>
-          <Heading fontSize="5xl" color="green.900">
-            Leading the way in Digital Marketing
+        <Image src={img} className="w-[20rem]" />
+        <VStack align="flex-start" className="my-auto" textAlign="start" spacing={8}>
+          <Heading fontSize="5xl" className="text-3xl font-bold text-orange-600" color="green.900">
+            Liderando o caminho do Marketing Digital
+
           </Heading>
           <Text lineHeight={2} color="gray.600">
-            Named as one of the Top 100 software companies of 2021 and rated as
-            the best Marketing Automation platform for SMBs. Grow your business
-            with CRM 360 !
+            Nomeada uma das 100 maiores empresas de software de 2024 e classificada como a melhor plataforma de automação de marketing para pequenas e médias empresas. Expanda seus negócios com o <b>Echo Link 360</b>
           </Text>
-          <Box lineHeight="10">
-            <HomeReviews title="Reputação 360" />
-          </Box>
+
+          <button className="bg-orange-600 mt-5 py-3 px-6 text-xl text-white" >
+            Comece gratuitamente
+          </button>
         </VStack>
-      </Flex>
+      </div>
+
+      <br />
+      <br />
+      <br />
 
       <VStack>
-        <Flex
-          gap="-4"
-          position="relative"
-          w="300px"
-          alignItems="center"
-          justify="center"
-          mt="10"
-        >
-          <Image
-            position="absolute"
-            left="12"
-            top="12"
-            w="50px"
-            // h="60px"
-            // border="1px"
-            src="https://www.sendinblue.com/wp-content/themes/sendinblue2019/assets/images/home/section-tools/icn-obj-3.png"
-          />
-          <Image
-            // position="absolute"
-            left="50px"
-            w="120px"
-            // h="120px"
-            src="https://www.sendinblue.com/wp-content/themes/sendinblue2019/assets/images/home/section-tools/icn-obj-1.png"
-          />
-          <Image
-            position="absolute"
-            left="150px"
-            top="12"
-            w="120px"
-            h="120px"
-            src="https://www.sendinblue.com/wp-content/themes/sendinblue2019/assets/images/home/section-tools/icn-obj-2.png"
-          />
-        </Flex>
 
-        <Heading fontSize="5xl" color="green.900">
-          Do it all with CRM 360{" "}
+        <Heading fontSize="5xl" className="font-bold text-4xl text-orange-600 font-bahiana" color="green.900">
+          Faça o com a Echo Link 360{" "}
         </Heading>
-        <Text fontSize="xl" color="gray.500">
-          all the tools you need and few new ones to try
+        <Text fontSize="xl" className="text-2xl font-light text-gray-500" color="gray.500">
+          Todas as ferramentas que você precisa e algumas novas para experimentar
+
         </Text>
       </VStack>
-
+      
       <HomeSection />
     </Container>
   );

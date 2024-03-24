@@ -1,6 +1,6 @@
 import { ElementType, InputHTMLAttributes, useState } from 'react'
 import { FormControlWrapper } from '.'
-import { StringUtils } from '@/utils'
+import { StringUtils } from '../../../utils'
 import { IconBaseProps } from 'react-icons'
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
