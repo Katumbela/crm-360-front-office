@@ -17,9 +17,9 @@ const userDetails: UserModel = {
   phone: 0,
   country: "",
   team: "",
-  contacts: [],
+  contacts: "",
   online_selling: "no", // Inicializado com um valor padrão
-  plan: "",
+  plan: "Free",
   id: "",
   name: "",
 };

@@ -9,7 +9,7 @@ export interface UserDetailsModel {
   team: string;
   city: string;
   country: string;
-  contacts: [],
+  contacts: "",
   plan: "Free" | "Basic" | "Premium";
   online_selling: "no" | "yes";
 }

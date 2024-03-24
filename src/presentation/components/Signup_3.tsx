@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import axios from 'axios';
+// import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom'
@@ -37,18 +37,18 @@ interface Country {
 }
 
 
-interface AddressSuggestion {
-	display_name: string;
-	// Adicione outras propriedades conforme necessário
-}
+// interface AddressSuggestion {
+// 	display_name: string;
+// 	// Adicione outras propriedades conforme necessário
+// }
 
-export default function Signup_3({ handleChange, handlePartPrev, handlePartNext }: Signup_3Props) {
+export default function Signup_3({ user, handleChange, handlePartPrev, handlePartNext }: Signup_3Props) {
 	// const { phone } = user;
-	const [address, setAddress] = useState("");
+	// const [address, setAddress] = useState("");
 	const [countries, setCountries] = useState<Country[]>([]);
-	const [showSuggestions, setShowSuggestions] = useState(false);
-	const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
-
+	// const [showSuggestions, setShowSuggestions] = useState(false);
+	// const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
+	const { address, country } = user
 
 	const [phoneNumber, setPhoneNumber] = useState('');
 
@@ -58,29 +58,29 @@ export default function Signup_3({ handleChange, handlePartPrev, handlePartNext 
 	};
 
 
-	const handleAddressChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const inputValue = e.target.value;
+	// const handleAddressChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const inputValue = e.target.value;
 
-		try {
-			// Faz uma chamada para a API do OpenStreetMap Nominatim
-			const response = await axios.get<AddressSuggestion[]>(`https://nominatim.openstreetmap.org/search?format=json&q=${inputValue}`);
+	// 	try {
+	// 		// Faz uma chamada para a API do OpenStreetMap Nominatim
+	// 		const response = await axios.get<AddressSuggestion[]>(`https://nominatim.openstreetmap.org/search?format=json&q=${inputValue}`);
 
-			// Atualiza as sugestões com base na resposta da API
-			setSuggestions(response.data);
-			setShowSuggestions(true);
-		} catch (error) {
-			console.error('Erro ao obter sugestões de endereço:', error);
-		}
+	// 		// Atualiza as sugestões com base na resposta da API
+	// 		setSuggestions(response.data);
+	// 		setShowSuggestions(true);
+	// 	} catch (error) {
+	// 		console.error('Erro ao obter sugestões de endereço:', error);
+	// 	}
 
-		// Atualiza o estado do endereço
-		setAddress(inputValue);
-	};
+	// 	// Atualiza o estado do endereço
+	// 	setAddress(inputValue);
+	// };
 
-	const handleSuggestionClick = (address: string) => {
-		// Preenche automaticamente o campo de endereço com a sugestão selecionada
-		setAddress(address);
-		setShowSuggestions(false);
-	};
+	// const handleSuggestionClick = (address: string) => {
+	// 	// Preenche automaticamente o campo de endereço com a sugestão selecionada
+	// 	setAddress(address);
+	// 	setShowSuggestions(false);
+	// };
 
 	useEffect(() => {
 		fetch('https://restcountries.com/v3.1/all')
@@ -100,7 +100,7 @@ export default function Signup_3({ handleChange, handlePartPrev, handlePartNext 
 			<Box w="70%" className='grid items-center' py={10} px={8}>
 
 
-				<Stack w="65%" m="auto"className='bg-slate-100/30 border p-14 rounded-md shadow-md' my="20" textAlign="left" spacing={7}>
+				<Stack w="65%" m="auto" className='bg-slate-100/30 border p-14 rounded-md shadow-md' my="20" textAlign="left" spacing={7}>
 
 					<NavLink
 						className={' absolute top-2 left-2 flex gap-2 px-2 w-[5rem] hover:text-orange-600 hover:rounded-lg py-1 hover:bg-orange-100/40 transition-all'}
@@ -129,14 +129,13 @@ export default function Signup_3({ handleChange, handlePartPrev, handlePartNext 
 								<FormLabel className="label-sm">Endereço </FormLabel>
 								<Input
 									className='input-default'
-									onChange={handleAddressChange}
+									onChange={handleChange}
 									name="address"
 									type="text"
-									value={address}
 								/>
 
 								{/* Mostra as sugestões de endereço */}
-								{showSuggestions && suggestions.length > 0 && (
+								{/* {showSuggestions && suggestions.length > 0 && (
 									<ul className='bg-orange-100 absolute shadow-xl w-full rounded-b-xl h-[12rem] overflow-y-auto z-10 px-2'>
 										{suggestions.map((suggestion, index) => (
 											<li className='cursor-pointer my-1 py-1 px-2 rounded-md hover:bg-orange-200 hover:text-orange-600' key={index} onClick={() => handleSuggestionClick(suggestion.display_name)}>
@@ -144,7 +143,7 @@ export default function Signup_3({ handleChange, handlePartPrev, handlePartNext 
 											</li>
 										))}
 									</ul>
-								)}
+								)} */}
 							</FormControl>
 						</GridItem>
 
@@ -162,8 +161,9 @@ export default function Signup_3({ handleChange, handlePartPrev, handlePartNext 
 
 						<GridItem>
 							<FormControl isRequired>
-								<FormLabel className="label-sm">Country</FormLabel>
+								<FormLabel className="label-sm">País</FormLabel>
 								<select className='input-default' name="country" onChange={handleChange}>
+									<option value="">Selecione</option>
 									{countries.map(country => (
 										<option key={country.code} value={country.name}>{country.name}</option>
 									))}
@@ -188,8 +188,8 @@ export default function Signup_3({ handleChange, handlePartPrev, handlePartNext 
 
 							className="rounded-md flex disabled:bg-slate-200 disabled:border-slate-400 disabled:text-slate-600 hover:bg-orange-200 transition-all bg-orange-100 border py-1 px-4 text-orange-600 border-primary"
 							disabled={
-								phoneNumber == "" ||
-								address == ""
+								phoneNumber.length < 10 ||
+								address == "" || country == ""
 							}
 							onClick={handlePartNext}
 						>

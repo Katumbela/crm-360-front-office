@@ -8,10 +8,10 @@ export interface UserModel {
   password:  string;
   address:  string;
   team:  string;
-  contacts:  [];
+  contacts:  "";
   city:  string;
   country:  string;
-  plan:  string;
+  plan:  "Free" | "Basic" | "Premium";
   online_selling:  "no" | "yes";
 }
 

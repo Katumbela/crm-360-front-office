@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
   Stack,
@@ -25,6 +24,9 @@ import bg_s from "../../assets/Images/bg-signup-2.webp";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BsArrowLeftShort } from "react-icons/bs";
 import { Spinner } from "./spinner";
+import { handleSignupService } from "../../services/signUpServices";
+import { useDispatch } from "react-redux";
+import { addAuthStore } from "../../store";
 
 interface Signup_4Props {
   user: UserModel;
@@ -35,19 +37,43 @@ interface Signup_4Props {
 export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) => {
   // const navigate = useNavigate();
   const [selling, setSelling] = useState("no");
+  const [showError, setShowError] = useState(false);
   const { team, contacts } = user;
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const  handleSubmit = async () => {
     setLoading(true)
-    setTimeout(() => {
+    try {
+      const accountData = await handleSignupService(user);
 
-      AlertUtils.success("Sua conta foi criada com sucesso !");
-      setLoading(false)
-      navigate('/success')
-    }, 4000);
+      localStorage.setItem('user', accountData.id?.toString())
+      // console.log(accountData)
+      dispatch(addAuthStore(accountData))
+      if (
+        accountData.name !== ''
+      ) {
+        AlertUtils.success("Conta configurada com sucesso");
+        navigate('/')
+
+      }
+      else {
+        setShowError(true)
+        // AlertUtils.error("Já existe uma conta com seu email");
+        setTimeout(() => {
+          setShowError(false)
+        }, 5000);
+
+      }
+    } catch (error) {
+      AlertUtils.error(error as string);
+    } finally {
+      setLoading(false);
+    }
+      // navigate('/success')
+   
     // navigate("/");
     // handleSignup(user);
   };
@@ -85,8 +111,9 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
           <Text className="text-sm font-truculenta" color="gray.600">
             Isso nos permitirá entender melhor as necessidades do seu negócio.
           </Text>
-
-          <br />
+          <span>
+            Plano: <b className="font-new-rocker text-orange-500">Free</b>
+          </span>
           <Grid templateColumns="repeat(2, 1fr)" gap="10">
             <GridItem>
               <FormControl isRequired>
@@ -97,13 +124,13 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
                   onChange={handleChange}
 
                 >
+                  <option value="">Selecione</option>
                   <option value="0-1 funcionário">0-1 funcionário</option>
                   <option value="2-10 funcionários">2-10 funcionários</option>
                   <option value="11-50 funcionários">11-50 funcionários</option>
                   <option value="51-250 funcionários">51-250 funcionários</option>
                   <option value="> 250 funcionários">{"> 250 funcionários"}</option>
                 </select>
-                <FormErrorMessage>O endereço é obrigatório.</FormErrorMessage>
               </FormControl>
             </GridItem>
 
@@ -116,6 +143,7 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
                   onChange={handleChange}
 
                 >
+                  <option value="">Selecione</option>
                   <option value="1-300">1-300</option>
                   <option value="301-2k">301-2k</option>
                   <option value="2001-5k">2001-5k</option>
@@ -124,7 +152,6 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
                   <option value="Mais de 100k">Mais de 100k</option>
                   <option value="Ainda não há contatos">Ainda não há contatos</option>
                 </select>
-                <FormErrorMessage>O CEP é obrigatório.</FormErrorMessage>
               </FormControl>
             </GridItem>
 
@@ -137,17 +164,21 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
                   value={selling}
                 >
                   <Stack spacing={30} direction="row">
-                    <Radio className={`border h-5 w-5 ${selling == 'sim' ? 'bg-green-500 border-green-500 border-2 rounded-md ' : ' border-primary '}`} value="sim">sim</Radio>
-                    <Radio className={`border h-5 w-5 ${selling == 'nao' ? 'bg-orange-500 border-orange-500 border-2 rounded-md ' : ' border-primary '}`} value="nao">não</Radio>
+                    <Radio className={`border h-5 w-5 ${selling == 'yes' ? 'bg-green-500 border-green-500 border-2 rounded-md ' : ' border-primary '}`} value="yes">sim</Radio>
+                    <Radio className={`border h-5 w-5 ${selling == 'no' ? 'bg-orange-500 border-orange-500 border-2 rounded-md ' : ' border-primary '}`} value="no">não</Radio>
                   </Stack>
                 </RadioGroup>
               </FormControl>
             </GridItem>
           </Grid>
-          <br />
+          {showError &&( <>
+          <div className=" bg-red-200/50 tracking-widest text-sm px-2 py-1 rounded-md shadow-md mb-1 text-red-700">
+          {user.name.split(" ")[0]} , Já existe uma conta com seu email , faça <NavLink className={'underline'} to={'/login'}>Login</NavLink>, ou recupere sua senha
+          </div>
+          </>)}
           <button
-            className="bg-orange-600 flex justify-center gap-4 disabled:bg-slate-300 disabled:text-slate-700 hover:bg-orange-500 transition-all py-2 rounded-md text-white font-bold tracking-widest"
-            disabled={team == "" || contacts == null || loading}
+            className="bg-orange-600 mt-3 flex justify-center gap-4 disabled:bg-slate-300 disabled:text-slate-700 hover:bg-orange-500 transition-all py-2 rounded-md text-white font-bold tracking-widest"
+            disabled={team == "" || contacts == "" || loading}
             onClick={handleSubmit}
           >
             {loading && ((<Spinner className="text-slate-700 mt-1 " />) as any)}
