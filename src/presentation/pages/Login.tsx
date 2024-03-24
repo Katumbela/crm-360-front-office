@@ -31,6 +31,8 @@ type FormDataProps = {
 
 
 export function Login() {
+  document.title = "Entre para sua conta"
+
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   //const [inputUser, setInputUser] = useState({ email: "", password: "" });
@@ -134,7 +136,7 @@ export function Login() {
                 placeholder="Digite a password"
               />
               <InputRightElement>
-                <span  className={'mt-1 cursor-pointer me-3 text-orange-600 text-xl'}  onClick={handleShowBtn}>
+                <span className={'mt-1 cursor-pointer me-3 text-orange-600 text-xl'} onClick={handleShowBtn}>
                   {show ? <ViewOffIcon /> : <ViewIcon />}
                 </span>
               </InputRightElement>
@@ -143,7 +145,7 @@ export function Login() {
 
           <button disabled={loading} onClick={handleLogin} className="disabled:bg-slate-300 disabled:text-slate-600 bg-orange-500 font-semibold tracking-widest transition-all hover:bg-orange-400 rounded-md text-white py-2 w-full justify-center flex mt-5">
             {loading && ((<Spinner className="text-slate-700 mt-1 mr-3" />) as any)}
-           
+
 
             {
               loading ? 'Entrando...' : 'Entrar'
@@ -167,7 +169,7 @@ export function Login() {
         <Center p={2} color="black" gap={3}>
           <NavLink
             to="/signup"
-className={'link'}
+            className={'link'}
           >
             Criar conta
           </NavLink>
