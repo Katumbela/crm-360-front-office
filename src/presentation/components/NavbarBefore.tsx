@@ -104,7 +104,7 @@ export const NavbarBefore = () => {
               <MenuGroup className="text-orange-600 font-semibold" title="Converter">
                 <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Formulários de Inscrição</MenuItem>
                 <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Páginas de Destino</MenuItem>
-                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Anúncios no Facebook</MenuItem>
+                <MenuItem className="hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md ">Monitoramento da internet</MenuItem>
               </MenuGroup>
             </MenuList>
           </Menu>
@@ -157,7 +157,7 @@ export const NavbarBefore = () => {
 
           <Box>
             <NavLink className={'hover-primary px-3 py-2 border-2 border-primary'} to="/signup">
-              Cadastro grátis
+              Registro grátis
             </NavLink>
           </Box>
         </Center>

@@ -32,7 +32,7 @@ export default function Home() {
       <NavbarBefore />
       <Flex m="auto" mt="70px" width="80%">
         <Stack width="70%" className="my-auto" spacing={5}>
-          <h1 className="text-3xl text-primary font-new-rocker">
+          <h1 className="text-5xl text-primary font-new-rocker">
             Prepare-se para a decolagem.
           </h1>
           <Text
@@ -117,8 +117,8 @@ export default function Home() {
           </VStack>
           <Tabs variant="soft-rounded" colorScheme="teal">
             <TabList className="gap-4 ms-3 mb-5">
-              <Tab className={` bg-orange-200 cursor-pointer focus:bg-orange-500 focus:text-white text-orange-700 py-1 px-3 rounded-lg`}>Monthly</Tab>
-              <Tab className={` bg-orange-200 cursor-pointer focus:bg-orange-500 focus:text-white text-orange-700 py-1 px-3 rounded-lg`}>Annually</Tab>
+              <Tab className={` bg-orange-200 cursor-pointer focus:bg-orange-500 focus:text-white text-orange-700 py-1 px-3 rounded-lg`}>Mensal</Tab>
+              <Tab className={` bg-orange-200 cursor-pointer focus:bg-orange-500 focus:text-white text-orange-700 py-1 px-3 rounded-lg`}>Anual</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>

@@ -23,7 +23,7 @@ const PricingBox: React.FC<PricingBoxProps> = ({
     );
 
     const isAnnual = billingOption === "annual";
-    const price = isAnnual ? monthlyPrice * 12 * 0.8 : monthlyPrice * 0.18;
+    const price = isAnnual ? monthlyPrice * 12 * 0.18 : monthlyPrice * 1;
 
     const bgColor = popular ? 'bg-secondary-opacity' : 'bg-gray-100/70';
     const borderColor = popular ? "teal.300" : "gray.300";
@@ -78,7 +78,7 @@ const PricingBox: React.FC<PricingBoxProps> = ({
                 <Text fontSize="sm" className="text-xs px-5 mt-2 text-gray-500" mt={2}>
                     {info}
                 </Text>
-                <Flex justify="center" className="gap-3" mt={4}>
+                {/* <Flex justify="center" className="gap-3" mt={4}>
                     <Button
                         size="xs"
                         variant="link"
@@ -97,7 +97,7 @@ const PricingBox: React.FC<PricingBoxProps> = ({
                     >
                         Anual
                     </Button>
-                </Flex>
+                </Flex> */}
 
             </center>
 
