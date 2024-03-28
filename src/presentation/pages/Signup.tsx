@@ -47,7 +47,6 @@ export function Signup() {
     console.log(user);
   };
 
-
   return (
     <Box>
       {part === 1 ? (
