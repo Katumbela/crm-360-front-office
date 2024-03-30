@@ -39,33 +39,35 @@ export async function handleSignupService({
       },
     });
 
-    if (response.status === 200) {
-      console.log("Requisição bem-sucedida!");
-      console.log("Dados recebidos:", response.data);
+    const userData: UserModel = response.data;
 
-      const userData: UserModel = response.data;
+    // if (response.status === 200) {
+    //   console.log("Requisição bem-sucedida!");
+    //   console.log("Dados recebidos:", response.data);
 
+    //   const userData: UserModel = response.data;
+
+    //   return userData;
+    // } else {
+    //   console.error("Erro na requisição:", response.statusText);
+    //   const userData: UserModel = {
+    //     id: "",
+    //     name: "",
+    //     email: "",
+    //     company_name: "",
+    //     website: "",
+    //     phone: 0,
+    //     password: "",
+    //     address: "",
+    //     team: "",
+    //     contacts: "",
+    //     city: "",
+    //     country: "",
+    //     plan: "Free",
+    //     online_selling: "no",
+    //   }; // Atribuir um array vazio de UserModel
       return userData;
-    } else {
-      console.error("Erro na requisição:", response.statusText);
-      const userData: UserModel = {
-        id: "",
-        name: "",
-        email: "",
-        company_name: "",
-        website: "",
-        phone: 0,
-        password: "",
-        address: "",
-        team: "",
-        contacts: "",
-        city: "",
-        country: "",
-        plan: "Free",
-        online_selling: "no",
-      }; // Atribuir um array vazio de UserModel
-      return userData;
-    }
+    
   } catch (error) {
     const userData: UserModel = {
       id: "",

@@ -52,6 +52,7 @@ export const Signup_4 = ({ user, handleChange, handlePartPrev }: Signup_4Props) 
       localStorage.setItem('user', accountData.id?.toString())
       // console.log(accountData)
       dispatch(addAuthStore(accountData))
+      console.log(accountData)
       if (
         accountData.name !== ''
       ) {
