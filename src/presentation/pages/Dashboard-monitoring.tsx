@@ -62,7 +62,7 @@ export const DashMonitoring = () => {
                     <input
                         type="text"
                         className="my-auto bg-transparent w-full outline-none py-2 px-1"
-                        placeholder="Pesquise por menções, tags, etc..."
+                        placeholder= {`Olá ${user.name } "Pesquise por menções, tags, etc...`}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
