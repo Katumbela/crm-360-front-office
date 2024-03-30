@@ -1,12 +1,5 @@
+import { BusinessData } from "@/domain/models";
 import { firestore } from "../firebase";
-interface BusinessData {
-  limits: {
-    email: number;
-    searches: number;
-  };
-  collaborators: any[]; // Altere o tipo conforme necessário
-  // Adicione outros campos conforme necessário
-}
 
 export async function getBusinessData(docId: string) {
   try {

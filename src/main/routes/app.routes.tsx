@@ -6,12 +6,13 @@ import authService from '../../services/auth.service';
 import axios from 'axios';
 import { env } from '../../main/config';
 import { addAuthStore } from '../../store';
-import { Dashboard, NotFound, Signup } from '../../presentation/pages';
+import { Dashboard, EmailCampaign, NotFound, Signup } from '../../presentation/pages';
 import Home from '../../presentation/pages/home';
 import { MakeLogin } from '../factories/pages';
 import { MenuUtils } from '../../utils';
 import { useAuth } from '../hooks';
 import { SignupSuccess } from '../../presentation/components/signup-success';
+import { DashMonitoring } from '../../presentation/pages/Dashboard-monitoring';
 
 export function AppRoutes() {
 	const dispatch = useDispatch();
@@ -44,7 +45,7 @@ export function AppRoutes() {
 		}
 
 		// const intervalId = setInterval(() => {
-			updateUserDataPeriodically(userLocal);
+		updateUserDataPeriodically(userLocal);
 		// }, 5000); // Executar a atualização a cada 5 segundos
 
 		// Limpar o intervalo quando o componente é desmontado
@@ -58,10 +59,17 @@ export function AppRoutes() {
 				<Route path={'/signup'} element={<Signup />} />
 				<Route path={'/success'} element={<SignupSuccess />} /> {/* Movido para fora do bloco condicional */}
 				{isAuthenticated.user?.name != null ? (
-					<Route path={'/'} element={<Dashboard />} />
+					<>
+
+						<Route path={'/'} element={<Dashboard />} />
+						<Route path={'/internet/monitoring'} element={<DashMonitoring />} />
+						<Route path={'/dashboard/email'} element={<EmailCampaign />} />
+					</>
 				) : (
 					<Route path={MenuUtils.HOME} element={<Home />} />
 				)}
+
+
 				<Route path="/*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>

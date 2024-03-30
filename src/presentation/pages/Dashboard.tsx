@@ -8,6 +8,7 @@ import { Dashboard_Email } from "../components/Dashboard_Email";
 import { Dashboard_Templates } from "../components/Dashboard_Templates";
 import { Dashboard_Statistics } from "../components/Dashboard_Statistics";
 import { Dashboard_Settings } from "../components/Dashboard_Settings";
+import { Dashboard_Contact } from "../components/Dashboard_Contacts";
 
 export const Dashboard = () => {
   const [view, setView] = useState("Dashboard");
@@ -38,13 +39,15 @@ export const Dashboard = () => {
         <div className="ps-[6rem] pe-6 w-full pt-[6.5rem]">
           <h2 className="ms-[8rem] text-orange-500 font-bold text-3xl">{view}</h2>
           {view === "Dashboard" ? (
-            <Dashboard_Home  />
+            <Dashboard_Home />
           ) : view === "Email" ? (
             <Dashboard_Email />
           ) : view === "Templates" ? (
             <Dashboard_Templates />
           ) : view === "Estatísticas" ? (
             <Dashboard_Statistics />
+          ) : view === "Contatos" ? (
+            <Dashboard_Contact />
           ) : (
             <Dashboard_Settings />
           )}

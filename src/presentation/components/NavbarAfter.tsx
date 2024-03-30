@@ -42,6 +42,7 @@ import { notification } from "../../dummy/notification-datas";
 export const NavbarAfter = () => {
   // const navigate = useNavigate();
   const account = useSelector(useAuth())
+  // const { user } = account
   const dispatch = useDispatch()
 
   const handleLogout = () => {
@@ -96,7 +97,7 @@ export const NavbarAfter = () => {
           <NavLink  className={' nav-after-link'} to={'/'}>
             Automação
           </NavLink>
-          <NavLink className={' nav-after-link'}  to="/" color={"black"} >
+          <NavLink className={' nav-after-link'}  to="/internet/monitoring" color={"black"} >
             Monitoramento
           </NavLink>
           <NavLink className={' nav-after-link'}  to="/" color={"black"} >
