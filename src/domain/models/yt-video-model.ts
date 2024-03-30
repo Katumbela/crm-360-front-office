@@ -1,3 +1,4 @@
+
 export interface Video {
     titulo: string;
     descricao: string;
@@ -7,5 +8,5 @@ export interface Video {
     visualizacoes: number;
     dataPublicacao: Date;
     thumbnail: string;
+    sentimento: string; // Adiciona a propriedade sentimento
   }
-  

@@ -2,17 +2,15 @@ import {
     Box,
     CircularProgress,
     Flex,
-    Image,
-    Text,
 } from "@chakra-ui/react";
 import { NavbarAfter } from "../components/NavbarAfter";
 import { useAuth } from "../../main/hooks";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import axios from "axios";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaYoutube } from "react-icons/fa";
 import { Video } from "../../domain/models/yt-video-model";
-import { env } from "../../main/config";
+// import { env } from "../../main/config";
 import { AlertUtils } from "../../utils";
 
 export const DashMonitoring = () => {
@@ -27,11 +25,10 @@ export const DashMonitoring = () => {
         try {
             const response = await axios.get(`http://localhost:3030/yt?query=${query}`);
             setVideos(response.data);
-            console.log(response)
-            AlertUtils.success(response?.data);
+            console.log(videos)
         } catch (error: any) {
             AlertUtils.error(error?.message);
-            console.error("Erro ao buscar vídeos:", error);
+            // console.error("Erro ao buscar vídeos:", error);
             setVideos([]);
         } finally {
             setLoading(false);
@@ -62,30 +59,31 @@ export const DashMonitoring = () => {
                 </button>
             </div>
             <Box bg="orange.100" className="mt-[8rem] px-[3rem] pt-[3rem]">
-                <h2>{user.company_name}</h2>
                 {loading ? (
                     <Flex justify="center" align="center" h="100%">
                         <CircularProgress isIndeterminate color="orange.500" />
                     </Flex>
                 ) : (
-                    <Flex justify="center" align="start" flexWrap="wrap" gap={8}>
+                    <>
                         {videos.map((video) => (
-                            <Box key={video.link} maxW="320px">
-                                <a href={video.link} target="_blank" rel="noopener noreferrer">
-                                    <Image src={video.thumbnail} alt={video.titulo} />
-                                    <Text fontSize="xl" fontWeight="semibold" mt={2}>
-                                        {video.titulo}
-                                    </Text>
-                                    <Text fontSize="md">{video.descricao}</Text>
-                                    <Text fontSize="sm" mt={2}>
-                                        Autor: {video.autor}
-                                    </Text>
-                                    <Text fontSize="sm">Visualizações: {video.visualizacoes}</Text>
-                                    <Text fontSize="sm">Data de Publicação: {video.dataPublicacao}</Text> {/* Corrigido aqui */}
-                                </a>
-                            </Box>
+                            <div key={video.link} className="my-[2rem]">
+                                <div className="bg-white p-3 shadow-md rounded-lg">
+                                    <div className="flex gap-3">
+                                        <img src={video.fotoPerfilAutor} className="w-[3em] border border-orange-500 rounded-full" alt="" />
+                                        <div>
+                                            <a target="__blank" href="" className="flex gap-3 font-bold text-sm hover:underline"> <FaYoutube className="text-red-600 text-2xl my-auto"/><span className="my-auto"> {video.autor}</span> </a>
+                                            <div className="flex text-xs text-slate-400 font-bold">
+                                                <span>youtube.com</span>
+                                                <span>&middot;</span>
+                                                {}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         ))}
-                    </Flex>
+                    </>
                 )}
             </Box>
 
