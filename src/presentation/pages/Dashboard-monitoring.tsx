@@ -16,6 +16,7 @@ import { calculatePopularityScore } from "../../utils/popularidade-utils";
 import { Spinner } from "../components/spinner";
 import { FaMessage } from "react-icons/fa6";
 import logo from '../../assets/Images/logo-new-2.png'
+import { env } from "../../main/config";
 
 export const DashMonitoring = () => {
     const account = useSelector(useAuth());
@@ -27,7 +28,7 @@ export const DashMonitoring = () => {
     const handleSearch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:3030/yt?query=${query}`);
+            const response = await axios.get(`${env.apiUrl}yt?query=${query}`);
             setVideos(response.data);
             console.log(videos)
         } catch (error: any) {
@@ -52,6 +53,14 @@ export const DashMonitoring = () => {
         }
     }
 
+    const highlightSearchTerm = (text: string, query: string) => {
+        // Cria uma expressão regular com a palavra pesquisada, ignorando maiúsculas e minúsculas
+        const regex = new RegExp(`(${query})`, 'gi');
+
+        // Substitui todas as ocorrências da palavra pesquisada pelo mesmo texto envolto em tags <strong>
+        return text.replace(regex, '<strong>$1</strong>');
+    };
+
 
     return (
         <div className="h-full bg-slate-100">
@@ -62,7 +71,7 @@ export const DashMonitoring = () => {
                     <input
                         type="text"
                         className="my-auto bg-transparent w-full outline-none py-2 px-1"
-                        placeholder= {`Olá ${user.name } "Pesquise por menções, tags, etc...`}
+                        placeholder={`Olá ${user.name} "Pesquise por menções, tags, etc...`}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
@@ -115,7 +124,7 @@ export const DashMonitoring = () => {
                                                 </div>
                                             </div>
                                             <p className="mt-1 text-gray-500 text-xs">
-                                                {video.descricao}
+                                                {highlightSearchTerm(video.descricao, query)}
                                             </p>
                                             <div className="flex my-4 text-xs gap-4 text-slate-400">
                                                 <span className="flex gap-1"><FaMessage className="my-auto" /> <span className="my-auto">{video.comentarios}</span></span>
