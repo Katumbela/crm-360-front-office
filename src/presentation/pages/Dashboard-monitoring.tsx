@@ -16,7 +16,7 @@ import { calculatePopularityScore } from "../../utils/popularidade-utils";
 import { Spinner } from "../components/spinner";
 import { FaMessage } from "react-icons/fa6";
 import logo from '../../assets/Images/logo-new-2.png'
-import { env } from "../../main/config";
+import Highlighter from "react-highlight-words"
 
 export const DashMonitoring = () => {
     const account = useSelector(useAuth());
@@ -54,13 +54,29 @@ export const DashMonitoring = () => {
         }
     }
 
+
+    // const highlightSearchTerm = (text: string, query: string) => {
+    //     // Cria uma expressão regular com a palavra pesquisada, ignorando maiúsculas e minúsculas
+    //     const regex = new RegExp(`(${query})`, 'gi');
+
+    //     // Substitui todas as ocorrências da palavra pesquisada pelo mesmo texto em negrito
+    //     return text.replace(regex, (match) => match.bold());
+    // };
     const highlightSearchTerm = (text: string, query: string) => {
         // Cria uma expressão regular com a palavra pesquisada, ignorando maiúsculas e minúsculas
         const regex = new RegExp(`(${query})`, 'gi');
 
-        // Substitui todas as ocorrências da palavra pesquisada pelo mesmo texto envolto em tags <strong>
-        return text.replace(regex, '<strong>$1</strong>');
+        // Cria um elemento span para envolver a palavra pesquisada
+        const span = document.createElement('span');
+        span.classList.add('highlight');
+
+        // Substitui todas as ocorrências da palavra pesquisada pelo elemento span criado
+        return text.replace(regex, (match: string) => {
+            span.textContent = match;
+            return span.outerHTML;
+        });
     };
+
 
 
     return (
@@ -125,7 +141,12 @@ export const DashMonitoring = () => {
                                                 </div>
                                             </div>
                                             <p className="mt-1 text-gray-500 text-xs">
-                                                {highlightSearchTerm(video.descricao, query)}
+                                                <Highlighter
+                                                    highlightClassName="bg-orange-400 font-bold px-1 py-[.5px] "
+                                                    searchWords={[query]}
+                                                    autoEscape={true}
+                                                    textToHighlight={video.descricao}
+                                                />
                                             </p>
                                             <div className="flex my-4 text-xs gap-4 text-slate-400">
                                                 <span className="flex gap-1"><FaMessage className="my-auto" /> <span className="my-auto">{video.comentarios}</span></span>
