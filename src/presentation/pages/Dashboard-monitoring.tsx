@@ -28,12 +28,13 @@ export const DashMonitoring = () => {
     const handleSearch = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`${env.apiUrl}yt?query=${query}`);
+            const response = await axios.get(`http://crm-360-api.vercel.app/yt?query='${query}'`);
             setVideos(response.data);
             console.log(videos)
         } catch (error: any) {
             AlertUtils.error(error?.message);
-            // console.error("Erro ao buscar vídeos:", error);
+
+            console.error("Erro ao buscar vídeos:", error);
             setVideos([]);
         } finally {
             setLoading(false);

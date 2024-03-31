@@ -126,35 +126,35 @@ export const Dashboard_Contact = () => {
         }));
     };
 
-
     const handleDeleteConfirm = async (collaboratorToDeleteId: string) => {
         try {
             setLoadingRender(true);
 
-            // Referência para o documento na coleção "business" com o ID "FZer_Gokside"
             const businessDocRef = firestore.collection("business").doc(`${user.id.substring(0, 4)}_${user.company_name}`);
 
-            // Obtém os dados atuais do documento
             const businessDocSnapshot = await businessDocRef.get();
             const businessData = businessDocSnapshot.data();
 
-            // Inicializa a lista de colaboradores se ainda não existir
-            const collaborators = businessData?.collaborators || {};
+            if (!businessData || !businessData.collaborators) {
+                throw new Error("Dados de colaboradores não encontrados.");
+            }
 
-            // Remove o colaborador com o ID especificado
-            delete collaborators[collaboratorToDeleteId];
+            // Faz uma cópia da lista de colaboradores
+            const updatedCollaborators = { ...businessData.collaborators };
 
-            // Atualiza o campo "collaborators" do documento "FZer_Gokside" com a lista atualizada de colaboradores
-            await businessDocRef.set({ collaborators }, { merge: true });
+            // Remove o colaborador com o ID especificado da lista
+            delete updatedCollaborators[collaboratorToDeleteId];
+
+            // Atualiza o campo "collaborators" do documento com a lista atualizada
+            await businessDocRef.update({ collaborators: updatedCollaborators });
 
             AlertUtils.success("Contato removido com sucesso!");
             console.log("Contato removido com sucesso!");
 
-            // Resetando os estados ou executando outras ações necessárias após a exclusão
             setLoadingRender(false);
             setIsDeleteConfirmationOpen(false);
 
-            // Atualiza a tabela de colaboradores após excluir o contato
+            // Atualiza a tabela de colaboradores após a exclusão
             fetchData();
         } catch (error) {
             setLoadingRender(false);
