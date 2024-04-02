@@ -1,5 +1,5 @@
 import { ElementType, HTMLAttributes, ReactNode } from 'react'
-import { StringUtils } from '@/utils'
+import { StringUtils } from '../../../utils'
 import { IconBaseProps } from 'react-icons'
 
 type InputProps = HTMLAttributes<HTMLInputElement> & {

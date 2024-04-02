@@ -1,5 +1,5 @@
 import  { ElementType, TextareaHTMLAttributes, useState } from 'react'
-import { StringUtils } from '@/utils'
+import { StringUtils } from '../../../utils'
 import { FormControlWrapper } from '.'
 
 type InputProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {

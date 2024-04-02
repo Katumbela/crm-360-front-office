@@ -1,5 +1,5 @@
 import  { ElementType, ReactNode, SelectHTMLAttributes, useState } from 'react'
-import { StringUtils } from '@/utils'
+import { StringUtils } from '../../../utils'
 import { FormControlWrapper } from '.'
 
 type InputProps = SelectHTMLAttributes<HTMLSelectElement> & {

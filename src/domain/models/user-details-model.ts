@@ -1,16 +1,15 @@
 export interface UserDetailsModel {
+  id: string;
   email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
+  name: string;
   company_name: string;
   website: string;
+  password: string;
   address: string;
-  zipcode: string;
+  team: string;
   city: string;
   country: string;
-  team: string;
-  contacts: string;
-  online_selling: "yes" | "no"; // Defina os possíveis valores para online_selling
-  plan: string;
+  contacts: "",
+  plan: "Free" | "Basic" | "Premium";
+  online_selling: "no" | "yes";
 }

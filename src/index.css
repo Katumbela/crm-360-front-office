@@ -1,4 +1,3 @@
-
 /* styles.css */
 @import url("https://fonts.googleapis.com/css2?family=Bahiana&family=New+Rocker&family=Truculenta:opsz,wght@12..72,100..900&display=swap");
 
@@ -6,10 +5,64 @@
 @tailwind components;
 @tailwind utilities;
 
+.text-primary {
+  @apply text-[#ff6633] hover:text-[#f9952f]
+}
+
+.bg-p {
+  @apply bg-orange-600
+}
+
+.bg-primary {
+ @apply bg-[#ff6633]
+}
+
+.border-primary {
+  @apply border-[#ff6633]
+}
+.border-hover-primary {
+  @apply hover:border-[#ff6633] transition-all
+}
+
 .new-rocker {
   font-family: "New Rocker";
   font-weight: 400;
   font-style: normal;
+}
+
+.bg-hover-primary {
+  @apply hover:bg-[#f9952f] bg-[#ff6633]
+}
+
+.nav-after-link {
+  @apply hover:border-b-2 border-primary ms-6
+}
+.nav-link {
+  @apply hover:bg-orange-100/40 hover:text-orange-600 px-2 py-[4px] transition-all rounded-md 
+}
+
+.bg-secondary {
+  @apply bg-[#f9952f]
+}
+
+.input-default {
+  @apply bg-slate-100/70 focus-within:border-orange-500 w-full outline-none  px-3 py-2 rounded-md border
+}
+
+.link {
+  @apply hover:text-orange-600 transition-all cursor-pointer
+}
+
+.label-sm {
+  @apply text-sm text-slate-400
+}
+
+.hover-primary:hover {
+  background: #f9942f25;
+}
+
+.bg-secondary-opacity {
+  background: #f9942f25;
 }
 
 .truculenta {
@@ -20,7 +73,7 @@
   font-variation-settings: "wdth" 100;
 }
 
-.bahiana-regular {
+.bahiana {
   font-family: "Bahiana", sans-serif;
   font-weight: 400;
   font-style: normal;

@@ -5,18 +5,17 @@ import {
   Menu,
   MenuButton,
   MenuItem,
-  Button,
   MenuList,
   MenuGroup,
   MenuDivider,
   Center,
   Spacer,
-  Link,
 } from "@chakra-ui/react";
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from '../../assets/Images/logo-new-2.png'
+import { useEffect, useState } from "react";
 
 
 
@@ -27,19 +26,32 @@ export const NavbarBefore = () => {
     navigate("/");
   };
 
-  const handleSignup = () => {
-    navigate("/signup");
-  };
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <Flex
       // border="1px"
       justifyContent="space-around"
-      padding={5}
       position="sticky"
       top="0"
       zIndex="100"
-      bg="white"
+
+      className={` ${scrolling ? "bg-orange-100 border-b-2 border-primary shadow-lg" : "bg-orange-100/30"} transition-all py-4 px-5`}
     >
       <Box>
         <Image
@@ -54,143 +66,103 @@ export const NavbarBefore = () => {
 
       <Spacer />
 
-      <Flex>
+      <Flex >
         <Center gap={10}>
           <Menu>
-            <MenuButton>
-              Solutions <ChevronDownIcon />
+            <MenuButton className={`${scrolling ? 'text-orange-600' : ''}`}>
+              Soluções <ChevronDownIcon />
             </MenuButton>
-            <MenuList>
-              <MenuItem>Why CRM 360 ?</MenuItem>
-              <MenuItem>EnterPrise</MenuItem>
+            <MenuList className="bg-white p-2 shadow-lg">
+              <MenuItem className="nav-link">Por que o Echo Link 360 ?</MenuItem>
+              <MenuItem className="nav-link">Enterprise</MenuItem>
             </MenuList>
           </Menu>
 
           <Menu>
-            <MenuButton>
-              Features <ChevronDownIcon />
+            <MenuButton className={`${scrolling ? 'text-orange-600' : ''}`}>
+              Recursos <ChevronDownIcon />
             </MenuButton>
 
-            <MenuList display="flex">
-              <MenuGroup title="Communicate">
-                <MenuItem>Email Marketing</MenuItem>
-                <MenuItem>Email API</MenuItem>
-                <MenuItem>SMS Marketing</MenuItem>
-                <MenuItem>Chat</MenuItem>
-                <MenuItem>Inbox</MenuItem>
+            <MenuList display="flex" className="bg-white p-3 shadow-lg rounded-md">
+              <MenuGroup className="text-orange-600 font-semibold" title="Comunicar">
+                <MenuItem className="nav-link">Email Marketing</MenuItem>
+                <MenuItem className="nav-link">API de Email</MenuItem>
+                <MenuItem className="nav-link">Marketing de SMS</MenuItem>
+                <MenuItem className="nav-link">Chat</MenuItem>
+                <MenuItem className="nav-link">Caixa de Entrada</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
 
-              <MenuGroup title="Personalize">
-                <MenuItem>Sales CRM</MenuItem>
-                <MenuItem>Marketing Automation</MenuItem>
-                <MenuItem>Transactional Emails</MenuItem>
+              <MenuGroup className="text-orange-600 font-semibold" title="Personalizar">
+                <MenuItem className="nav-link">CRM de Vendas</MenuItem>
+                <MenuItem className="nav-link">Automação de Marketing</MenuItem>
+                <MenuItem className="nav-link">Emails Transacionais</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
-              <MenuGroup title="Convert">
-                <MenuItem>Signup Forms</MenuItem>
-                <MenuItem>Landing Pages</MenuItem>
-                <MenuItem>Facebook Ads</MenuItem>
+              <MenuGroup className="text-orange-600 font-semibold" title="Converter">
+                <MenuItem className="nav-link">Formulários de Inscrição</MenuItem>
+                <MenuItem className="nav-link">Páginas de Destino</MenuItem>
+                <MenuItem className="nav-link">Monitoramento da internet</MenuItem>
               </MenuGroup>
             </MenuList>
           </Menu>
 
-          {/* <Link
-                        href="/pricing"
-                        _hover={{
-                                textDecoration:'none'
-                            }}
-                    >Pricing</Link> */}
+          {/* Links para Soluções */}
 
           <Menu>
-            <MenuButton>
-              Solutions <ChevronDownIcon />
+            <MenuButton className={`${scrolling ? 'text-orange-600' : ''}`}>
+              Soluções <ChevronDownIcon />
             </MenuButton>
-            <MenuList display="flex">
-              <MenuGroup title="Learning">
-                <MenuItem>Help Center</MenuItem>
-                <MenuItem>API Docs</MenuItem>
-                <MenuItem>CRM 360 Academy</MenuItem>
+            <MenuList display="flex" className="bg-white p-3 shadow-lg rounded-md">
+              <MenuGroup className="text-orange-600 font-semibold" title="Aprendizado">
+                <MenuItem className="nav-link">Centro de Ajuda</MenuItem>
+                <MenuItem className="nav-link">Documentação da API</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
 
-              <MenuGroup title="Platform">
-                <MenuItem>Product Updates</MenuItem>
-                <MenuItem>Case Studies</MenuItem>
-                <MenuItem>Service Lab</MenuItem>
-                <MenuItem>Platform Status</MenuItem>
-                <MenuItem>Plugins</MenuItem>
+              <MenuGroup className="text-orange-600 font-semibold" title="Plataforma">
+                <MenuItem className="nav-link">Casos de Uso</MenuItem>
+                <MenuItem className="nav-link">Laboratório de Serviços</MenuItem>
+                <MenuItem className="nav-link">Sobre a Plataforma</MenuItem>
               </MenuGroup>
 
               <MenuDivider />
-              <MenuGroup title="Partnerships">
-                <MenuItem>Expert Directory</MenuItem>
-                <MenuItem>Become an Expert</MenuItem>
-                <MenuItem>Affiliates</MenuItem>
+              <MenuGroup className="text-orange-600 font-semibold" title="Parcerias">
+                <MenuItem className="nav-link">Seja parceiro</MenuItem>
+                <MenuItem className="nav-link">Torne-se um Especialista</MenuItem>
+                <MenuItem className="nav-link">Parceiros</MenuItem>
               </MenuGroup>
             </MenuList>
           </Menu>
 
-          {/* <Link
-                        _hover={{
-                            textDecoration:'none'
-                        }}
-                    >Blog</Link> */}
+          {/* Links para Blog */}
+
         </Center>
       </Flex>
 
       <Spacer />
 
       <Flex mr={0}>
-        <Center gap={4}>
-          {/* <Menu >
-                        <MenuButton >
-                            <Image mr="1" display="inline" alt="flag" src="https://www.sendinblue.com/wp-content/plugins/multisite-language-switcher/flags/us.png" />
-                            En
-                        </MenuButton>
-                        <MenuList>
-                            <MenuItem gap="2" >
-                                <Image alt="flag" src="https://www.sendinblue.com/wp-content/plugins/multisite-language-switcher/flags/de.png"/>
-                                Deutsch
-                            </MenuItem>
-                            <MenuItem gap="2">
-                                <Image alt="flag" src="https://www.sendinblue.com/wp-content/plugins/multisite-language-switcher/flags/es.png" />
-                                Espanol
-                            </MenuItem>
-                            <MenuItem gap="2">
-                                <Image alt="flag" src="https://www.sendinblue.com/wp-content/plugins/multisite-language-switcher/flags/fr.png" />
-                                Francais
-                            </MenuItem>
-                            <MenuItem gap="2">
-                                <Image alt="flag" src="https://www.sendinblue.com/wp-content/plugins/multisite-language-switcher/flags/it.png" />
-                                Italiano
-                            </MenuItem>
-                            <MenuItem gap="2">
-                                <Image alt="flag" src="https://www.sendinblue.com/wp-content/plugins/multisite-language-switcher/flags/pt.png" />
-                                Portugues
-                            </MenuItem>
-                        </MenuList>
-                    </Menu> */}
+        <Center gap={6}>
+          {/* Links de Idioma */}
 
           <Box>
-            <Link href="/login" _hover={{ textDecoration: "none" }}>
-              Log in
-            </Link>
+            <NavLink className={'bg-hover-primary px-6  py-2 text-white border-2 border-primary transition-all'} to="/login">
+              Entrar
+            </NavLink>
           </Box>
 
-          <Button
-            colorScheme="red"
-            borderRadius={50}
-            p={6}
-            onClick={handleSignup}
-          >
-            Sign up free
-          </Button>
+          <Box>
+            <NavLink className={'hover-primary px-3 py-2 border-2 border-primary'} to="/signup">
+              Registro grátis
+            </NavLink>
+          </Box>
         </Center>
       </Flex>
+
     </Flex>
   );
 };

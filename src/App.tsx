@@ -1,4 +1,4 @@
-import './presentation/theme/global.css'
+// import './presentation/theme/global.css'
 import './index.css'
 import { AppRoutes } from './main/routes'
 import { store } from './store'
@@ -8,8 +8,9 @@ import { Toaster } from 'reput-Toaster';
 import { AppProvider } from './presentation/contexts'
 
 function App() {
+
 	return (
-		<div  className="bg-gradient-radial">
+		<div  className="bg-gradient-radial ">
 			<Provider store={store}>
 				<Toaster position="top-center" toastOptions={{ duration: 6000 }} />
 				<AppProvider>

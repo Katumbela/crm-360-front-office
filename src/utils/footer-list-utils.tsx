@@ -1,14 +1,14 @@
 export const footerList = [
   {
-    title: "Solutions",
-    content: ["Features", "Partner with us"],
+    title: "Soluções",
+    content: ["Ferramentas", "Trabalhe connosco"],
   },
   {
-    title: "Company",
-    content: ["About us", "Contact us"],
+    title: "Empresa",
+    content: ["Sobre nós", "Contacte nos"],
   },
   {
-    title: "Resources",
-    content: ["Blog", "Help center", "CRM 360 Academy", "API docs"],
+    title: "Recursos",
+    content: ["Centro de ajuda", "Documentação API"],
   },
 ];

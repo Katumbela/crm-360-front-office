@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 	useEffect(() => {
 		const load = async () => {
 			const account = await getCurrentAccountAdapter()
-			if (!account?.user && !isPublicRoute(path)) {
+			if (!account.email && !isPublicRoute(path)) {
 				location.replace('/')
-			} else if (account?.user && path === '/login') {
+			} else if (account?.email && path === '/login') {
 				location.replace('/')
 			} else {
 				if (!auth?.user?.id) dispatch(addAuthStore(account))
