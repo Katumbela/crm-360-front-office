@@ -3,7 +3,7 @@ import './index.css'
 import { AppRoutes } from './main/routes'
 import { store } from './store'
 import { Provider} from 'react-redux'
-import { Toaster } from 'reput-Toaster';
+import { Toaster } from 'react-hot-toast';
 
 import { AppProvider } from './presentation/contexts'
 

@@ -1,3 +1,5 @@
+// Front-end
+
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -18,9 +20,33 @@ import { useAuth } from "../../main/hooks";
 import QRCode from "qrcode.react";
 import io from "socket.io-client";
 
+type MessageType = {
+  id: string; // ID da mensagem
+  body: string; // Corpo da mensagem
+  from: string; // Remetente da mensagem
+  number: string; // Número do contato
+  name: string; // Nome do contato
+  pushName: string; // Push Name do contato
+  isMe: boolean; // Se a mensagem foi enviada pelo próprio usuário
+  isUser: boolean; // Se o remetente é um usuário
+  isGroup: boolean; // Se a mensagem foi enviada em um grupo
+  isWAContact: boolean; // Se o remetente é um contato do WhatsApp
+  isBusiness?: boolean; // Se é um Business Contact
+  // Outras propriedades específicas de Business Contact, se necessário
+  // Adicione outras propriedades da mensagem, se necessário
+};
+
+type ChatType = {
+  id: string;
+  name: string;
+};
+
 export function Dashboard_Statistics() {
   const [qrCode, setQrCode] = useState("");
+  const [messages, setMessages] = useState<MessageType[]>([]); // Para armazenar as mensagens recebidas
+  const [chats, setChats] = useState<ChatType[]>([]); // Para armazenar os chats disponíveis
   const socket = io("http://localhost:3001");
+  const [whatsappConnected, setWhatsappConnected] = useState(false);
 
   const account = useSelector(useAuth());
   const { user } = account;
@@ -34,14 +60,36 @@ export function Dashboard_Statistics() {
     }
   };
 
+  const handleChatClick = (chatId) => {
+    // Enviar uma solicitação ao servidor para abrir o chat com o ID especificado
+    socket.emit("openChat", { userId: user.id, chatId });
+  };
+
   useEffect(() => {
     socket.on("qrCode", (qrCodeData) => {
       setQrCode(qrCodeData.qr);
       console.log(qrCodeData.qr);
     });
 
+    socket.on("whatsappConnected", ({ userId }) => {
+      console.log(`WhatsApp conectado para o usuário ${userId}`);
+      setWhatsappConnected(true);
+    });
+
+    socket.on("allMessages", (messageList) => {
+      // Atualiza a lista de mensagens com as mensagens recebidas
+      setMessages(messageList);
+    });
+
+    socket.on("allChats", (chatList) => {
+      // Atualiza a lista de chats com os chats disponíveis
+      setChats(chatList);
+    });
+
     return () => {
-      socket.off("qrCode"); // Remover o ouvinte quando o componente for desmontado
+      socket.off("qrCode");
+      socket.off("allMessages");
+      socket.off("allChats");
     };
   }, []);
 
@@ -81,12 +129,7 @@ export function Dashboard_Statistics() {
         </Heading>
 
         {qrCode && (
-          <QRCode
-            value={qrCode}
-            size={256}
-            level={"H"}
-            includeMargin={true}
-          />
+          <QRCode value={qrCode} size={256} level={"H"} includeMargin={true} />
         )}
 
         <Text color="gray.700">
@@ -96,10 +139,39 @@ export function Dashboard_Statistics() {
 
         <Center>
           <Button borderRadius="50px" maxW="fit-content" colorScheme="red">
-            Aguardando!
+            <div>
+              {whatsappConnected ? (
+                <p>WhatsApp conectado com sucesso!</p>
+              ) : (
+                <p>Aguardando conexão com o WhatsApp...</p>
+              )}
+            </div>
           </Button>
         </Center>
       </Stack>
+
+      {/* Exibindo a lista de chats disponíveis */}
+      <Box>
+        <Heading size="md">Chats Disponíveis:</Heading>
+        <ul>
+          {chats.map((chat) => (
+            <li key={chat.id} onClick={() => handleChatClick(chat.id)}>
+              {chat.name}{" "}
+              {/* Exemplo de como você pode exibir o nome do chat */}
+            </li>
+          ))}
+        </ul>
+      </Box>
+
+      {/* Exibindo as mensagens recebidas */}
+      <Box>
+        <Heading size="md">Mensagens Recebidas:</Heading>
+        <ul>
+          {messages.map((message, index) => (
+            <li key={index}>{message.body}</li> // Supondo que 'body' contenha o texto da mensagem
+          ))}
+        </ul>
+      </Box>
 
       <Button
         bg="green.900"
