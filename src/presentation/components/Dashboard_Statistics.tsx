@@ -60,7 +60,7 @@ export function Dashboard_Statistics() {
     }
   };
 
-  const handleChatClick = (chatId) => {
+  const handleChatClick = (chatId: string) => {
     // Enviar uma solicitação ao servidor para abrir o chat com o ID especificado
     socket.emit("openChat", { userId: user.id, chatId });
   };
