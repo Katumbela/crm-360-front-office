@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 import { useAuth } from "../../main/hooks";
 import QRCode from "qrcode.react";
 import io from "socket.io-client";
-
+   
 type MessageType = {
   id: string; // ID da mensagem
   body: string; // Corpo da mensagem
@@ -45,7 +45,8 @@ export function Dashboard_Statistics() {
   const [qrCode, setQrCode] = useState("");
   const [messages, setMessages] = useState<MessageType[]>([]); // Para armazenar as mensagens recebidas
   const [chats, setChats] = useState<ChatType[]>([]); // Para armazenar os chats disponíveis
-  const socket = io("http://localhost:3001");
+  //const socket = io("http://localhost:3001");
+  const socket = io("https://whatsapp-socket-api.vercel.app/")
   const [whatsappConnected, setWhatsappConnected] = useState(false);
 
   const account = useSelector(useAuth());
