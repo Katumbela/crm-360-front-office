@@ -1,6 +1,6 @@
 // Front-end
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,13 +13,13 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaSpinner, FaWhatsapp } from "react-icons/fa";
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../main/hooks";
 import QRCode from "qrcode.react";
 import io from "socket.io-client";
-   
+
 type MessageType = {
   id: string; // ID da mensagem
   body: string; // Corpo da mensagem
@@ -43,10 +43,11 @@ type ChatType = {
 
 export function Dashboard_Statistics() {
   const [qrCode, setQrCode] = useState("");
+  const [load, SetLoad] = useState(false);
   const [messages, setMessages] = useState<MessageType[]>([]); // Para armazenar as mensagens recebidas
   const [chats, setChats] = useState<ChatType[]>([]); // Para armazenar os chats disponíveis
   //const socket = io("http://localhost:3001");
-  const socket = io("https://whatsapp-socket-api.vercel.app/")
+  const socket = io("https://whatsapp-socket-api.onrender.com");
   const [whatsappConnected, setWhatsappConnected] = useState(false);
 
   const account = useSelector(useAuth());
@@ -55,6 +56,7 @@ export function Dashboard_Statistics() {
   const handleConnectWhatsApp = () => {
     try {
       socket.emit("connectWhatsApp", user.id);
+      SetLoad(true);
       console.log("Conectando ao WhatsApp...");
     } catch (error) {
       console.error("Erro ao conectar o WhatsApp:", error);
@@ -70,10 +72,15 @@ export function Dashboard_Statistics() {
     socket.on("qrCode", (qrCodeData) => {
       setQrCode(qrCodeData.qr);
       console.log(qrCodeData.qr);
+      SetLoad(false);
+    });
+    socket.on("auth", (datas) => {
+      console.log(datas);
     });
 
     socket.on("whatsappConnected", ({ userId }) => {
       console.log(`WhatsApp conectado para o usuário ${userId}`);
+      SetLoad(false);
       setWhatsappConnected(true);
     });
 
@@ -86,14 +93,16 @@ export function Dashboard_Statistics() {
       // Atualiza a lista de chats com os chats disponíveis
       setChats(chatList);
     });
-
-    return () => {
-      socket.off("qrCode");
-      socket.off("allMessages");
-      socket.off("allChats");
-    };
   }, []);
 
+  /*
+  useMemo(() => {
+    handleConnectWhatsApp();
+  }, [user.id]);
+*/
+  useCallback(() => {
+    socket.emit("connectWhatsApp", user.id);
+  }, [socket, user.id]);
   return (
     <Box w="75%" mx="auto">
       <Flex p="4">
@@ -128,8 +137,9 @@ export function Dashboard_Statistics() {
         >
           <Icon as={FaWhatsapp} className="text-5xl text-green-600" /> <br />
         </Heading>
+        <span>CERCVEVE {qrCode} </span>
 
-        {qrCode && (
+        {qrCode != "" && (
           <QRCode value={qrCode} size={256} level={"H"} includeMargin={true} />
         )}
 
@@ -140,6 +150,15 @@ export function Dashboard_Statistics() {
 
         <Center>
           <Button borderRadius="50px" maxW="fit-content" colorScheme="red">
+            <div>
+              {load ? (
+                <p>
+                  <FaSpinner className="animate animate-spin" />
+                </p>
+              ) : (
+                <p></p>
+              )}
+            </div>{" "}
             <div>
               {whatsappConnected ? (
                 <p>WhatsApp conectado com sucesso!</p>
