@@ -1,6 +1,6 @@
 // Front-end
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -41,13 +41,17 @@ type ChatType = {
   name: string;
 };
 
+//const socket = io("https://whatsapp-socket-api.onrender.com");
+
 export function Dashboard_Statistics() {
   const [qrCode, setQrCode] = useState("");
   const [load, SetLoad] = useState(false);
   const [messages, setMessages] = useState<MessageType[]>([]); // Para armazenar as mensagens recebidas
   const [chats, setChats] = useState<ChatType[]>([]); // Para armazenar os chats disponíveis
   //const socket = io("http://localhost:3001");
+
   const socket = io("https://whatsapp-socket-api.onrender.com");
+
   const [whatsappConnected, setWhatsappConnected] = useState(false);
 
   const account = useSelector(useAuth());
@@ -72,10 +76,10 @@ export function Dashboard_Statistics() {
     socket.on("qrCode", (qrCodeData) => {
       setQrCode(qrCodeData.qr);
       console.log(qrCodeData.qr);
-      SetLoad(false);
     });
     socket.on("auth", (datas) => {
       console.log(datas);
+      setWhatsappConnected(true);
     });
 
     socket.on("whatsappConnected", ({ userId }) => {
@@ -100,9 +104,6 @@ export function Dashboard_Statistics() {
     handleConnectWhatsApp();
   }, [user.id]);
 */
-  useCallback(() => {
-    socket.emit("connectWhatsApp", user.id);
-  }, [socket, user.id]);
   return (
     <Box w="75%" mx="auto">
       <Flex p="4">
@@ -137,17 +138,6 @@ export function Dashboard_Statistics() {
         >
           <Icon as={FaWhatsapp} className="text-5xl text-green-600" /> <br />
         </Heading>
-        <span>CERCVEVE {qrCode} </span>
-
-        {qrCode != "" && (
-          <QRCode value={qrCode} size={256} level={"H"} includeMargin={true} />
-        )}
-
-        <Text color="gray.700">
-          Conecte sua conta para começar a enviar e receber mensagens a partir
-          da Echo Link 360
-        </Text>
-
         <Center>
           <Button borderRadius="50px" maxW="fit-content" colorScheme="red">
             <div>
@@ -163,7 +153,20 @@ export function Dashboard_Statistics() {
               {whatsappConnected ? (
                 <p>WhatsApp conectado com sucesso!</p>
               ) : (
-                <p>Aguardando conexão com o WhatsApp...</p>
+                <>
+                  {qrCode != "" && (
+                    <QRCode
+                      value={qrCode}
+                      size={256}
+                      level={"H"}
+                      includeMargin={true}
+                    />
+                  )}
+
+                  <Text color="gray.700">
+                    Conecte sua conta à Echo Link 360
+                  </Text>
+                </>
               )}
             </div>
           </Button>
