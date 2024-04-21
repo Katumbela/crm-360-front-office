@@ -41,6 +41,7 @@ type ChatType = {
   name: string;
 };
 
+
 //const socket = io("https://whatsapp-socket-api.onrender.com");
 
 export function Dashboard_Statistics() {
@@ -49,13 +50,15 @@ export function Dashboard_Statistics() {
   const [messages, setMessages] = useState<MessageType[]>([]); // Para armazenar as mensagens recebidas
   const [chats, setChats] = useState<ChatType[]>([]); // Para armazenar os chats disponíveis
   //const socket = io("http://localhost:3001");
-
-  const socket = io("https://whatsapp-socket-api.onrender.com");
-
-  const [whatsappConnected, setWhatsappConnected] = useState(false);
-
   const account = useSelector(useAuth());
   const { user } = account;
+ // "https://whatsapp-socket-api.onrender.com"
+  const socket = io("https://whatsapp-socket-api.onrender.com", {
+    query: {
+      userId: user.id,
+    },
+  });
+  const [whatsappConnected, setWhatsappConnected] = useState(false);
 
   const handleConnectWhatsApp = () => {
     try {
@@ -80,6 +83,9 @@ export function Dashboard_Statistics() {
     socket.on("auth", (datas) => {
       console.log(datas);
       setWhatsappConnected(true);
+    });
+    socket.on("con", (datas) => {
+      console.log(datas);
     });
 
     socket.on("whatsappConnected", ({ userId }) => {
