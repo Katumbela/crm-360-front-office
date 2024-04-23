@@ -59,6 +59,19 @@ export function Dashboard_Statistics() {
     }
   };
 
+  const getChats = async () => {
+    try {
+      const response = await axios.get(
+        "https://docker-project-api-wweb.onrender.com/client/getChats/" +
+          user.id 
+          
+      );
+      console.log(response.data); 
+    } catch (error) {
+      console.error("Erro ao conectar:", error);
+    }
+  };
+
   return (
     <div className="ps-32">
       {" "}
@@ -69,6 +82,9 @@ export function Dashboard_Statistics() {
         </Button>
         <Button onClick={qrcode} colorScheme="blue">
           QR code
+        </Button>
+        <Button onClick={getChats} colorScheme="blue">
+        Buscar mensagens
         </Button>
 
         {/* Exibir o QR code se estiver disponível */}
