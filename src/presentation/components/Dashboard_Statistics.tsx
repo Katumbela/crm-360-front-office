@@ -16,11 +16,17 @@ export function Dashboard_Statistics() {
   // Função para conectar ao servidor de backend via socket.io-client
   const connectToBackend = () => {
     const socket = io("https://crm-webhook-360.onrender.com"); // Substitua "https://seu-backend.com" pelo endereço do seu servidor de backend
+    // const socket = io("http://localhost:5001"); // Substitua "https://seu-backend.com" pelo endereço do seu servidor de backend
     console.log(socket);
 
     // Lidar com o evento de recebimento do QR code
     socket.on("qrCode", (data) => {
       setQrCode(data.qr); // Armazenar o QR code recebido no estado
+    });
+    
+    // Lidar com o evento de recebimento do QR code
+    socket.on("message", (data) => {
+      console.log(data); // Armazenar o QR code recebido no estado
     });
   };
 
@@ -28,6 +34,7 @@ export function Dashboard_Statistics() {
   useEffect(() => {
     connectToBackend();
   }, []);
+
   const connect = async () => {
     try {
       const response = await axios.get(
@@ -48,12 +55,10 @@ export function Dashboard_Statistics() {
   const qrcode = async () => {
     try {
       const response = await axios.get(
-        "https://docker-project-api-wweb.onrender.com/session/qr/" +
-          user.id 
-          
+        "https://docker-project-api-wweb.onrender.com/session/qr/" + user.id
       );
       console.log(response.data);
-      setQrCode(response.data.qr)
+      setQrCode(response.data.qr);
     } catch (error) {
       console.error("Erro ao conectar:", error);
     }
@@ -63,10 +68,9 @@ export function Dashboard_Statistics() {
     try {
       const response = await axios.get(
         "https://docker-project-api-wweb.onrender.com/client/getChats/" +
-          user.id 
-          
+          user.id
       );
-      console.log(response.data); 
+      console.log(response.data);
     } catch (error) {
       console.error("Erro ao conectar:", error);
     }
@@ -84,13 +88,15 @@ export function Dashboard_Statistics() {
           QR code
         </Button>
         <Button onClick={getChats} colorScheme="blue">
-        Buscar mensagens
+          Buscar mensagens
         </Button>
 
         {/* Exibir o QR code se estiver disponível */}
         {qrCode && (
           <Box>
-            <Heading size="md">Escanei para conectar seu whatsapp com QR Code</Heading>
+            <Heading size="md">
+              Escanei para conectar seu whatsapp com QR Code
+            </Heading>
             <QRCode value={qrCode} />
           </Box>
         )}
