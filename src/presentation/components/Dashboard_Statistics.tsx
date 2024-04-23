@@ -1,223 +1,84 @@
-// Front-end
-
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Center,
-  Divider,
-  Flex,
-  Heading,
-  Icon,
-  Spacer,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { FaSpinner, FaWhatsapp } from "react-icons/fa";
-import { QuestionOutlineIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
-import { useAuth } from "../../main/hooks";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import QRCode from "qrcode.react";
 import io from "socket.io-client";
-
-type MessageType = {
-  id: string; // ID da mensagem
-  body: string; // Corpo da mensagem
-  from: string; // Remetente da mensagem
-  number: string; // Número do contato
-  name: string; // Nome do contato
-  pushName: string; // Push Name do contato
-  isMe: boolean; // Se a mensagem foi enviada pelo próprio usuário
-  isUser: boolean; // Se o remetente é um usuário
-  isGroup: boolean; // Se a mensagem foi enviada em um grupo
-  isWAContact: boolean; // Se o remetente é um contato do WhatsApp
-  isBusiness?: boolean; // Se é um Business Contact
-  // Outras propriedades específicas de Business Contact, se necessário
-  // Adicione outras propriedades da mensagem, se necessário
-};
-
-type ChatType = {
-  id: string;
-  name: string;
-};
-
-
-//const socket = io("https://whatsapp-socket-api.onrender.com");
+import { useAuth } from "../../main/hooks";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 export function Dashboard_Statistics() {
-  const [qrCode, setQrCode] = useState("");
-  const [load, SetLoad] = useState(false);
-  const [messages, setMessages] = useState<MessageType[]>([]); // Para armazenar as mensagens recebidas
-  const [chats, setChats] = useState<ChatType[]>([]); // Para armazenar os chats disponíveis
-  //const socket = io("http://localhost:3001");
+  const [qrCode, setQrCode] = useState(""); // Estado para armazenar o QR code recebido
+  const [sockett, setSocket] = useState(""); // Estado para armazenar a instância do socket
+
   const account = useSelector(useAuth());
   const { user } = account;
- // "https://whatsapp-socket-api.onrender.com"
-  const socket = io("https://whatsapp-socket-api.onrender.com", {
-    query: {
-      userId: user.id,
-    },
-  });
-  const [whatsappConnected, setWhatsappConnected] = useState(false);
 
-  const handleConnectWhatsApp = () => {
+  // Função para conectar ao servidor de backend via socket.io-client
+  const connectToBackend = () => {
+    const socket = io("https://crm-webhook-360.onrender.com"); // Substitua "https://seu-backend.com" pelo endereço do seu servidor de backend
+    console.log(socket);
+
+    // Lidar com o evento de recebimento do QR code
+    socket.on("qrCode", (data) => {
+      setQrCode(data.qr); // Armazenar o QR code recebido no estado
+    });
+  };
+
+  // Efeito para conectar ao backend quando o componente for montado
+  useEffect(() => {
+    connectToBackend();
+  }, []);
+  const connect = async () => {
     try {
-      socket.emit("connectWhatsApp", user.id);
-      SetLoad(true);
-      console.log("Conectando ao WhatsApp...");
+      const response = await axios.get(
+        "https://docker-project-api-wweb.onrender.com/session/start/" + user.id
+      );
+      console.log(response); // Verifique o conteúdo completo da resposta
+      if (
+        response.status === 422 &&
+        response.data.error === "Session already exists"
+      ) {
+        alert("Já existe uma sessão para este usuário.");
+      }
     } catch (error) {
-      console.error("Erro ao conectar o WhatsApp:", error);
+      console.error("Erro ao conectar:", error);
     }
   };
 
-  const handleChatClick = (chatId: string) => {
-    // Enviar uma solicitação ao servidor para abrir o chat com o ID especificado
-    socket.emit("openChat", { userId: user.id, chatId });
+  const qrcode = async () => {
+    try {
+      const response = await axios.get(
+        "https://docker-project-api-wweb.onrender.com/session/qr/" +
+          user.id 
+          
+      );
+      console.log(response.data);
+      setQrCode(response.data.qr)
+    } catch (error) {
+      console.error("Erro ao conectar:", error);
+    }
   };
 
-  useEffect(() => {
-    socket.on("qrCode", (qrCodeData) => {
-      setQrCode(qrCodeData.qr);
-      console.log(qrCodeData.qr);
-    });
-    socket.on("auth", (datas) => {
-      console.log(datas);
-      setWhatsappConnected(true);
-    });
-    socket.on("con", (datas) => {
-      console.log(datas);
-    });
-
-    socket.on("whatsappConnected", ({ userId }) => {
-      console.log(`WhatsApp conectado para o usuário ${userId}`);
-      SetLoad(false);
-      setWhatsappConnected(true);
-    });
-
-    socket.on("allMessages", (messageList) => {
-      // Atualiza a lista de mensagens com as mensagens recebidas
-      setMessages(messageList);
-    });
-
-    socket.on("allChats", (chatList) => {
-      // Atualiza a lista de chats com os chats disponíveis
-      setChats(chatList);
-    });
-  }, []);
-
-  /*
-  useMemo(() => {
-    handleConnectWhatsApp();
-  }, [user.id]);
-*/
   return (
-    <Box w="75%" mx="auto">
-      <Flex p="4">
-        <Spacer />
-        <Button onClick={handleConnectWhatsApp} colorScheme="red">
-          Conectar WhatsApp
+    <div className="ps-32">
+      {" "}
+      <Box>
+        <Heading size="md">Conectar WhatsApp</Heading>
+        <Button onClick={connect} colorScheme="blue">
+          Conectar
         </Button>
-      </Flex>
+        <Button onClick={qrcode} colorScheme="blue">
+          QR code
+        </Button>
 
-      <Divider />
-
-      <Stack
-        mt="20px"
-        bg="#F9FAFC"
-        padding="10"
-        spacing={10}
-        border="1px"
-        borderStyle="dashed"
-        borderColor="gray.500"
-        textAlign="center"
-        w="60%"
-        mx="auto"
-        my="20"
-      >
-        <Heading
-          fontSize="2xl"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          gap="2"
-          fontWeight="500"
-        >
-          <Icon as={FaWhatsapp} className="text-5xl text-green-600" /> <br />
-        </Heading>
-        <Center>
-          <Button borderRadius="50px" maxW="fit-content" colorScheme="red">
-            <div>
-              {load ? (
-                <p>
-                  <FaSpinner className="animate animate-spin" />
-                </p>
-              ) : (
-                <p></p>
-              )}
-            </div>{" "}
-            <div>
-              {whatsappConnected ? (
-                <p>WhatsApp conectado com sucesso!</p>
-              ) : (
-                <>
-                  {qrCode != "" && (
-                    <QRCode
-                      value={qrCode}
-                      size={256}
-                      level={"H"}
-                      includeMargin={true}
-                    />
-                  )}
-
-                  <Text color="gray.700">
-                    Conecte sua conta à Echo Link 360
-                  </Text>
-                </>
-              )}
-            </div>
-          </Button>
-        </Center>
-      </Stack>
-
-      {/* Exibindo a lista de chats disponíveis */}
-      <Box>
-        <Heading size="md">Chats Disponíveis:</Heading>
-        <ul>
-          {chats.map((chat) => (
-            <li key={chat.id} onClick={() => handleChatClick(chat.id)}>
-              {chat.name}{" "}
-              {/* Exemplo de como você pode exibir o nome do chat */}
-            </li>
-          ))}
-        </ul>
+        {/* Exibir o QR code se estiver disponível */}
+        {qrCode && (
+          <Box>
+            <Heading size="md">Escanei para conectar seu whatsapp com QR Code</Heading>
+            <QRCode value={qrCode} />
+          </Box>
+        )}
       </Box>
-
-      {/* Exibindo as mensagens recebidas */}
-      <Box>
-        <Heading size="md">Mensagens Recebidas:</Heading>
-        <ul>
-          {messages.map((message, index) => (
-            <li key={index}>{message.body}</li> // Supondo que 'body' contenha o texto da mensagem
-          ))}
-        </ul>
-      </Box>
-
-      <Button
-        bg="green.900"
-        borderRadius="50px"
-        color="white"
-        gap="2"
-        position="sticky"
-        top="96%"
-        bottom="10px"
-        left="90%"
-        right="10px"
-        padding="5"
-        _hover={{ bg: "green.900" }}
-      >
-        <QuestionOutlineIcon />
-        Suporte
-      </Button>
-    </Box>
+    </div>
   );
 }
