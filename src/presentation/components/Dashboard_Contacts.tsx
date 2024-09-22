@@ -31,10 +31,11 @@ import { useAuth } from "../../main/hooks";
 import { useSelector } from "react-redux";
 import { Spinner } from "./spinner";
 import { CollaboratorModel } from "../../domain/models/colaborator-model";
-import { fetchCollaborators } from "../../services/getColaborators";
+import { fetchCollaborators, type IColaborator } from "../../services/getColaborators";
 import { v4 as uuidv4 } from 'uuid';
 
 import RenderCollaboratorsTable from './renderColaboratorsTable/renderColaboratorTable'
+import { collection, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 
 export const Dashboard_Contact = () => {
 
@@ -42,20 +43,23 @@ export const Dashboard_Contact = () => {
     const { user } = account
 
     const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
-    const [editCollaborator, setEditCollaborator] = useState<CollaboratorModel | null>(null);
-    const [collaborators, setCollaborators] = useState<CollaboratorModel[]>([]);
+    const [editCollaborator, setEditCollaborator] = useState<IColaborator | null>(null);
+    const [collaborators, setCollaborators] = useState<IColaborator[]>([]);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [loading, setLoading] = useState(false)
     const [loadingCollaborators, setLoadingCollaborators] = useState(true);
     const [loadingRender, setLoadingRender] = useState(false)
     const [loadingIcon, setLoadingIcon] = useState(false)
     const [isEditing, setIsEditing] = useState(false);
-    const [contact, setContact] = useState({
-        nome: "",
-        sobrenome: "",
+    const [contact, setContact] = useState<IColaborator>({
+        name: "",
+        bi: "",
+        phone: "",
+        city: "",
         email: "",
-        telefone: "",
+        password: "", // Se necessário
     });
+
 
 
     const fetchData = useCallback(async () => {
@@ -77,40 +81,32 @@ export const Dashboard_Contact = () => {
     const handleSaveContact = async () => {
         setLoading(true);
         try {
-            // Referência para o documento na coleção "business" com o ID "FZer_Gokside"
-            const businessDocRef = firestore.collection("business").doc(`${user.id.substring(0, 4)}_${user.company_name}`);
+            const db = getFirestore();
+            const businessDocRef = doc(collection(db, "business"), `${user.id.substring(0, 4)}_${user.company_name}`);
 
-            // Obtém os dados atuais do documento
-            const businessDocSnapshot = await businessDocRef.get();
+            const businessDocSnapshot = await getDoc(businessDocRef);
             const businessData = businessDocSnapshot.data();
 
-            // Inicializa a lista de colaboradores se ainda não existir
             const collaborators = businessData?.collaborators || {};
+            const newContactId = uuidv4();
 
-            // Gera um ID único para o novo contato
-            const newContactId = uuidv4(); // Usando a função uuidv4 para gerar um UUID único
-
-            // Cria um novo contato com um ID único
             const newContact = { id: newContactId, ...contact };
 
-            // Atualiza o campo "collaborators" do documento "FZer_Gokside" com os dados atualizados
-            await businessDocRef.set({ collaborators: { ...collaborators, [newContactId]: newContact } }, { merge: true });
+            await setDoc(businessDocRef, { collaborators: { ...collaborators, [newContactId]: newContact } }, { merge: true });
 
             AlertUtils.success("Contato salvo com sucesso!");
-            console.log("Contato salvo com sucesso!");
-
             onClose();
             setLoading(false);
 
-            // Limpa o estado após salvar o contato
             setContact({
-                nome: "",
-                sobrenome: "",
+                name: "",
+                bi: "",
+                phone: "",
+                city: "",
                 email: "",
-                telefone: "",
+                password: ""
             });
 
-            // Atualiza a tabela de colaboradores após salvar o contato
             fetchData();
         } catch (error) {
             setLoading(false);
@@ -118,43 +114,39 @@ export const Dashboard_Contact = () => {
         }
     };
 
-    const handleChange = (e: any) => {
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setContact((prevContact: any) => ({
+        setContact((prevContact) => ({
             ...prevContact,
             [name]: value,
         }));
     };
 
+
     const handleDeleteConfirm = async (collaboratorToDeleteId: string) => {
         try {
             setLoadingRender(true);
+            const db = getFirestore();
+            const businessDocRef = doc(collection(db, "business"), `${user.id.substring(0, 4)}_${user.company_name}`);
 
-            const businessDocRef = firestore.collection("business").doc(`${user.id.substring(0, 4)}_${user.company_name}`);
-
-            const businessDocSnapshot = await businessDocRef.get();
+            const businessDocSnapshot = await getDoc(businessDocRef);
             const businessData = businessDocSnapshot.data();
 
             if (!businessData || !businessData.collaborators) {
                 throw new Error("Dados de colaboradores não encontrados.");
             }
 
-            // Faz uma cópia da lista de colaboradores
             const updatedCollaborators = { ...businessData.collaborators };
-
-            // Remove o colaborador com o ID especificado da lista
             delete updatedCollaborators[collaboratorToDeleteId];
 
-            // Atualiza o campo "collaborators" do documento com a lista atualizada
-            await businessDocRef.update({ collaborators: updatedCollaborators });
+            await updateDoc(businessDocRef, { collaborators: updatedCollaborators });
 
             AlertUtils.success("Contato removido com sucesso!");
-            console.log("Contato removido com sucesso!");
-
             setLoadingRender(false);
             setIsDeleteConfirmationOpen(false);
 
-            // Atualiza a tabela de colaboradores após a exclusão
             fetchData();
         } catch (error) {
             setLoadingRender(false);
@@ -166,57 +158,60 @@ export const Dashboard_Contact = () => {
 
 
 
-    const handleSaveEdit = async (editCollaborator: CollaboratorModel) => {
-        const contactId = editCollaborator.id
-        const datas = {
-            nome: editCollaborator.nome,
-            sobrenome: editCollaborator.sobrenome,
-            email: editCollaborator.email,
-            telefone: editCollaborator.telefone
+    const handleSaveEdit = async (editCollaborator: IColaborator) => {
+        const contactId = editCollaborator.id;
+
+        // Verifica se contactId é undefined e lança um erro se for o caso
+        if (!contactId) {
+            throw new Error("ID do colaborador não encontrado.");
         }
+
+        const datas = {
+            name: editCollaborator.name,
+            email: editCollaborator.email,
+            city: editCollaborator.city,
+            phone: editCollaborator.phone,
+            bi: editCollaborator.bi
+        };
 
         setLoadingIcon(true);
         try {
-            // Referência para o documento na coleção "business" com o ID "FZer_Gokside"
-            const businessDocRef = firestore.collection("business").doc(`${user.id.substring(0, 4)}_${user.company_name}`);
+            const db = getFirestore();
+            const businessDocRef = doc(collection(db, "business"), `${user.id.substring(0, 4)}_${user.company_name}`);
 
-            // Obtém os dados atuais do documento
-            const businessDocSnapshot = await businessDocRef.get();
+            const businessDocSnapshot = await getDoc(businessDocRef);
             const businessData = businessDocSnapshot.data();
 
-            // Verifica se o contato que está sendo atualizado existe na lista de colaboradores
             const collaborators = businessData?.collaborators || {};
             if (!collaborators[contactId]) {
                 throw new Error("Contato não encontrado para atualização.");
             }
 
-            // Atualiza os dados do contato existente com os novos dados fornecidos
             collaborators[contactId] = { id: contactId, ...datas };
 
-            // Atualiza o campo "collaborators" do documento "FZer_Gokside" com os dados atualizados
-            await businessDocRef.set({ collaborators }, { merge: true });
+            await setDoc(businessDocRef, { collaborators }, { merge: true });
 
-            // AlertUtils.success("Contato atualizado com sucesso!");
             console.log("Contato atualizado com sucesso!");
-
             onClose();
             setLoadingIcon(false);
 
-            // Limpa o estado após atualizar o contato
             setContact({
-                nome: "",
-                sobrenome: "",
+                name: "",
+                bi: "",
+                phone: "",
+                city: "",
                 email: "",
-                telefone: "",
+                password: ""
             });
 
-            // Atualiza a tabela de colaboradores após atualizar o contato
             fetchData();
         } catch (error) {
             setLoadingIcon(false);
             console.error("Erro ao atualizar o contato:", error);
         }
     };
+
+
 
 
 
@@ -240,7 +235,7 @@ export const Dashboard_Contact = () => {
         <Box w="75%" mx="auto">
             <Flex p="4">
                 <Spacer />
-                <Button className="bg-orange-300/30 -mt-10 hover:bg-orange-500/40 transition-all border-2 border-orange-600 font-semibold text-orange-700 rounded-lg px-3 py-2 " onClick={onOpen}>Adicionar contacto</Button>
+                <Button className="px-3 py-2 -mt-10 font-semibold text-orange-700 transition-all border-2 border-orange-600 rounded-lg bg-orange-300/30 hover:bg-orange-500/40 " onClick={onOpen}>Adicionar contacto</Button>
             </Flex>
             <br />
 
@@ -321,44 +316,34 @@ export const Dashboard_Contact = () => {
                     <ModalCloseButton className="absolute top-4 right-4" />
                     <ModalBody>
                         <div className="flex flex-col my-[2rem] w-full gap-4">
-                            <FormControl className="bg-slate-50 font-semibold  text-slate-600 border flex gap-3 px-3 rounded-lg focus-within:border-orange-500 transition-all">
-                                <BsPersonCircle className="my-auto" />
-                                <Input name="nome"
-                                    value={contact.nome}
-                                    onChange={handleChange} className=" outline-none w-full  py-2.5 bg-transparent " placeholder='Nome' />
+                            <FormControl>
+                                <Input name="name" value={contact.name} onChange={handleChange} placeholder='Nome' />
+                            </FormControl>
+                            <FormControl>
+                                <Input name="bi" value={contact.bi} onChange={handleChange} placeholder='BI' />
+                            </FormControl>
+                            <FormControl>
+                                <Input name="phone" value={contact.phone} onChange={handleChange} placeholder='Telefone' />
+                            </FormControl>
+                            <FormControl>
+                                <Input name="city" value={contact.city} onChange={handleChange} placeholder='Cidade' />
+                            </FormControl>
+                            <FormControl>
+                                <Input name="email" value={contact.email} onChange={handleChange} placeholder='E-mail' />
                             </FormControl>
 
-                            <FormControl className="bg-slate-50 font-semibold  text-slate-600 border flex gap-3 px-3 rounded-lg focus-within:border-orange-500 transition-all">
-                                <BsPersonCircle className="my-auto" />
-                                <Input name="sobrenome"
-                                    value={contact.sobrenome}
-                                    onChange={handleChange} className=" outline-none w-full  py-2.5 bg-transparent " placeholder='Sobrenome' />
-                            </FormControl>
-
-                            <FormControl className="bg-slate-50 font-semibold w-full text-slate-600 border flex gap-3 px-3 rounded-lg focus-within:border-orange-500 transition-all">
-                                <EmailIcon className="my-auto" />
-                                <Input name="email"
-                                    value={contact.email}
-                                    onChange={handleChange} className=" outline-none w-full  py-2.5 bg-transparent " placeholder='E-mail' />
-                            </FormControl>
-
-                            <FormControl className="bg-slate-50 font-semibold w-full text-slate-600 border flex gap-3 px-3 rounded-lg focus-within:border-orange-500 transition-all">
-                                <BsTelephone className="my-auto" />
-                                <Input name="telefone"
-                                    value={contact.telefone}
-                                    onChange={handleChange} className=" outline-none w-full  py-2.5 bg-transparent " placeholder='Telefone' />
-                            </FormControl>
                         </div>
                     </ModalBody>
 
                     <ModalFooter className="flex gap-3">
-                        <Button className="px-3 py-2 bg-red-500 text-white rounded-lg" mr={3} onClick={onClose}>
+                        <Button className="px-3 py-2 text-white bg-red-500 rounded-lg" mr={3} onClick={onClose}>
                             Cancelar
                         </Button>
-                        <button onClick={handleSaveContact} disabled={loading || contact.email == "" || contact.nome == ""} className="bg-orange-500 disabled:bg-slate-300 disabled:text-slate-700 text-white py-2 px-3 rounded-lg hover:bg-orange-600 transition-all flex gap-2">
+                        <button onClick={handleSaveContact} disabled={loading || !contact.name || !contact.email} // Simplificando a verificação
+                            className="flex gap-2 px-3 py-2 text-white transition-all bg-orange-500 rounded-lg disabled:bg-slate-300 disabled:text-slate-700 hover:bg-orange-600">
                             {
                                 loading ?
-                                    <Spinner className="animate-spin my-1 mx-4" />
+                                    <Spinner className="mx-4 my-1 animate-spin" />
                                     :
                                     <span className="flex gap-3">
                                         Salvar <BiSave className="my-auto" />
