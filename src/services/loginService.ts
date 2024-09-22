@@ -1,7 +1,9 @@
-
-import "firebase/auth";
+// Importar os módulos necessários do Firebase
+import { getAuth, signInWithEmailAndPassword, User } from "firebase/auth";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
 import { UserModel } from "../domain/models";
-import firebase from "@/firebase/firebase.init";
+import { auth, db } from "../firebase"; // Assegure-se de que 'db' é o Firestore inicializado
 
 export interface AuthProps {
   email: string;
@@ -13,29 +15,49 @@ export async function handleLoginService(
 ): Promise<UserModel> {
   try {
     // Autenticação com Firebase
-    const userCredential = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-
-    const user = userCredential.user;
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user: User | null = userCredential.user;
 
     if (user) {
-      // Preencher os dados do usuário com informações do Firebase
+      console.log("Consultando dados do usuário...");
+
+      // Consultar Firestore para obter os dados do usuário
+      const userQuery = query(collection(db, "empresa"), where("emailEmpresa", "==", email));
+      const querySnapshot = await getDocs(userQuery);
+
+      if (querySnapshot.empty) {
+        throw new Error("Usuário não encontrado no Firestore: " + email);
+      }
+
+      // Pega o primeiro documento retornado pela consulta
+      const userDoc = querySnapshot.docs[0].data();
+
+      // Para verificar todos os documentos na coleção "empresa"
+      const allDocsQuery = query(collection(db, "empresa"));
+      const allDocsSnapshot = await getDocs(allDocsQuery);
+
+      // Exibir todos os documentos no console
+      allDocsSnapshot.docs.forEach(doc => {
+        // console.log(doc.data());
+      });
+
+
+      // Cria o objeto userData com os dados do Firestore
       const userData: UserModel = {
         id: user.uid,
-        name: user.displayName || "", // Nome pode ser vazio
-        email: user.email || "", // Email retornado pelo Firebase
-        company_name: "", // Aqui você pode obter outros dados de Firestore se necessário
-        website: "",
-        phone: 0, // Pode ser obtido de outro lugar se necessário
+        name: userDoc?.nomeResponsavel || user.displayName || "", // Mapeie para 'nomeResponsavel'
+        email: userDoc?.emailEmpresa || "", // Mapeie para 'emailEmpresa'
+        company_name: userDoc?.nomeEmpresa || "", // Mapeie para 'nomeEmpresa'
+        website: userDoc?.siteEmpresa || "", // Mapeie para 'siteEmpresa'
+        phone: userDoc?.whatsapp || 0, // Ou utilize o campo correto para telefone
         password: "", // Não armazenamos senhas
-        address: "",
-        team: "",
-        contacts: "",
-        city: "",
-        country: "",
-        plan: "Free", // Defina um valor padrão ou obtenha de outro lugar
-        online_selling: "no", // Defina um valor padrão ou obtenha de outro lugar
+        address: userDoc?.enderecoEmpresa || "", // Mapeie para 'enderecoEmpresa'
+        team: userDoc?.team || "", // Mantenha conforme necessário
+        contacts: userDoc?.contato || "", // Adicione um campo para contatos, se existir
+        city: userDoc?.cidade || "", // Mapeie para 'cidade' se existir
+        country: userDoc?.pais || "", // Mapeie para 'pais' se existir
+        plan: userDoc?.plano || "Free", // Mapeie para 'plano' se existir
+        online_selling: userDoc?.selo ? "yes" : "no", // Mapeie corretamente
       };
 
       return userData;
