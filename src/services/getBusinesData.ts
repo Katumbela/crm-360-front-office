@@ -1,12 +1,13 @@
 import { BusinessData } from "@/domain/models";
-import { firestore } from "../firebase";
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
-export async function getBusinessData(docId: string) {
+export async function getBusinessData(docId: string): Promise<BusinessData> {
   try {
-    const docRef = firestore.collection("business").doc(docId);
-    const docSnapshot = await docRef.get();
+    const docRef = doc(db, "business", docId);
+    const docSnapshot = await getDoc(docRef);
 
-    if (docSnapshot.exists) {
+    if (docSnapshot.exists()) {
       const businessData = docSnapshot.data() as BusinessData;
       return businessData;
     } else {
