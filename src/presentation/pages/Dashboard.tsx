@@ -42,7 +42,7 @@ export const Dashboard = () => {
             <Dashboard_Home />
           ) : view === "Email" ? (
             <Dashboard_Email />
-          ) : view === "Templates" ? (
+          ) : view === "Reclamações" ? (
             <Dashboard_Templates />
           ) : view === "Estatísticas" ? (
             <Dashboard_Statistics />
