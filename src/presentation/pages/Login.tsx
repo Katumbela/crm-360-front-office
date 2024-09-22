@@ -76,6 +76,7 @@ export function Login() {
       localStorage.setItem('user', accountData.id?.toString())
       // console.log(accountData)
       dispatch(addAuthStore(accountData))
+      console.log(accountData)
       if (
         accountData.name !== ''
       ) {
@@ -95,7 +96,7 @@ export function Login() {
   };
 
   return (
-    <Box className="bg-orange-500  h-screen grid " padding="10">
+    <Box className="grid h-screen bg-orange-500 " padding="10">
 
       <Stack
         spacing={5}
@@ -113,7 +114,7 @@ export function Login() {
           <Image src={logo} alt="" className="logo w-[8rem]" mx="auto" />
         </NavLink>
         <center><b className="text-primary hover:text-orange-500">Bem vindo de volta !</b></center>
-        <form className="bg-white pt-5 pb-3 w-full" onSubmit={handleLogin}>
+        <form className="w-full pt-5 pb-3 bg-white" onSubmit={handleLogin}>
           <FormControl>
             <FormLabel className="label-sm">Email</FormLabel>
             <Input
@@ -143,8 +144,8 @@ export function Login() {
             </InputGroup>
           </FormControl>
 
-          <button disabled={loading} onClick={handleLogin} className="disabled:bg-slate-300 disabled:text-slate-600 bg-orange-500 font-semibold tracking-widest transition-all hover:bg-orange-400 rounded-md text-white py-2 w-full justify-center flex mt-5">
-            {loading && ((<Spinner className="text-slate-700 mt-1 mr-3" />) as any)}
+          <button disabled={loading} onClick={handleLogin} className="flex justify-center w-full py-2 mt-5 font-semibold tracking-widest text-white transition-all bg-orange-500 rounded-md disabled:bg-slate-300 disabled:text-slate-600 hover:bg-orange-400">
+            {loading && ((<Spinner className="mt-1 mr-3 text-slate-700" />) as any)}
 
 
             {
@@ -152,14 +153,14 @@ export function Login() {
             }
           </button>
         </form>
-        <div className="relative my-2 py-3 text-center">
+        <div className="relative py-3 my-2 text-center">
           <span className="bg-white w-[5rem] mx-auto my-auto absolute top-0 left-0 right-0 font-bold text-orange-600">Ou</span>
           <hr />
         </div>
 
         <Button
 
-          className="border py-2 text-orange-600  rounded-md flex gap-3 font-semibold tracking-wider border-primary"
+          className="flex gap-3 py-2 font-semibold tracking-wider text-orange-600 border rounded-md border-primary"
 
         >
           <FcGoogle />
