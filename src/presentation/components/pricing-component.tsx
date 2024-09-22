@@ -8,7 +8,7 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { BsArrowRightShort, BsCheckCircleFill } from "react-icons/bs";
-import { NumberUtils } from "../../utils";
+import { AlertUtils, NumberUtils } from "../../utils";
 
 const PricingBox: React.FC<PricingBoxProps> = ({
     popular,
@@ -37,7 +37,7 @@ const PricingBox: React.FC<PricingBoxProps> = ({
         >
             {popular && (
                 <div
-                    className="absolute bg-primary px-3 py-1 font-bahiana font-semibold text-white rounded-bl-xl top-0 right-0 "
+                    className="absolute top-0 right-0 px-3 py-1 font-semibold text-white bg-primary font-bahiana rounded-bl-xl "
                 >
                     POPULAR
                 </div>
@@ -61,15 +61,16 @@ const PricingBox: React.FC<PricingBoxProps> = ({
             <Stack spacing={2} mt={4}>
                 {features.map((feat, index) => (
                     <Flex key={index} className="font-truculenta" alignItems="center">
-                        <BsCheckCircleFill className="text-primary mr-2" />
+                        <BsCheckCircleFill className="mr-2 text-primary" />
                         <Text>{feat}</Text>
                     </Flex>
                 ))}
             </Stack>
-            <center className="absolute bottom-3 left-0 right-0 mt-3">
+            <center className="absolute left-0 right-0 mt-3 bottom-3">
                 <Button
                     size="md"
                     borderRadius={0}
+                    onClick={() => { name == 'start' ? window.location.href = "signup" : AlertUtils.success("Faça o seu cadastro que estaremos no ar muito em breve com o pacote "+ name) }}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     className={`font-semibold ${popular ? 'bg-hover-primary text-white ' : 'text-primary hover-primary'} transition-all border-primary  border-2 mx-auto mt-4 ${name == 'start' ? 'px-8' : 'px-16'} py-2 `}
@@ -80,11 +81,11 @@ const PricingBox: React.FC<PricingBoxProps> = ({
                             }`}
                     />
                 </Button>
-                <Text fontSize="sm" className="text-xs px-5 mt-2 text-gray-500" mt={2}>
+                <Text fontSize="sm" className="px-5 mt-2 text-xs text-gray-500" mt={2}>
                     {info}
                 </Text>
                 <div className="hidden">
-                    <Flex justify="center" className="gap-3 hidden" mt={4}>
+                    <Flex justify="center" className="hidden gap-3" mt={4}>
                         <Button
                             size="xs"
                             variant="link"
