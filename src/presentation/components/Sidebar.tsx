@@ -18,7 +18,7 @@ interface listItemsProps {
 const listItems: listItemsProps[] = [
 	{ title: 'Dashboard', logo: AiFillDashboard },
 	{ title: 'Email', logo: MdEmail },
-	{ title: 'Templates', logo: RiLayout5Fill },
+	{ title: 'Reclamações', logo: RiLayout5Fill },
 	{ title: 'Estatísticas', logo: GoGraph },
 	{ title: 'Configurações', logo: AiFillSetting },
 	{ title: 'Contatos', logo: FaPhoneAlt }
@@ -80,7 +80,7 @@ export const Sidebar = ({ view, handleView }: SidebarProps) => {
 				<Text as="b" className='text-sm'>Plano {account.user.plan}</Text>
 				<Text>{limits?.email.monthly} emails</Text>
 				<Text>{limits?.searches.monthly} consultas</Text>
-				<Link className='mt-3 bg-orange-500 py-2 text-center text-white rounded-md cursor-pointer hover:bg-orange-600 transition-all'>
+				<Link className='py-2 mt-3 text-center text-white transition-all bg-orange-500 rounded-md cursor-pointer hover:bg-orange-600'>
 					Upgrade
 				</Link>
 			</Stack>
