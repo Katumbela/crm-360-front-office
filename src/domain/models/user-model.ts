@@ -1,5 +1,6 @@
 export interface UserModel {
   id: string;
+  sobre: string;
   name: string;
   email: string;
   company_name: string;
