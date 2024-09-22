@@ -42,22 +42,24 @@ export async function handleLoginService(
       });
 
 
+      console.log(userDoc)
       // Cria o objeto userData com os dados do Firestore
       const userData: UserModel = {
-        id: user.uid,
-        name: userDoc?.nomeResponsavel || user.displayName || "", // Mapeie para 'nomeResponsavel'
-        email: userDoc?.emailEmpresa || "", // Mapeie para 'emailEmpresa'
-        company_name: userDoc?.nomeEmpresa || "", // Mapeie para 'nomeEmpresa'
-        website: userDoc?.siteEmpresa || "", // Mapeie para 'siteEmpresa'
-        phone: userDoc?.whatsapp || 0, // Ou utilize o campo correto para telefone
-        password: "", // Não armazenamos senhas
-        address: userDoc?.enderecoEmpresa || "", // Mapeie para 'enderecoEmpresa'
-        team: userDoc?.team || "", // Mantenha conforme necessário
-        contacts: userDoc?.contato || "", // Adicione um campo para contatos, se existir
-        city: userDoc?.cidade || "", // Mapeie para 'cidade' se existir
-        country: userDoc?.pais || "", // Mapeie para 'pais' se existir
-        plan: userDoc?.plano || "Free", // Mapeie para 'plano' se existir
-        online_selling: userDoc?.selo ? "yes" : "no", // Mapeie corretamente
+        id: querySnapshot.docs[0].id, // Aqui você obtém o ID do documento corretamente
+        sobre: userDoc?.sobre || "",
+        name: userDoc?.nomeResponsavel || user.displayName || "",
+        email: userDoc?.emailEmpresa || "",
+        company_name: userDoc?.nomeEmpresa || "",
+        website: userDoc?.siteEmpresa || "",
+        phone: userDoc?.whatsapp || 0,
+        password: "",
+        address: userDoc?.enderecoEmpresa || "",
+        team: userDoc?.team || "",
+        contacts: userDoc?.contato || "",
+        city: userDoc?.cidade || "",
+        country: userDoc?.pais || "",
+        plan: userDoc?.plano || "Free",
+        online_selling: userDoc?.selo ? "yes" : "no",
       };
 
       return userData;
@@ -72,6 +74,7 @@ export async function handleLoginService(
       id: "",
       name: "",
       email: "",
+      sobre: "",
       company_name: "",
       website: "",
       password: "",
