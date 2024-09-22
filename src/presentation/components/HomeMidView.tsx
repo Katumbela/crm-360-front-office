@@ -24,7 +24,7 @@ export const HomeMidView = () => {
             Nomeada uma das 100 maiores empresas de software de 2024 e classificada como a melhor plataforma de automação de marketing para pequenas e médias empresas. Expanda seus negócios com o <b>Echo Link 360</b>
           </Text>
 
-          <button className="bg-orange-600 mt-5 py-3 px-6 text-xl text-white" >
+          <button  onClick={() => window.location.href = "signup"} className="px-6 py-3 mt-5 text-xl text-white bg-orange-600" >
             Comece gratuitamente
           </button>
         </VStack>
@@ -36,7 +36,7 @@ export const HomeMidView = () => {
 
       <VStack>
 
-        <Heading fontSize="5xl" className="font-bold text-4xl text-orange-600 font-bahiana" color="green.900">
+        <Heading fontSize="5xl" className="text-4xl font-bold text-orange-600 font-bahiana" color="green.900">
           Faça o com a Echo Link 360{" "}
         </Heading>
         <Text fontSize="xl" className="text-2xl font-light text-gray-500" color="gray.500">
