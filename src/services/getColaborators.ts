@@ -1,6 +1,7 @@
+import { useCallback } from "react";
 import { UserModel } from "../domain/models";
 import { firestore } from "../firebase";
-import { collection, query, where, getDocs } from "firebase/firestore"; // Importe as funções necessárias
+import { collection, query, where, getDocs, doc, getDoc, getFirestore } from "firebase/firestore"; // Importe as funções necessárias
 
 export interface IColaborator {
     id?: string
@@ -12,32 +13,23 @@ export interface IColaborator {
     password: string;
 }
 
-export const fetchCollaborators = async (user: UserModel): Promise<IColaborator[]> => {
+
+
+export const fetchColData = async (user: UserModel): Promise<IColaborator[]> => {
     try {
-        // Crie uma consulta para a coleção "clientes" onde o empresaId corresponde ao id da empresa logada
-        const clientsRef = collection(firestore, "clientes");
-        const q = query(clientsRef, where("empresaId", "==", `${user.id.substring(0, 4)}_${user.company_name}`));
+        const db = getFirestore();
+        const businessDocRef = doc(collection(db, "business"), `${user.id.substring(0, 4)}_${user.company_name}`);
 
-        // Obtém os documentos que correspondem à consulta
-        const querySnapshot = await getDocs(q);
+        const businessDocSnapshot = await getDoc(businessDocRef);
+        const businessData = businessDocSnapshot.data();
 
-        // Cria um array para armazenar os colaboradores
-        const collaborators: IColaborator[] = [];
-
-        // Verifica se existem colaboradores
-        if (!querySnapshot.empty) {
-            querySnapshot.forEach((doc) => {
-                const data = doc.data() as IColaborator; // Cast para IColaborator
-                collaborators.push(data); // Adiciona o colaborador ao array
-            });
-        } else {
-            throw new Error("Nenhum colaborador encontrado");
-        }
-
-        console.log(collaborators);
-        return collaborators;
-    } catch (error: any) {
+        // Extrai colaboradores ou inicializa como um array vazio
+        const fetchedCollaborators: IColaborator[] = businessData?.collaborators ? Object.values(businessData.collaborators) : [];
+        return fetchedCollaborators; // Retorna os colaboradores encontrados
+    } catch (error) {
         console.error("Erro ao buscar colaboradores:", error);
         return []; // Retorna um array vazio em caso de erro
+    } finally {
+        console.log("Busca de colaboradores concluída"); // Indica que a busca foi concluída
     }
-}
+};
