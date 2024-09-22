@@ -31,7 +31,7 @@ import { useAuth } from "../../main/hooks";
 import { useSelector } from "react-redux";
 import { Spinner } from "./spinner";
 import { CollaboratorModel } from "../../domain/models/colaborator-model";
-import { fetchCollaborators, type IColaborator } from "../../services/getColaborators";
+import { fetchColData, type IColaborator } from "../../services/getColaborators";
 import { v4 as uuidv4 } from 'uuid';
 
 import RenderCollaboratorsTable from './renderColaboratorsTable/renderColaboratorTable'
@@ -64,7 +64,7 @@ export const Dashboard_Contact = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            const fetchedCollaborators = await fetchCollaborators(user);
+            const fetchedCollaborators = await fetchColData(user);
             setCollaborators(fetchedCollaborators || []);
 
             setLoadingCollaborators(false);
