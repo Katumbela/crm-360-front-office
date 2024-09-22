@@ -51,8 +51,9 @@ export default function Home() {
           </Text>
 
           <Button
+            onClick={() => window.location.href = "signup"}
             maxWidth="fit-content"
-            className="font-bold flex text-white bg-primary py-3 mt-6 px-5 relative"
+            className="relative flex px-5 py-3 mt-6 font-bold text-white bg-primary"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -71,7 +72,7 @@ export default function Home() {
       <Flex
         w="80%"
         padding="40px"
-        className="section_2 bg-secondary-opacity mx-auto mt-20 border-2 border-primary rounded-lg"
+        className="mx-auto mt-20 border-2 rounded-lg section_2 bg-secondary-opacity border-primary"
         gap={18}
         position="relative"
         alignItems="center"
@@ -118,26 +119,26 @@ export default function Home() {
           paddingX={[5, 0]}
         >
           <VStack alignItems="center" w="full">
-            <Heading className="font-new-rocker text-3xl text-orange-600 md:text-5xl xxl:text-6xl ">Planos e Preços</Heading>
-            <Text className="font-bahiana mb-5" textAlign="center">
+            <Heading className="text-3xl text-orange-600 font-new-rocker md:text-5xl xxl:text-6xl ">Planos e Preços</Heading>
+            <Text className="mb-5 font-bahiana" textAlign="center">
               Escolha o plano perfeito para alavancar o seu negócio, empresa ou startup com a <b className="text-orange-600 font-new-rocker">Echo Link 360</b>
             </Text>
           </VStack>
           <Tabs variant="soft-rounded" colorScheme="teal">
-            <TabList className="gap-4 ms-3 mb-5">
+            <TabList className="gap-4 mb-5 ms-3">
               <Tab className={` bg-orange-200 cursor-pointer focus:bg-orange-500 focus:text-white text-orange-700 py-1 px-3 rounded-lg`}>Mensal</Tab>
               <Tab className={` bg-orange-200 cursor-pointer focus:bg-orange-500 focus:text-white text-orange-700 py-1 px-3 rounded-lg`}>Anual</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
-                <div className="w-full flex">
+                <div className="flex w-full">
                   {prices.map((price) => (
                     <PricingBox key={price.name} {...price} />
                   ))}
                 </div>
               </TabPanel>
               <TabPanel>
-                <div className="w-full flex">
+                <div className="flex w-full">
                   {prices.map((price) => (
                     <PricingBox
                       key={price.name}
@@ -155,12 +156,12 @@ export default function Home() {
       <div className="flex w-[80%] mx-auto gap-4">
         <img src={hero6} alt="" className="w-6/12" />
         <div className="w-6/12 my-auto">
-          <h2 className="text-4xl text-orange-600 font-bold ">Análise & Monitoramento</h2>
+          <h2 className="text-4xl font-bold text-orange-600 ">Análise & Monitoramento</h2>
           <p>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos perspiciatis esse corrupti obcaecati iste possimus, autem expedita dignissimos distinctio sequi officia, volupt
           </p>
 
-          <button className="bg-secondary-opacity flex gap-3 hover:bg-orange-600 hover:text-white transition-all mt-5 py-3 border-2 border-primary font-bold px-6 text-xl text-orange-700" >
+          <button onClick={() => window.location.href = "signup"} className="flex gap-3 px-6 py-3 mt-5 text-xl font-bold text-orange-700 transition-all border-2 bg-secondary-opacity hover:bg-orange-600 hover:text-white border-primary" >
             Comece gratuitamente
             <BsArrowRight className="my-auto" />
           </button>
