@@ -5,29 +5,32 @@ import { CollaboratorModel } from '../../../domain/models/colaborator-model';
 import { UserModel } from '../../../domain/models';
 import { AlertUtils } from '../../../utils';
 import { Spinner } from '../spinner';
+import type { IColaborator } from '@/services/getColaborators';
+
+
 interface RenderCollaboratorsTableProps {
-    collaborators: CollaboratorModel[];
+    collaborators: IColaborator[];
     handleDeleteConfirm: (id: string) => void;
     isDeleteConfirmationOpen: boolean;
     loadingRender: boolean;
     loadingIcon: boolean;
     isEditing: boolean;
-    editCollaborator: CollaboratorModel | null; // Alterado para apenas um colaborador, não um array
-    setEditCollaborator: React.Dispatch<React.SetStateAction<CollaboratorModel | null>>; // Alterado para apenas um colaborador, não um array
+    editCollaborator: IColaborator | null; // Alterado para apenas um colaborador, não um array
+    setEditCollaborator: React.Dispatch<React.SetStateAction<IColaborator | null>>; // Alterado para apenas um colaborador, não um array
     setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
     setIsDeleteConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    onSaveEdit: (editCollaborator: CollaboratorModel) => Promise<void>;
+    onSaveEdit: (editCollaborator: IColaborator) => Promise<void>;
     user: UserModel; // Substitua 'any' pelo tipo correto de 'user' se possível
 }
 
 const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isEditing, editCollaborator, setEditCollaborator, setIsEditing, collaborators, user, onSaveEdit, isDeleteConfirmationOpen, setIsDeleteConfirmationOpen, loadingIcon, loadingRender, handleDeleteConfirm }) => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCollaborator, setSelectedCollaborator] = useState<CollaboratorModel | null>(null);
+    const [selectedCollaborator, setSelectedCollaborator] = useState<IColaborator | null>(null);
 
     const leastDestructiveRef = useRef<HTMLButtonElement>(null); // Crie a referência aqui
 
     const filteredCollaborators = Object.values(collaborators).filter(collaborator =>
-        collaborator.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        collaborator.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         collaborator.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -35,7 +38,7 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
         setSearchTerm(event.target.value);
     };
 
-    const handleEditClick = (collaborator: CollaboratorModel) => {
+    const handleEditClick = (collaborator: IColaborator) => {
         setEditCollaborator(collaborator);
         setSelectedCollaborator(collaborator); // Seleciona o colaborador para edição
         setIsEditing(true);
@@ -56,7 +59,7 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
         }
     };
 
-    const handleDeleteClick = (collaborator: CollaboratorModel) => {
+    const handleDeleteClick = (collaborator: IColaborator) => {
         setSelectedCollaborator(collaborator);
         setIsDeleteConfirmationOpen(true);
     };
@@ -73,13 +76,13 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
 
     return (
         <>
-            <div className="flex bg-slate-100/70 focus-within:border-orange-500 transition-all rounded-full px-4 py-1 border">
+            <div className="flex px-4 py-1 transition-all border rounded-full bg-slate-100/70 focus-within:border-orange-500">
                 <InputGroup size="sm">
                     <Input
                         placeholder={`${user.name.split(' ')[0]}, Pesquise por nome ou email`}
                         value={searchTerm}
                         onChange={handleSearchChange}
-                        className='py-1 px-2 outline-none bg-transparent w-full'
+                        className='w-full px-2 py-1 bg-transparent outline-none'
                     />
                     <Search2Icon className='my-auto text-slate-600' />
                 </InputGroup>
@@ -88,8 +91,8 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
 
             <table className='mt-[1rem] table-auto w-full text-start'>
                 <thead className='bg-slate-300 px-4 py-[3rem]'>
-                    <tr className='my-2 px-4'>
-                        <th className='text-start ps-2 py-1'>Nome</th>
+                    <tr className='px-4 my-2'>
+                        <th className='py-1 text-start ps-2'>Nome</th>
                         <th className='text-start'>Sobrenome</th>
                         <th className='text-start'>Email</th>
                         <th className='text-start'>Telefone</th>
@@ -98,25 +101,25 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
                 </thead>
                 <tbody className="bg-slate-100/30">
                     {filteredCollaborators.map((collaborator, index) => (
-                        <tr key={index} className='hover:bg-orange-300/20 cursor-pointer transition-all'>
+                        <tr key={index} className='transition-all cursor-pointer hover:bg-orange-300/20'>
                             <td>
                                 <div className="py-2 border-t">{isEditing && selectedCollaborator?.email === collaborator.email ? (
                                     <Input
-                                        value={editCollaborator?.nome}
+                                        value={editCollaborator?.name}
                                         onChange={(e) => setEditCollaborator(prevState => ({ ...prevState!, nome: e.target.value }))}
                                     />
                                 ) : (
-                                    collaborator.nome
+                                    collaborator.name
                                 )}</div>
                             </td>
                             <td>
                                 <div className="py-2 border-t">{isEditing && selectedCollaborator?.email === collaborator.email ? (
                                     <Input
-                                        value={editCollaborator?.sobrenome}
+                                        value={editCollaborator?.name}
                                         onChange={(e) => setEditCollaborator(prevState => ({ ...prevState!, sobrenome: e.target.value }))}
                                     />
                                 ) : (
-                                    collaborator.sobrenome
+                                    collaborator.name
                                 )}</div>
                             </td>
                             <td>
@@ -132,11 +135,11 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
                             <td>
                                 <div className="py-2 border-t">{isEditing && selectedCollaborator?.email === collaborator.email ? (
                                     <Input
-                                        value={editCollaborator?.telefone}
+                                        value={editCollaborator?.email}
                                         onChange={(e) => setEditCollaborator(prevState => ({ ...prevState!, telefone: e.target.value }))}
                                     />
                                 ) : (
-                                    collaborator.telefone
+                                    collaborator.email
                                 )}</div>
                             </td>
                             <td>
@@ -175,7 +178,7 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
                     <tr>
 
                         {filteredCollaborators.length === 0 ? (
-                            <p className='mt-6 mx-auto text-slate-600 text-sm'>Nenhum colaborador encontrado.</p>
+                            <p className='mx-auto mt-6 text-sm text-slate-600'>Nenhum colaborador encontrado.</p>
                         ) : null}
                     </tr>
                 </tfoot>
@@ -189,25 +192,25 @@ const RenderCollaboratorsTable: React.FC<RenderCollaboratorsTableProps> = ({ isE
                     onClose={handleDeleteCancel}
                 >
                     <AlertDialogOverlay className='bg-black/40'>
-                        <AlertDialogContent className='bg-white p-4 rounded-lg shadow-3xl border border-red-600' mx={'auto'} w={'18rem'} mt={"20%"}>
+                        <AlertDialogContent className='p-4 bg-white border border-red-600 rounded-lg shadow-3xl' mx={'auto'} w={'18rem'} mt={"20%"}>
                             <AlertDialogHeader className='text-xl text-orange-600' fontWeight="bold">
                                 Confirmar Exclusão
                             </AlertDialogHeader>
                             <AlertDialogBody>
-                                <p className="text-sm py-5">
-                                    Tem certeza de que deseja excluir o colaborador <b>{selectedCollaborator.nome}</b>?
+                                <p className="py-5 text-sm">
+                                    Tem certeza de que deseja excluir o colaborador <b>{selectedCollaborator.name}</b>?
                                 </p>
                             </AlertDialogBody>
                             <AlertDialogFooter className='flex gap-3'>
-                                <button ref={leastDestructiveRef} disabled={loadingRender} className='border-2 disabled:bg-slate-300 disabled:border-slate-300 disabled:text-slate-700 hover:bg-red-400/40 transition-all border-red-600 px-3 py-1 rounded-lg text-red-700 font-semibold' onClick={() => confirmDelete(selectedCollaborator.id)}>
+                                <button ref={leastDestructiveRef} disabled={loadingRender} className='px-3 py-1 font-semibold text-red-700 transition-all border-2 border-red-600 rounded-lg disabled:bg-slate-300 disabled:border-slate-300 disabled:text-slate-700 hover:bg-red-400/40' onClick={() => confirmDelete(selectedCollaborator?.id ? selectedCollaborator?.id : '')}>
                                     {
                                         loadingRender ?
-                                            <span className='flex gap-2 my-1 px-3'> <Spinner className='my-auto' /></span>
+                                            <span className='flex gap-2 px-3 my-1'> <Spinner className='my-auto' /></span>
                                             :
                                             <span> Excluir</span>
                                     }
                                 </button>
-                                <Button ml={3} className='bg-red-600 text-white  font-semibold py-1 px-3  rounded-lg border-2 border-red-600' onClick={handleDeleteCancel}>
+                                <Button ml={3} className='px-3 py-1 font-semibold text-white bg-red-600 border-2 border-red-600 rounded-lg' onClick={handleDeleteCancel}>
                                     Cancelar
                                 </Button>
                             </AlertDialogFooter>
