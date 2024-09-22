@@ -1,7 +1,12 @@
-import axios from "axios";
-import { UserModel } from "../domain/models";
-import { env } from "../main/config";
 
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+import { UserModel } from "../domain/models";
+import firebase from "@/firebase/firebase.init";
+
+// Função de Cadastro
 export async function handleSignupService({
   email,
   password,
@@ -14,77 +19,95 @@ export async function handleSignupService({
   phone,
   team,
   website,
+  logoFile,
+  capaFile,
 }: UserModel): Promise<UserModel> {
-    
   try {
-    const formData = {
+    // Verificar se as imagens foram selecionadas
+    if (!logoFile || !capaFile) {
+      throw new Error("Logo e capa não foram selecionadas!");
+    }
+
+    // Criar usuário no Firebase Authentication
+    const userCredential = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+
+    // Upload de logo e capa para o Firebase Storage
+    const logoFileName = `empresas/${uuidv4()}_${logoFile.name}`;
+    const capaFileName = `empresas/${uuidv4()}_${capaFile.name}`;
+    const storageRef = firebase.storage().ref();
+
+    // Upload da logo
+    const logoFileRef = storageRef.child(logoFileName);
+    await logoFileRef.put(logoFile);
+    const logoFileURL = await logoFileRef.getDownloadURL();
+
+    // Upload da capa
+    const capaFileRef = storageRef.child(capaFileName);
+    await capaFileRef.put(capaFile);
+    const capaFileURL = await capaFileRef.getDownloadURL();
+
+    // Enviar os dados para o Firestore
+    const empresaRef = firebase.firestore().collection("empresa");
+
+    // Adicionar os dados da empresa no Firestore
+    const empresaDocRef = await empresaRef.add({
       email: email,
-      password: password,
-      address: address,
-      city: "---------",
       company_name: company_name,
+      address: address,
       contacts: contacts,
       country: country,
       name: name,
       online_selling: online_selling,
       phone: phone,
-      plan: "Free",
       team: team,
       website: website,
-    };
-
-    const response = await axios.post(env.apiUrl + "/signup", formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+      userId: user.uid,
+      logo: logoFileURL,
+      capa: capaFileURL,
+      plan: "Free",
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
-    const userData: UserModel = response.data;
+    // Retorna os dados do usuário
+    const userData: UserModel = {
+      id: user.uid,
+      name: name,
+      email: email,
+      company_name: company_name,
+      phone: phone,
+      website: website,
+      password: password,
+      address: address,
+      team: team,
+      contacts: contacts,
+      city: "",
+      country: country,
+      plan: "Free",
+      online_selling: online_selling,
+    };
 
-    // if (response.status === 200) {
-    //   console.log("Requisição bem-sucedida!");
-    //   console.log("Dados recebidos:", response.data);
-
-    //   const userData: UserModel = response.data;
-
-    //   return userData;
-    // } else {
-    //   console.error("Erro na requisição:", response.statusText);
-    //   const userData: UserModel = {
-    //     id: "",
-    //     name: "",
-    //     email: "",
-    //     company_name: "",
-    //     website: "",
-    //     phone: 0,
-    //     password: "",
-    //     address: "",
-    //     team: "",
-    //     contacts: "",
-    //     city: "",
-    //     country: "",
-    //     plan: "Free",
-    //     online_selling: "no",
-    //   }; // Atribuir um array vazio de UserModel
-      return userData;
-    
+    return userData;
   } catch (error) {
+    console.error("Erro ao cadastrar empresa:", error);
     const userData: UserModel = {
       id: "",
       name: "",
       email: "",
       company_name: "",
+      phone: 0,
       website: "",
       password: "",
       address: "",
       team: "",
-      phone: 0,
       contacts: "",
       city: "",
       country: "",
       plan: "Free",
       online_selling: "no",
-    }; // Atribuir um array vazio de UserModel
+    };
     return userData;
   }
 }
