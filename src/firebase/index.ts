@@ -1,2 +1,1 @@
-export * from './firebase.config'
-export * from './firebase.init'
+export * from './firebase.config' 
