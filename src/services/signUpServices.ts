@@ -1,10 +1,9 @@
-
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import { UserModel } from "../domain/models";
-import firebase from "@/firebase/firebase.init";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db, storage } from "../firebase";
 
 // Função de Cadastro
 export async function handleSignupService({
@@ -23,37 +22,31 @@ export async function handleSignupService({
   capaFile,
 }: UserModel): Promise<UserModel> {
   try {
-    // Verificar se as imagens foram selecionadas
-    if (!logoFile || !capaFile) {
-      throw new Error("Logo e capa não foram selecionadas!");
-    }
-
     // Criar usuário no Firebase Authentication
-    const userCredential = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     // Upload de logo e capa para o Firebase Storage
-    const logoFileName = `empresas/${uuidv4()}_${logoFile.name}`;
-    const capaFileName = `empresas/${uuidv4()}_${capaFile.name}`;
-    const storageRef = firebase.storage().ref();
+    const logoFileName = `empresas/${uuidv4()}_${logoFile?.name}`;
+    const capaFileName = `empresas/${uuidv4()}_${capaFile?.name}`;
 
+    // Referências no Storage
+    const logoFileRef = ref(storage, logoFileName);
+    const capaFileRef = ref(storage, capaFileName);
+    /*
     // Upload da logo
-    const logoFileRef = storageRef.child(logoFileName);
-    await logoFileRef.put(logoFile);
-    const logoFileURL = await logoFileRef.getDownloadURL();
+    await uploadBytes(logoFileRef, logoFile);
+    const logoFileURL = await getDownloadURL(logoFileRef);
 
     // Upload da capa
-    const capaFileRef = storageRef.child(capaFileName);
-    await capaFileRef.put(capaFile);
-    const capaFileURL = await capaFileRef.getDownloadURL();
-
-    // Enviar os dados para o Firestore
-    const empresaRef = firebase.firestore().collection("empresa");
+    await uploadBytes(capaFileRef, capaFile);
+    const capaFileURL = await getDownloadURL(capaFileRef);
+*/
+    // Enviar os dados da empresa para o Firestore
+    const empresaRef = collection(db, "empresa");
 
     // Adicionar os dados da empresa no Firestore
-    const empresaDocRef = await empresaRef.add({
+    await addDoc(empresaRef, {
       email: email,
       company_name: company_name,
       address: address,
@@ -65,10 +58,10 @@ export async function handleSignupService({
       team: team,
       website: website,
       userId: user.uid,
-      logo: logoFileURL,
-      capa: capaFileURL,
+      logo: "logoFileURL",
+      capa: "capaFileURL",
       plan: "Free",
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: serverTimestamp(),
     });
 
     // Retorna os dados do usuário
@@ -90,8 +83,9 @@ export async function handleSignupService({
     };
 
     return userData;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Erro ao cadastrar empresa:", error);
+
     const userData: UserModel = {
       id: "",
       name: "",
