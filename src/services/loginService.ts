@@ -1,6 +1,7 @@
-import axios from "axios";
+
+import "firebase/auth";
 import { UserModel } from "../domain/models";
-import { env } from "../main/config";
+import firebase from "@/firebase/firebase.init";
 
 export interface AuthProps {
   email: string;
@@ -11,45 +12,40 @@ export async function handleLoginService(
   { email, password }: AuthProps
 ): Promise<UserModel> {
   try {
-    const formData = {
-      email: email,
-      password: password,
-    };
+    // Autenticação com Firebase
+    const userCredential = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
 
-    const response = await axios.post(env.apiUrl + "/login", formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const user = userCredential.user;
 
-    if (response.status === 200) {
-      console.log("Requisição bem-sucedida!");
-    //   console.log("Dados recebidos:", response.data);
-
-      const userData: UserModel = response.data;
-      
-      return userData;
-    } else {
-      console.error("Erro na requisição:", response.statusText);
+    if (user) {
+      // Preencher os dados do usuário com informações do Firebase
       const userData: UserModel = {
-        id: "",
-        name: "",
-        email: "",
-        company_name: "",
+        id: user.uid,
+        name: user.displayName || "", // Nome pode ser vazio
+        email: user.email || "", // Email retornado pelo Firebase
+        company_name: "", // Aqui você pode obter outros dados de Firestore se necessário
         website: "",
-        phone: 0,
-        password: "",
+        phone: 0, // Pode ser obtido de outro lugar se necessário
+        password: "", // Não armazenamos senhas
         address: "",
         team: "",
         contacts: "",
         city: "",
         country: "",
-        plan: "Free",
-        online_selling: "no",
-      }; // Atribuir um array vazio de UserModel
+        plan: "Free", // Defina um valor padrão ou obtenha de outro lugar
+        online_selling: "no", // Defina um valor padrão ou obtenha de outro lugar
+      };
+
       return userData;
+    } else {
+      throw new Error("Usuário não encontrado");
     }
-  } catch (error) {
+  } catch (error: any) {
+    console.error("Erro ao fazer login:", error.message);
+
+    // Retornar dados vazios em caso de erro
     const userData: UserModel = {
       id: "",
       name: "",
@@ -65,7 +61,7 @@ export async function handleLoginService(
       country: "",
       plan: "Free",
       online_selling: "no",
-    }; // Atribuir um array vazio de UserModel
+    };
     return userData;
   }
 }
